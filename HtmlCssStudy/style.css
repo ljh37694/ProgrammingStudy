@@ -2,77 +2,109 @@
     margin: 0px;
 }
 
-.background {
-    background-color: #484c4e;
-    width: 100vw;
-    height: 100vh;
+.wrapper {
+    display: flex;
+    width: 1000px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgb(163, 163, 163);
 }
 
+.main {
+    width: 80%;
+    padding-right: 30px;
+}
+
+/* profile */
 .profile {
-    width: 200px;
-    margin-right: auto;
-    margin-left: auto;
-    display: block;
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.user-image {
+    display: flex;
+    border-radius: 50px;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.info {
+    margin-left: 10px;
 }
 
 .name {
-    font-size: 60px;
-    color: #ffffff;
-    letter-spacing: 3px;
-    text-align: center;
-    margin-bottom: 0px;
+    width: 50px;
+    margin-top: 0px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
-.subtitle {
-    text-align: center;
-    margin-bottom: 100px;
+.upload-time {
+    font-size: 12px;
+    margin-top: 5px;
+    color: grey;
 }
 
-.mainText {
-    text-align: left;
-    color: #ffffff;
-    font-weight: 200;
-    font-size: 16px;
-    padding: 24px;
-}
-
-.mainContainer {
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 6px;
-    width: 1000px;
-    height: 500px;
-    background-color: #638ac4;
-    box-shadow: 5px 5px 5px black;
-}
-
-.container {
-    width: 800px;
-}
-
-.header {
-    width: 100%;
-    height: 50px;
-    background-color: #638ac4;
-}
-
-.left-menu {
+/* image */
+.image-preview {
     width: 20%;
-    height: 400px;
-    background:#484c4e;
-    float: left;
+    height: 100%;
+    background-image: url("https://github.com/ljh37694/ljh37694.github.io/assets/84302688/8f5295fb-6ee8-4bcc-89c4-e83d40ce75a3");
+    background-size: cover;
+    display: flex;
+    align-items: end;
+    justify-content: end;
 }
 
-.right {
-    width: 80%;
-    height: 400px;
-    background-color: aquamarine;
-    float: left;
+.plus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    width: 35px;
+    font-size: 30px;
+    color: white;
+    font-weight: lighter;
+    background-color: rgba(94, 94, 94, 0.5);
+}
+
+/* main-content */
+.content {
+    width: 100%;
+    height: 80%;
+    text-justify: center;
+}
+
+.content > .title {
+    font-size: 24px;
+    font-weight: bold;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.content > .text {
+    height: calc(70% - 40px);
+    font-size: 16px;
+    color: grey;
 }
 
 .footer {
-    width: 100%;
-    height: 100px;
-    background-color: brown;
-    clear: both;
+    display: flex;
+    height: 10%;
+    justify-content: end;
+}
+
+.share-image {
+    height: 100%;
 }
