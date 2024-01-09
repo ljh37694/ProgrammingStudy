@@ -1,0 +1,74 @@
+* {
+    margin: 0px;
+}
+
+.main-background {
+    width: 100%;
+    height: 800px;
+    background-image: url("https://codingapple.com/wp-content/uploads/2019/06/shoes.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    padding-top: 1px; /* margin collepse*/
+}
+
+.main-title {
+    color: white;
+    font-size: 80px;
+    margin-top: 120px;
+    text-align: center;
+}
+
+.main-text {
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-size: 30px;
+    margin-top: 30px;
+}
+
+.main-btn {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+    width: 200px;
+    height: 60px;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: rgb(248, 219, 122);
+    border-radius: 2px;
+    font-family: sans-serif;
+    border: none;
+    color: white;
+}
+
+.main-btn:hover {
+    background-color: rgb(190, 168, 95);
+}
+
+.sub-box {
+    background-color: rgb(238, 238, 238);
+    width: 60%;
+    height: 150px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 100px;
+    padding: 40px;
+    border-radius: 2px;
+    border: none;
+    text-align: center;
+    position: relative;
+    top: -40px;
+    box-sizing: border-box;
+}
+
+.sub-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.sub-content {
+    margin-top: 15px;
+}
