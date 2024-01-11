@@ -7,11 +7,14 @@ table {
     border-collapse: collapse;
     border-style: hidden;
     width: 100%;
+    background-color: #fff;
+    border-radius: 5px;
 }
 
 .wrapper {
     background-color: rgb(167, 203, 212);
     padding-top: 1px;
+    height: 100vh;
 }
 
 .wrapper > * {
@@ -27,19 +30,20 @@ table {
     font-size: 30px;
 }
 
-.table-container {
-    border-radius: 10px;
-    background-color: #fff;
-}
-
 th, td {
-    padding: 10px;
     border-bottom: 1px solid black;
     vertical-align: middle;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: right;
 }
 
-td {
-    height: 120px;
+th {
+    height: 40px;
+}
+
+tbody td {
+    height: 100px;
 }
 
 .table-title > th {
@@ -53,14 +57,17 @@ td {
 }
 
 .product > img {
+    display: block;
     width: 100px;
-    height: 100px;
+    height: 90px;
     float: left;
 }
 
 .product-info {
     margin-left: 30px;
     font-weight: bold;
+    text-align: left;
+    float: right;
 }
 
 .product-name {
@@ -82,4 +89,34 @@ td {
 
 .total {
     color: rgb(55, 55, 131);
+}
+
+.sum-price {
+    height: 60px;
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(55, 55, 131);
+}
+
+.footer {
+    width: 100%;
+    height: 100px;
+    position: relative;
+    top: 30px;
+}
+
+.footer > a {
+    float: left;
+}
+
+.footer > button {
+    float: right;
+    height: 60px;
+    width: 250px;
+    color: #fff;
+    background-color: rgb(55, 55, 131);
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: normal;
 }
