@@ -119,4 +119,9 @@ tbody td {
     border-radius: 5px;
     font-size: 18px;
     font-weight: normal;
+    cursor: pointer;
+}
+
+.footer > button:hover {
+    background-color: rgb(61, 61, 95);
 }
