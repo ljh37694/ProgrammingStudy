@@ -2,6 +2,39 @@
     margin: 0px;
 }
 
+.wrapper {
+    box-sizing: border-box;
+}
+
+.main-bar {
+    background-color: rgb(245, 94, 210);
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    height: 40px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.main-logo {
+    flex-grow: 1;
+    font-size: 40px;
+}
+
+.main-bar:nth-child(2) {
+    margin-right: 20px;
+}
+
+.main-bar > a:link {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px;
+}
+
+.main-bar > a:visited {
+    color: #fff;
+}
+
 .main-background {
     width: 100%;
     height: 800px;
