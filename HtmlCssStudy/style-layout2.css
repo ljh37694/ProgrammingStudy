@@ -7,22 +7,20 @@
 }
 
 .main-bar {
-    background-color: rgb(245, 94, 210);
-    display: flex;
-    align-items: center;
-    padding: 10px;
+    background-color: rgb(243, 127, 216);
+    padding: 20px;
     height: 40px;
     font-weight: bold;
     color: #fff;
 }
 
 .main-logo {
-    flex-grow: 1;
     font-size: 40px;
+    float: left;
 }
 
-.main-bar:nth-child(2) {
-    margin-right: 20px;
+.main-bar > a {
+    float: right;
 }
 
 .main-bar > a:link {
