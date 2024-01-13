@@ -66,5 +66,4 @@
 
 .item:hover .price-anim {
     top: 50%;
-    transition: all 0.8s;
 }
