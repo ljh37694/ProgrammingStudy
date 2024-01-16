@@ -1,0 +1,72 @@
+p, h3 {
+    margin: 0px;
+}
+
+.font-main-title {
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.font-title {
+    font-size: 30px;
+    font-weight: normal;
+}
+
+.font-normal {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.wrapper {
+    box-sizing: border-box;
+    padding: 1px;
+}
+
+.white-box {
+	background: white;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0.5px 0.5px 2px 1px #eee;
+}
+
+.main-btn {
+    background-color: #6fbaf8;
+    border: none;
+    border-radius: 3px;
+}
+
+.profile-simple {
+    border-right: 1px solid #d3d3d3;
+}
+
+@media screen and (max-width: 1400px) {
+    .font-main-title {
+        font-size: 24px;
+    }
+
+    .font-title {
+        font-size: 20px;
+    }
+
+    .font-normal {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .profile-simple {
+        border-right: none;
+    }
+
+    .font-main-title {
+        font-size: 24px;
+    }
+
+    .font-title {
+        font-size: 20px;
+    }
+
+    .font-normal {
+        font-size: 12px;
+    }
+}
