@@ -35,8 +35,27 @@ p, h3 {
     border-radius: 3px;
 }
 
+.profile-top {
+    min-width: 568px;
+}
+
 .profile-simple {
     border-right: 1px solid #d3d3d3;
+}
+
+.profile-progress {
+    height: 2px;
+    width: 100%;
+}
+
+.profile-progress > .row > div {
+    background-color: #6fbaf8 ;
+    width: 10%;
+}
+
+.progress-top-title {
+    padding: 10px;
+    font-size: 14px;
 }
 
 @media screen and (max-width: 1400px) {
