@@ -2,21 +2,6 @@ p, h3 {
     margin: 0px;
 }
 
-.font-main-title {
-    font-size: 28px;
-    font-weight: 500;
-}
-
-.font-title {
-    font-size: 30px;
-    font-weight: normal;
-}
-
-.font-normal {
-    font-size: 14px;
-    font-weight: normal;
-}
-
 .wrapper {
     box-sizing: border-box;
     padding: 1px;
@@ -27,10 +12,10 @@ p, h3 {
 	padding: 20px;
 	border-radius: 5px;
 	box-shadow: 0.5px 0.5px 2px 1px #eee;
+    font-size: 16px;
 }
 
 .main-btn {
-    background-color: #6fbaf8;
     border: none;
     border-radius: 3px;
 }
@@ -43,24 +28,70 @@ p, h3 {
     border-right: 1px solid #d3d3d3;
 }
 
-.profile-progress {
-    height: 2px;
-    width: 100%;
-}
-
-.profile-progress > .row > div {
-    background-color: #6fbaf8 ;
-    width: 10%;
-}
-
-.progress-top-title {
+.nav-title {
+    color: grey;
+    border-bottom: 3px solid rgb(197, 197, 197);
+    text-align: center;
+    font-weight: bold;
     padding: 10px;
-    font-size: 14px;
+    font-size: 18px;
+}
+
+.skill-container {
+    height: 10%;
+    flex-wrap: wrap;
+}
+
+.skill-container > p {
+    border: 1px solid #d3d3d3;
+    margin: 5px;
+}
+
+.sign-up-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 60px;
+}
+
+.sign-up-container * {
+    margin: 5px auto;
+}
+
+.profile-detail-container {
+    height: 40em;
+}
+
+.font-main-title {
+    font-size: 2em;
+    font-weight: 600;
+}
+
+.font-title {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.font-normal {
+    font-size: 1em;
+    font-weight: normal;
+}
+
+.bk-blue {
+    background-color: #6fbaf8;
+}
+
+.border-blue {
+    border-color: #6fbaf8;
+}
+
+.font-blue {
+    color: #6fbaf8;
 }
 
 @media screen and (max-width: 1400px) {
     .font-main-title {
-        font-size: 24px;
+        font-size: 26px;
     }
 
     .font-title {
