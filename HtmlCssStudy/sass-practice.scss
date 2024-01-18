@@ -1,0 +1,107 @@
+@use '_reset';
+
+%box {
+    width: 200px;
+    height: 200px;
+    padding: 20px;
+}
+
+.box-green {
+    @extend %box;
+    background-color: green;
+}
+
+.box-red {
+    @extend %box;
+    background-color: red;
+}
+
+.box-blue {
+    @extend %box;
+    background-color: blue;
+}
+
+ul {
+    width: 300px;
+
+    li {
+        padding: 0.5em;
+        position: relative;
+
+        border: 1px solid #eee;
+
+        &:not(:last-child) {
+            border-bottom: none;
+        }
+    }
+
+    li::marker {
+        content: none;
+    }
+
+    li.active {
+        background-color: rgb(0, 131, 253);
+        color: #fff;
+        border-color: rgb(0, 110, 212);
+    }
+}
+
+@mixin alter-box() {
+    font-size: 16px;
+    padding: 0.5em;
+    width: 50%;
+    margin-bottom: 10px;
+    display: flex;
+    border-radius: 5px;
+
+    .alter-title {
+        margin-right: 1em;
+        font-weight: bold;
+    }
+}
+
+.alter-green {
+    @include alter-box();
+    background-color: rgb(71, 177, 133);
+    color: rgb(35, 102, 74);
+}
+
+.alter-blue {
+    @include alter-box();
+    background-color: rgb(133, 210, 255);
+    color: rgb(37, 107, 148);
+}
+
+.alter-yellow {
+    @include alter-box();
+    background-color: rgb(255, 241, 163);
+    color: rgb(170, 150, 39);
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+@mixin col($width) {
+    width: $width;
+    height: 100%;
+    background-color: rgb(34, 204, 247);
+
+    &:not(:last-child) {
+        border-right: 1px solid #eee;
+    }
+}
+
+.col-2 {
+    @include col(100% / 6);
+}
+
+.col-4 {
+    @include col(100% / 3);
+}
+
+.col-6 {
+    @include col(100% / 2);
+}
