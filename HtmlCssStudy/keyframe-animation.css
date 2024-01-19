@@ -1,0 +1,41 @@
+@import url("./_reset.scss");
+
+* {
+    margin: 0px;
+}
+
+.wrapper {
+    width: 100%;
+}
+
+.btn-container {
+    margin: auto;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.shake-btn {
+    width: 80px;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(121, 190, 255);
+    color: #fff;
+}
+
+.shake-btn:hover {
+    animation-name: shake;
+    animation-duration: 1s;
+}
+
+@keyframes shake {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(30deg);
+    }
+}
