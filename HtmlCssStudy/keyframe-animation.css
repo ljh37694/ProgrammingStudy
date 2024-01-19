@@ -1,11 +1,12 @@
-@import url("./_reset.scss");
-
 * {
     margin: 0px;
 }
 
 .wrapper {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .btn-container {
@@ -27,7 +28,7 @@
 
 .shake-btn:hover {
     animation-name: shake;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
 }
 
 @keyframes shake {
@@ -35,7 +36,78 @@
         transform: rotate(0deg);
     }
 
+    25% {
+        transform: rotate(-10deg);
+    }
+
     50% {
-        transform: rotate(30deg);
+        transform: rotate(10deg);
+    }
+
+    75% {
+        transform: rotate(-10deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.plus {
+    font-size: 40px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.plus:hover {
+    animation-name: plus-animation;
+    animation-duration: 1s;
+}
+
+@keyframes plus-animation {
+    50% {
+        transform: rotate(-10deg);
+    }
+
+    100% {
+        transform: rotate(30deg) scale(2);
+    }
+}
+
+.side-menu-black {
+    background-color: rgb(75, 75, 75);
+    position: fixed;
+    left: -170px;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    padding: 40px;
+    color: #fff;
+    transition: all 1s;
+    text-align: center;
+}
+
+.side-menu-black > h3 {
+    margin-top: 100px;
+    margin-bottom: 30px;
+    text-align: right;
+}
+
+.side-menu-black:hover {
+    left: 0px;
+}
+
+.side-menu-black:hover > h3 {
+    text-align: center;
+}
+
+.side-menu-black:hover > p {
+    animation-name: item-anim;
+    animation-duration: 0.7s;
+}
+
+@keyframes item-anim {
+    50% {
+        transform: translateX(60px) skew(30deg);
     }
 }
