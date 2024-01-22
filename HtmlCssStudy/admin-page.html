@@ -33,8 +33,13 @@
                     <div class="row">
                         <div class="col-3">
                             <form class="search-form">
-                                <input type="text" id="search-input">
-                                <button><i id="search-btn" class="fa-solid fa-magnifying-glass"></i></button>
+                                <input type="text" id="search-input" />
+                                <button>
+                                    <i
+                                        id="search-btn"
+                                        class="fa-solid fa-magnifying-glass"
+                                    ></i>
+                                </button>
                             </form>
                         </div>
                         <div class="col-6"></div>
@@ -82,7 +87,9 @@
                                     </div>
                                     <div class="col-4">
                                         <div class="summary-card-icon">
-                                            <i class="fa-solid fa-dollar-sign"></i>
+                                            <i
+                                                class="fa-solid fa-dollar-sign"
+                                            ></i>
                                         </div>
                                     </div>
                                 </div>
@@ -99,7 +106,9 @@
                                     </div>
                                     <div class="col-4">
                                         <div class="summary-card-icon">
-                                            <i class="fa-solid fa-list-check"></i>
+                                            <i
+                                                class="fa-solid fa-list-check"
+                                            ></i>
                                         </div>
                                     </div>
                                 </div>
@@ -123,9 +132,81 @@
                             </div>
                         </div>
                     </div>
+                    <div class="dashboard-main-content">
+                        <div class="row">
+                            <div class="col-8">
+                                <ul class="list">
+                                    <li>Earnings Overview</li>
+                                    <li>
+                                        <div>
+                                            <canvas id="myChart" height: 300px width:100%></canvas>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-4" style="align-items: start">
+                                <ul class="list">
+                                    <li>Tasks</li>
+                                    <li>
+                                        <p>Borrowed Items</p>
+                                        <p class="task-cnt">14</p>
+                                    </li>
+                                    <li>
+                                        <p>Trello Requests</p>
+                                        <p class="task-cnt">14</p>
+                                    </li>
+                                    <li>
+                                        <p>Marked Comments</p>
+                                        <p class="task-cnt">14</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <script src="https://kit.fontawesome.com/90a450fbe2.js" crossorigin="anonymous"></script>
+        <script
+            src="https://kit.fontawesome.com/90a450fbe2.js"
+            crossorigin="anonymous"
+        ></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+            const ctx = document.getElementById("myChart");
+
+            new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: [
+                        "January",
+                        "February",
+                        "March",
+                        "April",
+                        "May",
+                        "June",
+                        "July",
+                    ],
+                    datasets: [
+                        {
+                            label: "Monthly",
+                            data: [0, 10, 5, 3, 20, 30, 45],
+                            borderWidth: 1,
+                            fill: true,
+                            tension: 0.3,
+                            backgroundColor: "rgba(0, 162, 255, 0.5)",
+                        },
+                    ],
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
+                    },
+                },
+            });
+        </script>
     </body>
 </html>
