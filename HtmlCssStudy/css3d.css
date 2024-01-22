@@ -1,0 +1,42 @@
+* {
+    margin: 0;
+}
+
+.flip-outer {
+    width: 300px;
+    height: 300px;
+    margin: 100px auto;
+}
+
+.flip-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: all 1s;
+}
+
+.front {
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    backface-visibility: hidden;
+}
+
+.back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgb(255, 217, 0);
+    box-sizing: border-box;
+    border-radius: 300px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    transform: rotateY(180deg);
+}
+
+.flip-inner:hover {
+    transform: rotateY(180deg);
+}
