@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="./alter-box.css">
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="alter-box-container">
+                <div class="alter-box" id="one">
+                    Hello
+                    <button class="close-btn" onclick="deleteAlterBox()">X</button>
+                </div>
+                <div class="alter-box" id="two">Aespa</div>
+                <div class="alter-box" id="three">Karina</div>
+            </div>
+        </div>
+
+        <script>
+            function deleteAlterBox() {
+                document.getElementById("one").style.display = "none";
+            }
+        </script>
+    </body>
+</html>

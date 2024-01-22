@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+.alter-box-container {
+    width: 80%;;
+    margin: 40px auto;
+}
+
+.alter-box {
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+#one {
+    background-color: skyblue;
+}
+
+#two {
+    background-color: aquamarine;
+}
+
+#three {
+    background-color: #eee;
+}
+
+.close-btn {
+    margin-left: auto;
+    background-color: inherit;
+    border: none;
+    float: right;
+    cursor: pointer;
+    font-size: 20px;
+}
