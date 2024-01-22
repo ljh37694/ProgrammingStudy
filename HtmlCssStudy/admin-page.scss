@@ -1,5 +1,9 @@
 @use "reset";
 
+div {
+    box-sizing: border-box;
+}
+
 .wrapper {
     width: 100%;
     background-color: #eee;
@@ -87,7 +91,7 @@
     margin-left: 30px;
 
     input {
-        width: 200px;
+        width: 100%;
         border: none;
         border: 1px solid #eee;
         border-right: none;
@@ -109,7 +113,8 @@
 }
 
 .nav-menu {
-    justify-content: end;
+    display: flex;
+    align-items: center;
     margin-right: 40px;
     color: #6d6d6d;
 
@@ -119,7 +124,7 @@
         font-size: 20px;
         background-color: inherit;
         border: none;
-        margin: 10px;
+        margin-right: 20px;
         position: relative;
     }
 
@@ -152,10 +157,6 @@
 
 .summary-card-container {
     margin-top: 40px;
-
-    & > div:not(:last-child) {
-        margin-right: 30px;
-    }
 }
 
 @mixin summary-card($border-color) {
@@ -170,6 +171,10 @@
     align-items: center;
     flex-wrap: wrap;
     padding: 20px;
+    
+    &:not(:last-child) {
+        margin-right: 20px;
+    }
 }
 
 .summary-card-sky {
@@ -209,17 +214,12 @@
     margin-top: 40px;
 }
 
-.dashboard-main-content .row {
-    div:not(:last-child) {
-        margin-right: 20px;
-    }
-}
-
 .list {
     width: 100%;
     padding-left: 0px;
     border-radius: 10px;
     box-shadow: 0px 0px 1px 1px #d2d2d2;
+    margin-bottom: 30px;
 
     li {
         list-style: none;
@@ -245,13 +245,17 @@
     }
 }
 
+.earnings-overview {
+    margin-right: 20px;
+}
+
 .task-cnt {
     background-color: rgb(65, 80, 214);
     color: #fff;
     padding: 0px 10px;
     border-radius: 15px;
     position: absolute;
-    left: 90%;
+    right: 20px;
     top: calc(50% - 0.5em);
 }
 
@@ -259,12 +263,18 @@
 .row {
     display: flex;
     width: 100%;
+    flex-wrap: wrap;
+}
+
+.row > * {
+    flex-shrink: 0;
 }
 
 @mixin col($width) {
     width: $width;
     display: flex;
     align-items: center;
+    flex: 0 0 auto;
 }
 
 .col-3 {
@@ -281,4 +291,11 @@
 
 .col-8 {
     @include col(100% / 1.5);
+}
+
+@media screen and (max-width: 768px) {
+    .col-md-12 {
+        width: 100%;
+        flex: 0 0 auto;
+    }
 }
