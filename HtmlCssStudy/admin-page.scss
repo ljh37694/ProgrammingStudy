@@ -171,10 +171,7 @@ div {
     align-items: center;
     flex-wrap: wrap;
     padding: 20px;
-    
-    &:not(:last-child) {
-        margin-right: 20px;
-    }
+    margin-right: 20px;
 }
 
 .summary-card-sky {
@@ -191,6 +188,7 @@ div {
 
 .summary-card-yellow {
     @include summary-card(rgb(253, 239, 45));
+    margin-right: 0;
 }
 
 .summary-card-content {
@@ -297,5 +295,10 @@ div {
     .col-md-12 {
         width: 100%;
         flex: 0 0 auto;
+    }
+
+    .summary-card-blue, .summary-card-green, .summary-card-sky {
+        margin-right: 0;
+        margin-bottom: 20px;
     }
 }

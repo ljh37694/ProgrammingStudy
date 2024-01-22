@@ -166,8 +166,6 @@ div {
   align-items: center;
   flex-wrap: wrap;
   padding: 20px;
-}
-.summary-card-sky:not(:last-child) {
   margin-right: 20px;
 }
 
@@ -183,8 +181,6 @@ div {
   align-items: center;
   flex-wrap: wrap;
   padding: 20px;
-}
-.summary-card-green:not(:last-child) {
   margin-right: 20px;
 }
 
@@ -200,8 +196,6 @@ div {
   align-items: center;
   flex-wrap: wrap;
   padding: 20px;
-}
-.summary-card-blue:not(:last-child) {
   margin-right: 20px;
 }
 
@@ -217,9 +211,8 @@ div {
   align-items: center;
   flex-wrap: wrap;
   padding: 20px;
-}
-.summary-card-yellow:not(:last-child) {
   margin-right: 20px;
+  margin-right: 0;
 }
 
 .summary-card-content {
@@ -325,5 +318,9 @@ div {
   .col-md-12 {
     width: 100%;
     flex: 0 0 auto;
+  }
+  .summary-card-blue, .summary-card-green, .summary-card-sky {
+    margin-right: 0;
+    margin-bottom: 20px;
   }
 }/*# sourceMappingURL=admin-page.css.map */
