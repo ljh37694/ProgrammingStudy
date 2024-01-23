@@ -36,28 +36,36 @@
             <button class="slide-btn-2">2</button>
             <button class="slide-btn-3">3</button>
             <button id="next-btn">next</button>
+            <button id="prev-btn">prev</button>
         </div>
 
         <script>
+            let cnt = 0
             $(".slide-btn").on("click", () => {
                 $(".slide-container").css("transform", "translateX(0vw)");
+                cnt = 0;
             });
 
             $(".slide-btn-2").on("click", () => {
                 $(".slide-container").css("transform", "translateX(-100vw)");
+                cnt = 1;
             });
 
             $(".slide-btn-3").on("click", () => {
                 $(".slide-container").css("transform", "translateX(-200vw)");
+                cnt = 2;
             });
 
-            let cnt = 0;
+            let len = 3;
             $("#next-btn").on("click", () => {
-                cnt = (cnt + 1) % 3;
-                console.log(cnt * -100);
-
+                cnt = (cnt + 1) % len;
                 $(".slide-container").css("transform", `translateX(${cnt * -100}vw)`);
-            })
+            });
+
+            $("#prev-btn").on("click", () => {
+                cnt = (cnt + len - 1) % len;
+                $(".slide-container").css("transform", `translateX(${cnt * -100}vw)`);
+            });
         </script>
 
         <!-- Bootstrap -->
