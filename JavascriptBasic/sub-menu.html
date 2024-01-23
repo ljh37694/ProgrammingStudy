@@ -42,6 +42,7 @@
                 </form>
             </div>
         </div>
+        <span class="badge bg-dark">Dark 🔄</span>
 
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
@@ -123,6 +124,14 @@
                     console.log("불합격ㅋ");
                 }
             }
+
+            let cnt = 0;
+
+            $(".badge").on("click", () => {
+                cnt++;
+
+                $(".badge").html((cnt % 2 == 1 ? "Light 🔄" : "Dark 🔄"));
+            })
 
             game369(3);
             game369(11);
