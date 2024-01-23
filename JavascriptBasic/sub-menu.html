@@ -99,6 +99,38 @@
 
                 console.log(textInput);
             });
+
+            function game369(number) {
+                if (number % 9 == 0) {
+                    console.log("박수X2");
+                }
+
+                else if (number % 3 == 0) {
+                    console.log("박수X1");
+                }
+
+                else {
+                    console.log("통과");
+                }
+            }
+
+            function pass(a, b) {
+                if ((a >= 40 && b >= 40) && a + b >= 120) {
+                    console.log("합격 ㅠㅠㅠ");
+                }
+
+                else {
+                    console.log("불합격ㅋ");
+                }
+            }
+
+            game369(3);
+            game369(11);
+            game369(9);
+
+            pass(70, 70);
+            pass(30, 100);
+            pass(50, 50);
         </script>
 
         <!-- Bootstrap -->
