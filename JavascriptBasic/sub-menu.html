@@ -22,7 +22,24 @@
         <div class="black-bg modal">
             <div class="white-bg">
                 <h4>로그인하세요</h4>
-                <button class="btn btn-danger" id="close">닫기</button>
+                <form action="./javascript-start.html">
+                    <div class="my-3">
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="my-3">
+                        <input type="password" class="form-control" />
+                    </div>
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="submit-btn"
+                    >
+                        전송
+                    </button>
+                    <button type="button" class="btn btn-danger" id="close">
+                        닫기
+                    </button>
+                </form>
             </div>
         </div>
 
@@ -50,11 +67,17 @@
             });
 
             $("#show-modal-btn").on("click", () => {
-                $(".modal").addClass('show-modal');
+                $(".modal").addClass("show-modal");
             });
 
-            $('#close').on('click', () => {
-                $(".modal").removeClass('show-modal');
+            $("#close").on("click", () => {
+                $(".modal").removeClass("show-modal");
+            });
+
+            $("#submit-btn").on("click", () => {
+                if ($(".form-control").text() === "") {
+                    alert("빈칸입니다.");
+                }
             });
         </script>
 
