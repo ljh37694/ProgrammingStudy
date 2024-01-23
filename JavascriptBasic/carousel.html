@@ -35,6 +35,7 @@
             <button class="slide-btn">1</button>
             <button class="slide-btn-2">2</button>
             <button class="slide-btn-3">3</button>
+            <button id="next-btn">next</button>
         </div>
 
         <script>
@@ -49,6 +50,14 @@
             $(".slide-btn-3").on("click", () => {
                 $(".slide-container").css("transform", "translateX(-200vw)");
             });
+
+            let cnt = 0;
+            $("#next-btn").on("click", () => {
+                cnt = (cnt + 1) % 3;
+                console.log(cnt * -100);
+
+                $(".slide-container").css("transform", `translateX(${cnt * -100}vw)`);
+            })
         </script>
 
         <!-- Bootstrap -->
