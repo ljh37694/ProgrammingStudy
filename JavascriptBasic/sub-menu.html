@@ -11,8 +11,21 @@
             crossorigin="anonymous"
         />
         <link rel="stylesheet" href="./sub-menu.css" />
+        <!-- jquery -->
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"
+        ></script>
     </head>
     <body>
+        <div class="black-bg modal">
+            <div class="white-bg">
+                <h4>로그인하세요</h4>
+                <button class="btn btn-danger" id="close">닫기</button>
+            </div>
+        </div>
+
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
                 <span class="navbar-brand">Navbar</span>
@@ -29,9 +42,15 @@
             <li class="list-group-item">And a fifth one</li>
         </ul>
 
+        <button class="show-modal" type="button">Show modal</button>
+
         <script>
-            document.querySelector('.navbar-toggler').addEventListener('click', () => {
-                document.querySelectorAll('.list-group')[0].classList.toggle('show-list-group');
+            $(".navbar-toggler").on("click", () => {
+                $(".list-group").toggleClass("show-list-group");
+            });
+
+            $(".show-modal").on("click", () => {
+                $(".modal").css("display", "block");
             });
         </script>
 
