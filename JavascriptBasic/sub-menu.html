@@ -42,15 +42,19 @@
             <li class="list-group-item">And a fifth one</li>
         </ul>
 
-        <button class="show-modal" type="button">Show modal</button>
+        <button id="show-modal-btn" type="button">Show modal</button>
 
         <script>
             $(".navbar-toggler").on("click", () => {
                 $(".list-group").toggleClass("show-list-group");
             });
 
-            $(".show-modal").on("click", () => {
-                $(".modal").css("display", "block");
+            $("#show-modal-btn").on("click", () => {
+                $(".modal").addClass('show-modal');
+            });
+
+            $('#close').on('click', () => {
+                $(".modal").removeClass('show-modal');
             });
         </script>
 
