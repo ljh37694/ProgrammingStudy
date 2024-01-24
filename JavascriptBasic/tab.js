@@ -1,22 +1,33 @@
-// for (let i = 0; i < $(".tab-button").length; i++) {
-//     let curBtn = $(".tab-button").eq(i), curContent = $(".tab-content").eq(i);
-//     console.log("hi");
+$(".list").on("click", (e) => {
+    let id = Number(e.target.dataset.id);
 
-//     curBtn.on("click", () => {
-//         $(".tab-button").removeClass("orange");
-//         $(".tab-content").removeClass("show");
-//         curBtn.addClass("orange");
-//         curContent.addClass("show");
-//     });
-// }
+    if (e.target.classList.contains("tab-button")) {
+        $(".tab-button").removeClass("orange");
+        $(".tab-content").removeClass("show");
+        $(".tab-button").eq(id).addClass("orange");
+        $(".tab-content").eq(id).addClass("show");
+    }
+});
 
-    $(".list").on("click", (e) => {
-        let id = Number(e.target.dataset.id);
+let products = [
+    {
+        name: "모자",
+        size: ["m", "l", "xl"],
+    },
+    {
+        name: "신발",
+        size: [260, 270, 280, 290],
+    },
+];
 
-        if (e.target.classList.contains("tab-button")) {
-            $(".tab-button").removeClass("orange");
-            $(".tab-content").removeClass("show");
-            $(".tab-button").eq(id).addClass("orange");
-            $(".tab-content").eq(id).addClass("show");
-        }
-    });
+$(".form-select").eq(0).on("input", (e) => {
+    let value = e.currentTarget.value;
+
+    if (value == "셔츠") {
+        $("#item-options").removeClass("hide");
+    }
+
+    else if (value == "모자") {
+        $("#item-options").addClass("hide");
+    }
+});
