@@ -22,7 +22,7 @@
         <div class="wrapper">
             <div class="black-bg modal">
                 <div class="white-bg">
-                    <h4>로그인하세요</h4>
+                    <h4>로그인</h4>
                     <form action="./javascript-start.html">
                         <div class="my-3">
                             <input
@@ -51,15 +51,18 @@
                     </form>
                 </div>
             </div>
-            <nav class="navbar navbar-light bg-light">
-                <div class="container-fluid">
-                    <span class="navbar-brand">JsShop</span>
-                    <span class="badge bg-dark">Dark 🔄</span>
-                    <button class="navbar-toggler" type="button">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </div>
-            </nav>
+            <div class="nav-container">
+                <nav class="navbar navbar-light bg-light">
+                    <div class="container-fluid">
+                        <span class="navbar-brand">JsShop</span>
+                        <span class="badge bg-dark">Dark 🔄</span>
+                        <button class="navbar-toggler" type="button">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                </nav>
+            </div>
+            
             <ul class="list-group">
                 <li class="list-group-item">An item</li>
                 <li class="list-group-item">A second item</li>
@@ -116,8 +119,11 @@
                     alert("비밀번호를 6자 이상으로 입력하세요.");
                     e.preventDefault();
                 }
+            });
 
-                console.log(textInput);
+            $(".black-bg").on("click", (e) => {
+                if (e.target.classList.contains("black-bg"))
+                    $(".black-bg").removeClass("show-modal");
             });
 
             function game369(number) {
