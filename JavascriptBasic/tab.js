@@ -1,3 +1,18 @@
+let products = [
+    {
+        name: "모자",
+        sizes: ["m", "l", "xl"],
+    },
+    {
+        name: "셔츠",
+        sizes: [260, 270, 280, 290, 300],
+    },
+    {
+        name: "바지",
+        sizes: [1, 2, 3, 4, 5],
+    },
+];
+
 $(".list").on("click", (e) => {
     let id = Number(e.target.dataset.id);
 
@@ -9,25 +24,34 @@ $(".list").on("click", (e) => {
     }
 });
 
-let products = [
-    {
-        name: "모자",
-        size: ["m", "l", "xl"],
-    },
-    {
-        name: "신발",
-        size: [260, 270, 280, 290],
-    },
-];
+products.forEach(item => {
+    let tmp = document.createElement("option");
+    tmp.innerHTML = item.name;
+
+    $("#items").append(tmp);
+});
 
 $(".form-select").eq(0).on("input", (e) => {
     let value = e.currentTarget.value;
+    $("#item-options").removeClass("hide");
 
     if (value == "셔츠") {
-        $("#item-options").removeClass("hide");
+        products[1].sizes.forEach(size => {
+            let tmp = document.createElement("option");
+            tmp.innerHTML = size;
+            $("#item-options").append(tmp);
+        });
     }
 
-    else if (value == "모자") {
-        $("#item-options").addClass("hide");
-    }
+    products.forEach(item => {
+        if (item.name == value) {
+            $("#item-options").html("");
+
+            item.sizes.forEach(size => {
+                let tmp = document.createElement("option");
+                tmp.innerHTML = size;
+                $("#item-options").append(tmp);
+            })
+        }
+    })
 });
