@@ -19,48 +19,72 @@
         ></script>
     </head>
     <body>
-        <div class="black-bg modal">
-            <div class="white-bg">
-                <h4>로그인하세요</h4>
-                <form action="./javascript-start.html">
-                    <div class="my-3">
-                        <input type="text" class="form-control" id="email" />
-                    </div>
-                    <div class="my-3">
-                        <input type="password" class="form-control" id="password" />
-                    </div>
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                        id="submit-btn"
-                    >
-                        전송
-                    </button>
-                    <button type="button" class="btn btn-danger" id="close">
-                        닫기
-                    </button>
-                </form>
+        <div class="wrapper">
+            <div class="black-bg modal">
+                <div class="white-bg">
+                    <h4>로그인하세요</h4>
+                    <form action="./javascript-start.html">
+                        <div class="my-3">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="email"
+                            />
+                        </div>
+                        <div class="my-3">
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password"
+                            />
+                        </div>
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            id="submit-btn"
+                        >
+                            전송
+                        </button>
+                        <button type="button" class="btn btn-danger" id="close">
+                            닫기
+                        </button>
+                    </form>
+                </div>
             </div>
-        </div>
-        <span class="badge bg-dark">Dark 🔄</span>
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                    <span class="navbar-brand">JsShop</span>
+                    <span class="badge bg-dark">Dark 🔄</span>
+                    <button class="navbar-toggler" type="button">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+            </nav>
+            <ul class="list-group">
+                <li class="list-group-item">An item</li>
+                <li class="list-group-item">A second item</li>
+                <li class="list-group-item">A third item</li>
+                <li class="list-group-item">A fourth item</li>
+                <li class="list-group-item">And a fifth one</li>
+            </ul>
 
-        <nav class="navbar navbar-light bg-light">
-            <div class="container-fluid">
-                <span class="navbar-brand">Navbar</span>
-                <button class="navbar-toggler" type="button">
-                    <span class="navbar-toggler-icon"></span>
+            <div class="login-container">
+                <button
+                    class="btn btn-danger"
+                    id="show-modal-btn"
+                    type="button"
+                >
+                    Login
                 </button>
             </div>
-        </nav>
-        <ul class="list-group">
-            <li class="list-group-item">An item</li>
-            <li class="list-group-item">A second item</li>
-            <li class="list-group-item">A third item</li>
-            <li class="list-group-item">A fourth item</li>
-            <li class="list-group-item">And a fifth one</li>
-        </ul>
 
-        <button id="show-modal-btn" type="button">Show modal</button>
+            <div class="lorem">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam,
+                quas saepe nostrum molestiae nam ex laudantium repellat maiores
+                incidunt magni, sunt illum? Beatae iusto omnis consectetur at
+                earum, distinctio ut!
+            </div>
+        </div>
 
         <script>
             $(".navbar-toggler").on("click", () => {
@@ -76,24 +100,19 @@
             });
 
             $("#submit-btn").on("click", (e) => {
-                let textInput = document.querySelector("#email"), passwordInput = document.querySelector("#password");
+                let textInput = document.querySelector("#email"),
+                    passwordInput = document.querySelector("#password");
 
                 if (textInput.value == "" && passwordInput.value == "") {
                     alert("아이디와 비밀번호를 입력하세요.");
                     e.preventDefault();
-                }
-
-                else if (textInput.value == "") {
+                } else if (textInput.value == "") {
                     alert("아이디를 입력하세요.");
                     e.preventDefault();
-                }
-
-                else if (passwordInput.value == "") {
+                } else if (passwordInput.value == "") {
                     alert("비밀번호를 입력하세요.");
                     e.preventDefault();
-                }
-
-                else if (passwordInput.value.length < 6) {
+                } else if (passwordInput.value.length < 6) {
                     alert("비밀번호를 6자 이상으로 입력하세요.");
                     e.preventDefault();
                 }
@@ -104,23 +123,17 @@
             function game369(number) {
                 if (number % 9 == 0) {
                     console.log("박수X2");
-                }
-
-                else if (number % 3 == 0) {
+                } else if (number % 3 == 0) {
                     console.log("박수X1");
-                }
-
-                else {
+                } else {
                     console.log("통과");
                 }
             }
 
             function pass(a, b) {
-                if ((a >= 40 && b >= 40) && a + b >= 120) {
+                if (a >= 40 && b >= 40 && a + b >= 120) {
                     console.log("합격 ㅠㅠㅠ");
-                }
-
-                else {
+                } else {
                     console.log("불합격ㅋ");
                 }
             }
@@ -130,8 +143,8 @@
             $(".badge").on("click", () => {
                 cnt++;
 
-                $(".badge").html((cnt % 2 == 1 ? "Light 🔄" : "Dark 🔄"));
-            })
+                $(".badge").html(cnt % 2 == 1 ? "Light 🔄" : "Dark 🔄");
+            });
 
             game369(3);
             game369(11);
@@ -140,6 +153,23 @@
             pass(70, 70);
             pass(30, 100);
             pass(50, 50);
+
+            $(window).on("scroll", () => {
+                $(".navbar-brand").css(
+                    "font-size",
+                    $(window).scrollTop() >= 10 ? "20px" : "36px"
+                );
+            });
+
+            let isAgree = false;
+            $(".lorem").on("scroll", () => {
+                let lorem = $(".lorem");
+
+                if (lorem.prop('scrollHeight') - (lorem.innerHeight() + lorem.scrollTop()) <= 5 && !isAgree) {
+                    alert("동의하셨습니다.");
+                    isAgree = true;
+                }
+            })
         </script>
 
         <!-- Bootstrap -->
