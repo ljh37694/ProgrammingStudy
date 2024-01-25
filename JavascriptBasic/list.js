@@ -32,10 +32,32 @@ $("#show-more-btn").on("click", () => {
     });
 });
 
-$("#sort").click(() => {
+function makeSortBtn(btnId, sort) {
+
+}
+
+$("#price-ascending").click(() => {
     products.sort((a, b) => {
         return a.price - b.price;
     });
     $(".card-row").html("");
     appendProductCard(products);
+});
+
+$("#name-descending").click(() => {
+    products.sort((a, b) => {
+        console.log(a.title < b.title);
+        return (a.title < b.title ? 1 : -1);
+    });
+    $(".card-row").html("");
+    appendProductCard(products);
+});
+
+$("#price-6under").click(() => {
+    let filteredProducts = products.filter((data) => {
+        return data.price <= 60000;
+    });
+    console.log(filteredProducts);
+    $(".card-row").html("");
+    appendProductCard(filteredProducts);
 });
