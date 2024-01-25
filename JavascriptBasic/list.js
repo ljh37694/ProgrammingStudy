@@ -17,12 +17,6 @@ let products = [
     { id: 2, price: 60000, title: "Black Monastery" },
 ];
 
-products.sort((a, b) => {
-    return a.price - b.price;
-});
-
-console.log(products);
-
 appendProductCard(products);
 
 let showMoreCnt = 0;
@@ -30,9 +24,18 @@ let showMoreCnt = 0;
 $("#show-more-btn").on("click", () => {
     $.get(`https://codingapple1.github.io/js/more${++showMoreCnt}.json`)
     .done((data) => {
+        products = products.concat(data);
         appendProductCard(data);
     })
     .fail(() => {
         console.log("Fail!!");
     });
-})
+});
+
+$("#sort").click(() => {
+    products.sort((a, b) => {
+        return a.price - b.price;
+    });
+    $(".card-row").html("");
+    appendProductCard(products);
+});
