@@ -18,7 +18,7 @@
         cartList.forEach((item) => {
             let pTag = document.createElement("p");
 
-            pTag.innerHTML = item;
+            pTag.innerHTML = `${item.name}: ${item.cnt}개`;
 
             document.querySelector("#cart").appendChild(pTag);
         });
