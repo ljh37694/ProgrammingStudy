@@ -5,9 +5,17 @@ function appendProductCard(products) {
             <img src="https://via.placeholder.com/600" class="w-100" />
             <h5 class="item-title">${item.title}</h5>
             <p class="item-price">가격: ${item.price}</p>
+            <button class="btn btn-danger purchase-btn">구매하기</button>
         </div>`;
 
         $(".card-row").append(productCard);
+    });
+
+    $(".purchase-btn").on("click", function() {
+        cartList.push(this.previousElementSibling.previousElementSibling.innerText);
+        localStorage.removeItem("cart");
+        localStorage.setItem("cart", JSON.stringify(cartList));
+        console.log(localStorage.getItem("cart"));
     });
 }
 
@@ -31,10 +39,6 @@ $("#show-more-btn").on("click", () => {
         console.log("Fail!!");
     });
 });
-
-function makeSortBtn(btnId, sort) {
-
-}
 
 $("#price-ascending").click(() => {
     products.sort((a, b) => {
@@ -61,3 +65,9 @@ $("#price-6under").click(() => {
     $(".card-row").html("");
     appendProductCard(filteredProducts);
 });
+
+$("#cart").click(() => {
+    location.href = './cart.html';
+})
+
+let cartList = [];
