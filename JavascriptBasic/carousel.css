@@ -1,13 +1,23 @@
+.wrapper {
+    width: 80%;
+    margin: auto;
+    margin-top: 100px;
+}
+
 .slide-container {
-    width: 300vw;
-    transition: all 1s;
+    width: 300%;
+    /* transition: all 1s; */
 }
 
 .slide-box {
-    width: 100vw;
+    width: 33.333333%;
     float: left;
 }
 
 .slide-box > img {
     width: 100%;
+}
+
+.transition-all {
+    transition: all 1s;
 }

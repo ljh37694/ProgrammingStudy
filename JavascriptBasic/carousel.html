@@ -20,53 +20,26 @@
     </head>
     <body>
         <div class="wrapper" style="overflow: hidden;">
-            <div class="slide-container">
+            <div class="slide-container transition-all">
                 <div class="slide-box">
-                    <img src="https://codingapple.com/wp-content/uploads/2022/02/car1.png" alt="">
+                    <img src="https://codingapple.com/wp-content/uploads/2022/02/car1.png" alt="" draggable="false">
                 </div>
                 <div class="slide-box">
-                    <img src="https://codingapple.com/wp-content/uploads/2022/02/car2.png" alt="">
+                    <img src="https://codingapple.com/wp-content/uploads/2022/02/car2.png" alt="" draggable="false">
                 </div>
                 <div class="slide-box">
-                    <img src="https://codingapple.com/wp-content/uploads/2022/02/car3.png" alt="">
+                    <img src="https://codingapple.com/wp-content/uploads/2022/02/car3.png" alt="" draggable="false">
                 </div>
             </div>
 
             <button class="slide-btn">1</button>
-            <button class="slide-btn-2">2</button>
-            <button class="slide-btn-3">3</button>
-            <button id="next-btn">next</button>
+            <button class="slide-btn">2</button>
+            <button class="slide-btn">3</button>
             <button id="prev-btn">prev</button>
+            <button id="next-btn">next</button>
         </div>
 
-        <script>
-            let cnt = 0
-            $(".slide-btn").on("click", () => {
-                $(".slide-container").css("transform", "translateX(0vw)");
-                cnt = 0;
-            });
-
-            $(".slide-btn-2").on("click", () => {
-                $(".slide-container").css("transform", "translateX(-100vw)");
-                cnt = 1;
-            });
-
-            $(".slide-btn-3").on("click", () => {
-                $(".slide-container").css("transform", "translateX(-200vw)");
-                cnt = 2;
-            });
-
-            let len = 3;
-            $("#next-btn").on("click", () => {
-                cnt = (cnt + 1) % len;
-                $(".slide-container").css("transform", `translateX(${cnt * -100}vw)`);
-            });
-
-            $("#prev-btn").on("click", () => {
-                cnt = (cnt + len - 1) % len;
-                $(".slide-container").css("transform", `translateX(${cnt * -100}vw)`);
-            });
-        </script>
+        <script src="./carousel.js""></script>
 
         <!-- Bootstrap -->
         <script
