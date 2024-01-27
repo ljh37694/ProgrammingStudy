@@ -38,14 +38,15 @@ slideContainer.on("mousemove", (e) => {
     if (mouseDown) {
         let mouseMoveDist = mouseDownPoint - e.clientX;
         console.log(mouseMoveDist);
+        
 
         if (mouseMoveDist >= 300) {
-            cnt = (cnt + 1) % positions.length;
+            cnt += (cnt + 1 > positions.length - 1 ? 0 : 1);
             slideContainer.css("transform", `translateX(${positions[cnt]}%)`);
         } 
         
-        else if (mouseMoveDist < -300) {
-            cnt = (cnt + positions.length - 1) % positions.length;
+        else if (mouseMoveDist <= -300) {
+            cnt += (cnt - 1 < 0 ? 0 : -1);
             slideContainer.css("transform", `translateX(${positions[cnt]}%)`);
         }
 
@@ -57,10 +58,12 @@ slideContainer.on("mousemove", (e) => {
 
 slideContainer.on("mouseup", (e) => {
     mouseDown = false;
-    slideContainer.addClass("transition-all");
+    slideContainer.css("transform", `translateX(${positions[cnt]}%)`);
+    slideContainer.addClass("transition-all"); 
 });
 
 slideContainer.on("mouseover", (e) => {
     mouseDown = false;
+    slideContainer.css("transform", `translateX(${positions[cnt]}%)`);
     slideContainer.addClass("transition-all");
 });
