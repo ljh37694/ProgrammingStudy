@@ -9,7 +9,6 @@ for (let i = 0; i < slideBtns.length; i++) {
     slideBtns.eq(i).click(() => {
         slideContainer.css("transform", `translateX(${positions[i]}%)`);
         cnt = i;
-        console.log(cnt);
     });
 }
 
@@ -29,30 +28,36 @@ let mouseDownPoint = 0;
 
 slideContainer.on("mousedown", (e) => {
     mouseDownPoint = e.clientX;
-    console.log(mouseDownPoint);
     mouseDown = true;
     slideContainer.removeClass("transition-all");
 });
 
+let move = false;
 slideContainer.on("mousemove", (e) => {
     if (mouseDown) {
         let mouseMoveDist = mouseDownPoint - e.clientX;
-        console.log(mouseMoveDist);
-        
 
-        if (mouseMoveDist >= 300) {
+        if (mouseMoveDist >= 300 && !move) {
             cnt += (cnt + 1 > positions.length - 1 ? 0 : 1);
             slideContainer.css("transform", `translateX(${positions[cnt]}%)`);
-        } 
+            slideContainer.addClass("transition-all");
+            move = true;
+        }
         
-        else if (mouseMoveDist <= -300) {
+        else if (mouseMoveDist <= -300 && !move) {
             cnt += (cnt - 1 < 0 ? 0 : -1);
             slideContainer.css("transform", `translateX(${positions[cnt]}%)`);
+            slideContainer.addClass("transition-all");
+            move = true;
         }
 
         else {
             slideContainer.css("transform", `translateX(calc(${-mouseMoveDist}px + ${positions[cnt]}%))`);
         }
+    }
+    else {
+        move = false;
+        slideContainer.addClass("transition-all");
     }
 });
 
