@@ -55,15 +55,14 @@ function addCartItem() {
         `;
 
         $("#cart-items").append(cartItem);
-    });
-
-    $(".product-amount").on("input", function() {
-        let value = this.value;
-        console.log(value);
-
-        if (isNaN(value)) {
-            this.value = 0;
-        }
+        $(".product-amount").on("input", function() {
+            let value = this.value;
+            console.log(value);
+    
+            if (isNaN(value)) {
+                this.value = 0;
+            }
+        });
     });
 }
 
