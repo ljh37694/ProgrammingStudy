@@ -38,24 +38,42 @@ function addCartItem() {
     $(".add-btn").on("click", function(e) {
         let idx = this.id;
         let { id, title, brand, photo, price } = productsData[idx];
+        let cartItems = $("#cart-items");
 
-        let cartItem = 
+        let card = 
         `
-        <div class="col-3" draggable="true">
+        <div class="col-3 cart-item" draggable="true">
             <div class="card p-3" style="width: 100%">
                 <img src="${photo}" class="card-img-top" draggable="false" />
                 <div class="card-body p-0 mt-3">
-                    <h5 class="card-title product-title">${title}</h5>
-                    <p class="card-text product-brand">${brand}</p>
-                    <p class="card-text" id="price">${price}</p>
-                    <input type="text" class="product-amount w-80"/>
+                    <h5 class="card-title cart-product-title">${title}</h5>
+                    <p class="card-text cart-product-brand">${brand}</p>
+                    <p class="card-text cart-product-price">${price}</p>
+                    <input type="text" class="cart-product-amount w-80" value="0"/>
                 </div>
             </div>
         </div>
         `;
 
-        $("#cart-items").append(cartItem);
-        $(".product-amount").on("input", function() {
+        let exist = false;
+        let cartItem = $(".cart-item");
+        for (let i = 0; i < cartItem.length; i++) {
+            if ($(".cart-product-title").eq(i).text() === title && $(".cart-product-brand").eq(i).text() === brand) {
+                let amount = $(".cart-product-amount").eq(i).val();
+
+                $(".cart-product-amount").eq(i).val(parseInt(amount) + 1);
+
+                exist = true;
+
+                break;
+            }
+        }
+
+        if (!exist) {
+            cartItems.append(card);
+        }
+
+        $(".cart-product-amount").on("input", function() {
             let value = this.value;
             console.log(value);
     
