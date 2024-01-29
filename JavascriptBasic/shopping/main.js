@@ -78,30 +78,31 @@ function addCartItem(data) {
 
     if (!exist) {
         cartItems.append(makeCartItemCard(data));
+
+        $(".cart-product-amount").on("input", function(e) {
+            let value = this.value;
+    
+            if (isNaN(value)) {
+                this.value = 0;
+            }
+        });
+    
+        $(".cart-product-amount").on("change", (e) => {
+            $(".total-price").text(sumTotalPrice());
+        });
     }
-
-    $(".cart-product-amount").on("input", function(e) {
-        let value = this.value;
-
-        if (isNaN(value)) {
-            this.value = 0;
-        }
-    });
-
-    $(".cart-product-amount").on("change", (e) => {
-        $(".total-price").text(sumTotalPrice());
-    });
 
     let sum = parseInt($(".total-price").text()) + parseInt(data.price);
     $(".total-price").text(sum);
 }
 
+// 장바구니 최종가격
 function sumTotalPrice() {
     let cartItem = $(".cart-item");
     let sum = 0;
 
     for (let i = 0; i < cartItem.length; i++) {
-        sum += parseInt($(".cart-product-price").eq(i).text()) * parseInt($(".cart-product-amount").val());
+        sum += parseInt($(".cart-product-price").eq(i).text()) * parseInt($(".cart-product-amount").eq(i).val());
     }
 
     return sum;
@@ -167,3 +168,53 @@ $("#cart-items").on("drop", function(e) {
 
     addCartItem(productsData[id]);
 });
+
+$(".purchase-btn").click(() => {
+    $(".modal-container").addClass("show-purchase-modal");
+});
+
+$("#close-btn").click(() => {
+    $(".modal-container").removeClass("show-purchase-modal");
+});
+
+$("#submit-btn").click(() => {
+    $(".modal-container").removeClass("show-purchase-modal");
+    $(".receipt-container").addClass("show-canvas");
+
+    writeReceipt();
+});
+
+$(".receipt-close-btn").click(() => {
+    $(".receipt-container").removeClass("show-canvas");
+});
+
+function writeReceipt() {
+    let canvas = document.getElementById("canvas");
+    let cv = canvas.getContext("2d");
+    let today = new Date();
+
+    cv.clearRect(0, 0, canvas.width, canvas.height);
+    
+    cv.font = 'bold 30px dotum';
+    cv.fillText("영수증", 0, 30);
+
+    cv.font = '16px dotum';
+    cv.fillText(today.toLocaleString(), 0, 60);
+
+    let cartItems = $(".cart-item"), sum = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+        let startPoint = 100 + 80 * i;
+        let title = $(".cart-product-title").eq(i).text();
+        let brand = $(".cart-product-brand").eq(i).text();
+        let price = $(".cart-product-price").eq(i).text();
+        let amount = $(".cart-product-amount").eq(i).val();
+
+        cv.fillText(`${title}(${brand})`, 0, startPoint);
+        cv.fillText(`가격: ${price}`, 0, startPoint + 15);
+        cv.fillText(`수량: ${amount}`, 0, startPoint + 15 * 2);
+        cv.fillText(`합계: ${parseInt(price) * parseInt(amount)}`, 0, startPoint + 15 * 3);
+        sum += parseInt(price) * parseInt(amount);
+    }
+
+    cv.fillText(`총 합계: ${sum}`, 0, 200 + 80 * cartItems.length);
+}
