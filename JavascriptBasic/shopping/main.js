@@ -2,10 +2,9 @@ let productsData = [];
 
 let onDragStartCard = function(e) {
     e.dataTransfer.setData("id", e.target.id);
-    console.log(e.target.id);    
 };
 
-function makeCard(data) {
+function makeProductCard(data) {
     let { id, title, brand, photo, price } = data;
 
     let productCard = 
@@ -17,7 +16,7 @@ function makeCard(data) {
                 <h5 class="card-title product-title">${title}</h5>
                 <p class="card-text product-brand">${brand}</p>
                 <p class="card-text" id="price">${price}</p>
-                <button class="btn btn-dark add-btn" id="${id}" onclick="addCartIte(${data})">담기</button>
+                <button class="btn btn-dark add-btn">담기</button>
             </div>
         </div>
     </div>
@@ -26,10 +25,10 @@ function makeCard(data) {
     return productCard;
 }
 
-function makeCartItem(data) {
+function makeCartItemCard(data) {
     let { id, title, brand, photo, price } = data;
 
-    let cartItem = 
+    let card = 
     `
     <div class="col-3 cart-item" id="cart-item-${id}">
         <div class="card p-3" style="width: 100%">
@@ -44,7 +43,7 @@ function makeCartItem(data) {
     </div>
     `;
 
-    return cartItem;
+    return card;
 }
 
 function highlightingCard(text) {
@@ -78,7 +77,7 @@ function addCartItem(data) {
     }
 
     if (!exist) {
-        cartItems.append(makeCartItem(data));
+        cartItems.append(makeCartItemCard(data));
     }
 
     $(".cart-product-amount").on("input", function() {
@@ -88,6 +87,10 @@ function addCartItem(data) {
             this.value = 0;
         }
     });
+
+    $(".product-card").on("dragstart", function(e) {
+        e.originalEvent.dataTransfer.setData("id", e.target.id);
+    });
 }
 
 // 상품 데이터 받기
@@ -96,9 +99,13 @@ $.getJSON("./store.json")
     let tmpData = data.products;
 
     for (let i = 0; i < tmpData.length; i++) {
-        $("#product-card-container").append(makeCard(tmpData[i]));
+        $("#product-card-container").append(makeProductCard(tmpData[i]));
 
         productsData.push(tmpData[i]);
+
+        $(".add-btn").eq(i).on("click", (e) => {
+            addCartItem(tmpData[i]);
+        });
     }
 });
 
@@ -111,12 +118,10 @@ $("#search").on("keypress", function(e) {
 
         productsData.forEach((item, idx) => {
             if (item.title.includes(value) || item.brand.includes(value)) {
-                $("#product-card-container").append(makeCard(item));
+                $("#product-card-container").append(makeProductCard(item));
                 highlightingCard(value);
             }
         });
-        
-        addCartItem();
     }
 });
 
@@ -127,13 +132,9 @@ $("#search").on("input", function(e) {
     if (value == "") {
         $("#product-card-container").html("");
         productsData.forEach((item, idx) => {
-            $("#product-card-container").append(makeCard(item));
+            $("#product-card-container").append(makeProductCard(item));
         });
     }
-});
-
-$(".product-card").on("dragstart", function(e) {
-    e.originalEvent.dataTransfer.setData("id", e.target.id);
 });
 
 $("#cart-items").on("dragover", function(e) {
@@ -145,5 +146,5 @@ $("#cart-items").on("drop", function(e) {
 
     let id = parseInt(e.originalEvent.dataTransfer.getData("id").slice(-1));
 
-    $("#cart-items").append(makeCartItem(productsData[id]));
+    addCartItem(productsData[id]);
 });

@@ -40,3 +40,7 @@
 .cart-product-amount {
     max-width: 100%;
 }
+
+#cart-items {
+    min-height: 300px;
+}
