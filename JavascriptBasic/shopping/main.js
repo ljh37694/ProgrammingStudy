@@ -80,7 +80,7 @@ function addCartItem(data) {
         cartItems.append(makeCartItemCard(data));
     }
 
-    $(".cart-product-amount").on("input", function() {
+    $(".cart-product-amount").on("input", function(e) {
         let value = this.value;
 
         if (isNaN(value)) {
@@ -88,9 +88,23 @@ function addCartItem(data) {
         }
     });
 
-    $(".product-card").on("dragstart", function(e) {
-        e.originalEvent.dataTransfer.setData("id", e.target.id);
+    $(".cart-product-amount").on("change", (e) => {
+        $(".total-price").text(sumTotalPrice());
     });
+
+    let sum = parseInt($(".total-price").text()) + parseInt(data.price);
+    $(".total-price").text(sum);
+}
+
+function sumTotalPrice() {
+    let cartItem = $(".cart-item");
+    let sum = 0;
+
+    for (let i = 0; i < cartItem.length; i++) {
+        sum += parseInt($(".cart-product-price").eq(i).text()) * parseInt($(".cart-product-amount").val());
+    }
+
+    return sum;
 }
 
 // 상품 데이터 받기
@@ -105,6 +119,10 @@ $.getJSON("./store.json")
 
         $(".add-btn").eq(i).on("click", (e) => {
             addCartItem(tmpData[i]);
+        });
+
+        $(".product-card").eq(i).on("dragstart", function(e) {
+            e.originalEvent.dataTransfer.setData("id", e.target.id);
         });
     }
 });
@@ -137,6 +155,7 @@ $("#search").on("input", function(e) {
     }
 });
 
+// 드래드앤드롭
 $("#cart-items").on("dragover", function(e) {
     e.preventDefault();
 });
