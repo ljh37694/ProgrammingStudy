@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+
+        <script>
+            function f(literal, variable, variable2) {
+                console.log(literal[0] + variable2 + literal[1] + variable);
+            }
+
+            function f1(literal, ...variables) {
+                console.log(literal[0] + (variables[0] == 0 ? "바지 안 팔아요" : variables[0]) + literal[1] + variables[1]);
+            }
+
+            let pants = 20, socks = 100;
+
+            f`바지: ${pants}, 양말: ${socks}`;
+
+            pants = 0;
+            f1`바지: ${pants}, 양말: ${socks}`;
+        </script>
+    </body>
+</html>
