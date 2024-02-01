@@ -11,12 +11,18 @@
                 this.name = name;
                 this.price = price;
 
+                this.vat = () => {
+                    console.log(price * 0.1);
+                }
             }
 
             let a = new Product("shirts", 3000);
             let b = new Product("pants", 400);
 
             console.log(a, b);
+            b.vat();
+            a.vat();
+
         </script>
     </body>
 </html>
