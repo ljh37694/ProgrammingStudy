@@ -59,6 +59,82 @@
 
             // apply의 기능은 어떤 함수를 실행하는데 이 오브젝트에 적용해서 실행해달라는 의미이다.
             person.sayHi.apply(person2);
+
+            /*
+            1.
+                var a = [1,2,3];
+                var b = '김밥';
+                var c = [...b, ...a];
+                console.log(c);
+
+                결과: ['김', '밥', 1, 2, 3]
+
+            2.
+                var a = [1,2,3];
+                var b = ['you', 'are'];
+                var c = function(a,b){
+                    console.log( [[...a], ...[...b]][1] )
+                }
+                c(a,b);
+
+                결과: 2
+
+            3. 
+                function 함수(a = 5, b = a * 2 ){
+                    console.log(a + b);
+                    return 10
+                }
+                함수(3);
+
+                결과: 9
+
+            4. 
+                function 함수(a = 5, b = a * 2 ){
+                    console.log(a + b);
+                }
+                함수(undefined, undefined);
+
+                결과: error
+
+            5. 
+                function 어레이(...arr) {
+                    return arr;
+                }
+
+                var newArray = 어레이(1,2,3,4,5);
+                console.log(newArray);
+
+                풀이: arguments를 배열로 만들어 return, 개수는 n개이다. 그래서 spread operator를 사용했다.
+
+            6. 
+                var numbers = [2,3,4,5,6,1,3,2,5,5,4,6,7];
+                Math.max(...numbers);
+
+                풀이: Math.max()는 arguments의 값 중 최댓값을 return하는 함수이다. 
+                     숫자가 100개면 100개를 다 치기 힘들어서 spread.operator를 사용했다.
+
+            7.
+                function stringSort(string) {
+                    let arr = [...string];
+                    arr.sort();
+                    console.log(...arr);
+                }
+
+                풀이: 문자열을 정렬해서 각각 출력
+
+            8.
+                function dataMining(string) {
+                    let obj = {};
+
+                    for (let i = 0; i < string.length; i++) {
+                        obj[string[i]] = (obj[string[i]] == undefined ? 1 : obj[string[i]] + 1);
+                    }
+
+                    console.log(obj);
+                }
+
+                풀이: 각 문자 개수를 object로 출력하는 함수
+            */
         </script>
     </body>
 </html>
