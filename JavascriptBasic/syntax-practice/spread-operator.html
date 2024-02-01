@@ -77,7 +77,8 @@
                 }
                 c(a,b);
 
-                결과: 2
+                결과: you
+                풀이: 잘 생각해보면 된다. 이걸 틀리네
 
             3. 
                 function 함수(a = 5, b = a * 2 ){
@@ -94,7 +95,8 @@
                 }
                 함수(undefined, undefined);
 
-                결과: error
+                결과: 15
+                풀이: undefined는 argument를 넣지 않은 것과 같기 때문에 default 값이 사용된다.
 
             5. 
                 function 어레이(...arr) {
@@ -126,14 +128,15 @@
                 function dataMining(string) {
                     let obj = {};
 
-                    for (let i = 0; i < string.length; i++) {
-                        obj[string[i]] = (obj[string[i]] == undefined ? 1 : obj[string[i]] + 1);
-                    }
+                    [...string].forEach((c) => {
+                        obj[c] = (obj[c] == undefined ? 1 : obj[c] + 1);
+                    });
 
                     console.log(obj);
                 }
 
                 풀이: 각 문자 개수를 object로 출력하는 함수
+                     문자열을 배열로 바꿔 forEach를 사용하면 더 간단하게 할 수 있다.
             */
         </script>
     </body>
