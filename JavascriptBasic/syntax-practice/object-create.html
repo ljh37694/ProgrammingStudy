@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            let parent = {
+                name: "Kim",
+                age: 30,
+            };
+
+            // child는 parent를 상속받고 child.prototype에 상속받은 것이 들어있다.
+            let child = Object.create(parent);
+
+            console.log(child.name); // 오브젝트는 현재 오브젝트에 name이 없으면 prototype을 찾는다.
+        </script>
+    </body>
+</html>
