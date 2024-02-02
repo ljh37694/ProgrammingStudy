@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            class Parent {
+                constructor(name, age) {
+                    this.name = name;
+                    this.age = age;
+
+                    // constructor 안에 넣으면 prototype에 들어가지 않는다.
+                    this.print = () => {
+                        console.log(this.name, this.age);
+                    }
+                }
+
+                // 밖에 함수를 만들면 Parent.prototype에 들어간다.
+                printName() {
+                    console.log(this.name);
+                }
+            }
+
+            class Children extends Parent {
+                constructor(name, age, gender) {
+                    super(name, age); // 부모의 constructor를 상속받음
+                    this.gender = gender;
+                }
+
+                printAge() {
+                    console.log(this.age);
+                    super.printName(); // 부모의 함수를 사용할 수 있다.
+                }
+
+                // 부모와 같은 이름의 함수를 재정의할 수 있음
+                printName() {
+                    console.log(this.name, this.gender);
+                }
+            }
+
+            let personA = new Parent("Lee", 23);
+            let personB = new Children("Lee", 10, "male");
+
+            personA.printName();
+            personB.printName();
+            personA.print();
+            personB.printAge();
+
+            console.log(personA);
+            console.log(personB);
+        </script>
+    </body>
+</html>
