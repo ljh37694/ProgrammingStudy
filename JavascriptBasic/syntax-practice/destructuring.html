@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            let arr = [1, 2, 3, 4];
+            let obj = { name: "Lee", age: 23 };
+
+            // 배열이면 대괄호, 오브젝트면 중괄호
+            let [one, two, three, four, five = 50] = arr; // default 값을 넣어줄 수 있다.
+            let { name, age } = obj; // key값과 같은 변수 이름을 사용해야 한다.
+
+            console.log(five, name);
+
+            let 신체정보 = {
+                body: {
+                    height: 190,
+                    weight: 70,
+                },
+                size: ["상의 Large", "바지 30인치"],
+            };
+
+            let {
+                body: {
+                    height,
+                    weight
+                },
+                size: [상의, 하의]
+            } = 신체정보;
+
+            console.log(상의);
+        </script>
+    </body>
+</html>
