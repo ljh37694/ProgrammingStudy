@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            function Student(name, age) {
+                this.name = name;
+                this.age = age;
+
+                this.sayHi = function () {
+                    console.log(`안녕 나는 ${this.name}이야`);
+                };
+            }
+            let studentA = new Student("Kim", 20);
+            studentA.sayHi();
+
+            // 1. 밑 코드의 결과는?
+            function Parent() {
+                this.name = "Kim";
+            }
+            var a = new Parent();
+
+            a.__proto__.name = "Park";
+            console.log(a.name);
+
+            // 답: Kim
+            // 풀이: a의 prototype.name이 "Park"으로 설정된 것이지 a의 name이 바뀐 것이 아니다.
+
+            // 2. 모든 array에 적용할 수 있는 함수 만들기
+            Array.prototype.remove3 = function() {
+                this.forEach((item, idx) => {
+                    if (item === 3) {
+                        this.splice(idx, 1);
+                    }
+                });
+            };
+
+            let arr = [1, 2, 3, 4, 5];
+            arr.remove3();
+
+            console.log(arr);
+        </script>
+    </body>
+</html>
