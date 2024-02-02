@@ -60,7 +60,10 @@
                 }
 
                 agePlusOne() {
-                    console.log("ERROR");
+                    // instanceOf를 이용해서 오브젝트가 Cat일 때만 True
+                    if (this instanceof Cat) {
+                        this.age++;
+                    }
                 }
             }
 
@@ -73,13 +76,20 @@
                     this.age = age;
                 }
 
-                agePlusOne() {
-                    this.age++;
-                }
+                // agePlusOne() {
+                //     this.age++;
+                // }
             }
 
             let cat1 = new Cat("코숏", "white", 5);
             let cat2 = new Cat("러시안 블루", "brown", 2);
+
+            console.log(cat1.age);
+            console.log(dog1.age);
+            cat1.agePlusOne();
+            dog1.agePlusOne();
+            console.log(cat1.age);
+            console.log(dog1.age);
 
             class Unit {
                 constructor() {
