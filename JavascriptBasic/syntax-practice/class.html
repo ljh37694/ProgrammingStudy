@@ -58,10 +58,79 @@
                     this.type = type;
                     this.color = color;
                 }
+
+                agePlusOne() {
+                    console.log("ERROR");
+                }
             }
 
-            let Dog1 = new Dog("말티즈", "white");
-            let Dog2 = new Dog("진돗개", "brown");
+            let dog1 = new Dog("말티즈", "white");
+            let dog2 = new Dog("진돗개", "brown");
+
+            class Cat extends Dog {
+                constructor(type, color, age) {
+                    super(type, color);
+                    this.age = age;
+                }
+
+                agePlusOne() {
+                    this.age++;
+                }
+            }
+
+            let cat1 = new Cat("코숏", "white", 5);
+            let cat2 = new Cat("러시안 블루", "brown", 2);
+
+            class Unit {
+                constructor() {
+                    this.atk = 5;
+                    this.hp = 100;
+                }
+
+                get battlePoint() {
+                    return this.atk + this.hp;
+                }
+
+                set heal(hp) {
+                    this.hp += hp;
+                }
+            }
+
+            let unit1 = new Unit;
+
+            console.log(unit1.battlePoint);
+            unit1.heal = 50;
+            console.log(unit1.hp);
+
+            let data = {
+                odd : [],
+                even : [],
+
+                addNumbers(...numbers) {
+                    numbers.forEach(num => {
+                        if (num % 2) {
+                            this.odd.push(num);
+                        }
+
+                        else {
+                            this.even.push(num);
+                        }
+                    });
+
+                    this.odd.sort();
+                    this.even.sort();
+                },
+
+                get numbers() {
+                    let answer = [...this.odd, ...this.even]; 
+
+                    return answer.sort();
+                }
+            }
+
+            data.addNumbers(1, 2, 3, 4, 5);
+            console.log(data);
+            console.log(data.numbers);
         </script>
     </body>
 </html>
