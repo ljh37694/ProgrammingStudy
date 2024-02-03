@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            var products = [
+                {
+                    name1: "chair",
+                    price1: 7000,
+                },
+                {
+                    name2: "sofa",
+                    price: 5000,
+                },
+                {
+                    name1: "desk",
+                    price3: 9000,
+                },
+            ];
+            
+            console.log(products);
+
+            products.forEach(item => {
+                // for in 반복문은 __proto__도 같이 돼서 안 되게 하려면 hasOwnProperty로 확인해야 한다.
+                // 보통 오브젝트에 사용한다.
+                for (key in item) {
+                    if (!isNaN(parseInt(key.substr(-1)))) {
+                        let tmp = key.substr(0, key.length - 1);
+
+                        item[tmp] = item[key];
+                        delete item[key];
+                    }
+                }
+            });
+            
+            console.log(products);
+
+            let arr = [1, 2, 3, 4, 5, 6];
+
+            // for of는 iterable한 것들에 사용할 수 있다.
+            // arr[Symbol.iterator]()와 같은 방식으로 출력해보면 iterable한 것인지 알 수 있다.
+            for (val of arr) {
+                console.log(val);
+            }
+        </script>
+    </body>
+</html>
