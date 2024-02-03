@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <custom-input name="이름"></custom-input>
+        <div id="mordor"></div>
+        <template id="template1">
+            <label>이메일을 입력하세요</label><input>
+            <style>label { color: red; }</style>
+        </template>
+        <script>
+            class CustomInput extends HTMLElement {
+                connectedCallback() {
+                    let name = this.getAttribute("name");
+                    //this.innerHTML = `<label>${name}을 입력하세요</label><input>`
+                    this.attachShadow({ mode : "open" });
+                    this.shadowRoot.append(template1.content.cloneNode(true)); // template를 넣을 수 있다.
+                    this.shadowRoot.querySelector("label").addEventListener("click", () => console.log("클릭함")); // shadowDom에 있는 element에 이벤트 리스너를 넣을 수 있다.
+                }
+
+                // 변경이 감지될 attributes를 array로 return
+                static get observedAttributes() {
+                    return ['name'];
+                }
+
+                // attributes가 변경됐을 때 실행할 코드
+                attributeChangedCallback() {
+                    console.log("변경됨");
+
+                    let name = this.getAttribute("name");
+                    this.innerHTML = `<label>${name}을 입력하세요</label><input>`
+                }
+            }
+
+            // 커스텀 태그 만들기
+            customElements.define("custom-input", CustomInput);
+
+            // shadowDom에 적용한 style은 밖에는 적용되지 않는다.
+            document.querySelector("#mordor").attachShadow({ mode : 'open' });
+            document.querySelector("#mordor").shadowRoot.innerHTML = "<p>이곳은 그림자다.</p>";
+        </script>
+    </body>
+</html>
