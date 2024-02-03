@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            let weight = Symbol("시크릿 몸무게");
+            let height = Symbol("진짜 키");
+            let obj = { name : "Lee", gender : "male", [weight] : 120 };
+
+            obj[height] = 150;
+            
+            // Symbol은 iterable하지 않다.
+            for (key in obj) {
+                console.log(obj[key]);
+            }
+
+            // Symbol은 설명이 같다고 해서 같지 않다.
+            let a = Symbol("심볼");
+            let b = Symbol("심볼");
+
+            console.log(a === b); // false
+
+            // Symbol을 전역으로 사용할 수 있게 해준다.
+            let c = Symbol.for("심볼");
+            let d = Symbol.for("심볼");
+
+            console.log(c === d); // true
+        </script>
+    </body>
+</html>
