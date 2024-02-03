@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
+    </head>
+    <body>
+        <img id="test" src="https://codingapple1.github.io/kona.jpg"> 
+
+        <script>
+            let imageLoad = new Promise((reslove, reject) => {
+                let image = document.getElementById("test");
+
+                image.addEventListener("load", () => {
+                    reslove();
+                });
+
+                image.addEventListener("error", () => {
+                    reject();
+                });
+            });
+
+            imageLoad.then(() => {
+                console.log("성공");
+            }).catch(() => {
+                console.log("실패");
+            });
+
+            $.get("https://codingapple1.github.io/hello.txt").done((hello) => {
+                console.log(hello);
+                $.get("https://codingapple1.github.io/hello2.txt").done((hello) => {
+                    console.log(hello);
+                });
+            });
+        </script>
+    </body>
+</html>
