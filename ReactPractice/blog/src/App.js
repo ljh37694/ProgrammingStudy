@@ -37,9 +37,17 @@ function App() {
         <p>2024년 2월 10일 발행</p>
       </div>
       <button onClick={() => {
-        arr[0] = "여자 코트 추천";
-        setPosts(arr);
-      }}>click!</button>
+        let copyArr = [...posts];
+        copyArr[0] = "여자 코트 추천";
+
+        setPosts(copyArr);
+      }}>수정</button>
+      <button onClick={() => {
+        let copyArr = [...posts];
+        copyArr.sort();
+
+        setPosts(copyArr);
+      }}>정렬</button>
     </div>
   );
 }
