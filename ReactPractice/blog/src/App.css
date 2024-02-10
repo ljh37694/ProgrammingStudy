@@ -16,6 +16,16 @@
   align-items: center;
 }
 
+.item {
+  border-bottom: 1px solid black;
+  padding: 20px;
+  text-align: left;
+}
+
+.item > h4 {
+  margin-bottom: 20px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
