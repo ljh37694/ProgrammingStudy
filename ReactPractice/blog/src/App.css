@@ -4,6 +4,7 @@
 
 * {
   margin: 0;
+  box-sizing: border-box;
 }
 
 .black-nav {
@@ -23,6 +24,23 @@
 }
 
 .item > h4 {
+  margin-bottom: 20px;
+}
+
+.modal {
+  background-color: #eee;
+  width: 1000px;
+  height: 200px;
+  margin: auto;
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal > h4 {
+  font-size: 30px;
   margin-bottom: 20px;
 }
 
