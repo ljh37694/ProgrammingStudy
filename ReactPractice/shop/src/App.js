@@ -62,7 +62,7 @@ function App() {
                 </Container>
             </Navbar>
             <div className="main-image w-100 m-0"></div>
-            <ShoesItems data={data}/>
+            <ShoesItems data={itemData}/>
         </div>
     );
 }
