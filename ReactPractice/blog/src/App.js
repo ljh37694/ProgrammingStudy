@@ -17,6 +17,9 @@ function Modal(props) {
 function App() {
     let postTitle = "메가 커피";
     let arr = ["남자 코트 추천", "강남 우동 맛집", "파이썬 독학"];
+    let date = new Date();
+
+    // states
     let [posts, setPosts] = useState(arr);
     let [likeCounts, setLikeCount] = useState(posts.map(() => 0));
     let [modalVisible, setModalVisible] = useState(false);
@@ -44,7 +47,7 @@ function App() {
                             style={{ fontSize: "30px" }}
                         >{item}</h4>
 
-                        <p>2024년 2월 10일 발행</p>
+                        <p>{`${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 발행`}</p>
 
                         <button
                             onClick={() => {
@@ -87,7 +90,7 @@ function App() {
                 let copyPosts= [input.value ,...posts];
 
                 if (input.value == "") return;
-                
+
                 setPosts(copyPosts);
                 setLikeCount(copyPosts.map(() => 0));
 
