@@ -86,6 +86,8 @@ function App() {
                 let input = document.getElementById("title-input");
                 let copyPosts= [input.value ,...posts];
 
+                if (input.value == "") return;
+                
                 setPosts(copyPosts);
                 setLikeCount(copyPosts.map(() => 0));
 
