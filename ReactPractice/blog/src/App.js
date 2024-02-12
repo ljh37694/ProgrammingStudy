@@ -6,7 +6,7 @@ import { useState } from 'react';
 function Modal(props) {
   return (
     <div className="modal">
-      <h4>{props.title[0]}</h4>
+      <h4>{props.title}</h4>
       <p>날짜</p>
       <p>상세내용</p>
       <button onClick={props.clickChangeBtn}>수정</button>
@@ -20,6 +20,7 @@ function App() {
   let [posts, setPosts] = useState(arr);
   let [likeCounts, setLikeCount] = useState([0, 0, 0]);
   let [modalVisible, setModalVisible] = useState(false);
+  let [modalTitle, setModalTitle] = useState("");
   let clickChangeBtn = () => {
     let copyArr = [...posts];
     copyArr[0] = "여자 코트 추천";
@@ -39,7 +40,10 @@ function App() {
       { posts.map((item, idx) => {
         return (
           <div className="item" key={idx}>
-            <h4 onClick={() => setModalVisible(!modalVisible)} style={{fontSize: "30px"}}>{item}</h4>
+            <h4 onClick={() => {
+              setModalVisible(!modalVisible);
+              setModalTitle(posts[idx]);
+            }} style={{fontSize: "30px"}}>{item}</h4>
             <p>2024년 2월 10일 발행</p>
             <button onClick={() => {
                   let copyLikeCounts = [...likeCounts];
@@ -59,7 +63,7 @@ function App() {
       }}>정렬</button>
 
       {
-        modalVisible === true ? <Modal title={posts} clickChangeBtn={clickChangeBtn} /> : null
+        modalVisible === true ? <Modal title={modalTitle} clickChangeBtn={clickChangeBtn} /> : null
       }
     </div>
   );
