@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import "./App.css";
-import { useState } from "react";
+import React, { useState } from "react";
 
 function Modal(props) {
     return (
@@ -14,6 +14,25 @@ function Modal(props) {
     );
 }
 
+class Modal2 extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            age: 20,
+            name: "Lee"
+        };
+    }
+
+    render() {
+        return (
+            <div>
+                Hi my name is {this.state.name}{this.state.age}
+                <button onClick={() => {this.setState({age: 23})}}>변경</button>
+            </div>
+        );
+    }
+}
+
 function App() {
     let postTitle = "메가 커피";
     let arr = ["남자 코트 추천", "강남 우동 맛집", "파이썬 독학"];
@@ -24,6 +43,8 @@ function App() {
     let [likeCounts, setLikeCount] = useState(posts.map(() => 0));
     let [modalVisible, setModalVisible] = useState(false);
     let [modalTitle, setModalTitle] = useState("");
+
+    // function
     let clickChangeBtn = () => {
         let copyArr = [...posts];
         copyArr[0] = "여자 코트 추천";
@@ -96,6 +117,8 @@ function App() {
 
                 input.value = "";
             }}>추가</button>
+
+            <Modal2/>
         </div>
     );
 }
