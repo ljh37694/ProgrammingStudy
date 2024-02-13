@@ -8,12 +8,23 @@ function DetailPage(props) {
         return item.id == id;
     });
     let [alert, setAlert] = useState(true);
+    let [dontDoThat, setDontDoThat] = useState(false);
 
     // html이 다 로드되고 실행됨
     useEffect(() => {
-        setTimeout(() => {
+        let timer = setTimeout(() => {
             setAlert(false);
         }, 2000);
+    
+        /*
+            clear up funtion
+
+            위 코드 실행 전에 실행됨
+            unmount될 때 실행됨
+        */
+        return () => {
+            clearTimeout(timer);
+        };
     }, []);
 
     return (
@@ -33,6 +44,17 @@ function DetailPage(props) {
                     <button className="btn btn-danger">주문하기</button>
                 </div>
             </div>
+
+            { dontDoThat ? <div className="alert alert-danger">그러지 마!!!</div> : null }
+            <input onInput={(e) => {
+                if (isNaN(e.target.value)) {
+                    setDontDoThat(true);
+                }
+
+                else {
+                    setDontDoThat(false);
+                }
+            }} />
         </div>
     );
 }
