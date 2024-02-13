@@ -9,6 +9,7 @@ function DetailPage(props) {
     });
     let [alert, setAlert] = useState(true);
     let [dontDoThat, setDontDoThat] = useState(false);
+    let [amount, setAmount] = useState(0);
 
     // html이 다 로드되고 실행됨
     useEffect(() => {
@@ -26,6 +27,10 @@ function DetailPage(props) {
             clearTimeout(timer);
         };
     }, []);
+
+    useEffect(() => {
+        setDontDoThat(isNaN(amount));
+    }, [amount]);
 
     return (
         <div className="container">
@@ -46,15 +51,7 @@ function DetailPage(props) {
             </div>
 
             { dontDoThat ? <div className="alert alert-danger">그러지 마!!!</div> : null }
-            <input onInput={(e) => {
-                if (isNaN(e.target.value)) {
-                    setDontDoThat(true);
-                }
-
-                else {
-                    setDontDoThat(false);
-                }
-            }} />
+            <input id="amount" onInput={ (e) => setAmount(e.target.value)} />
         </div>
     );
 }
