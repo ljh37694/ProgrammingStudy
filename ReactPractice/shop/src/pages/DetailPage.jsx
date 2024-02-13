@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 function DetailPage(props) {
@@ -7,16 +7,18 @@ function DetailPage(props) {
     let curItem = itemData.find((item) => {
         return item.id == id;
     });
+    let [alert, setAlert] = useState(true);
 
+    // html이 다 로드되고 실행됨
     useEffect(() => {
         setTimeout(() => {
-            document.getElementsByClassName("alert")[0].style.visibility= "hidden";
+            setAlert(false);
         }, 2000);
-    });
+    }, []);
 
     return (
         <div className="container">
-            <div className="alert alert-warning">2초 이내 구매시 할인</div>
+            { alert ? <div className="alert alert-warning">2초 이내 구매시 할인</div> : null }
             <div className="row">
                 <div className="col-md-6">
                     <img
