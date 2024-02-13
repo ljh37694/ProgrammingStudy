@@ -7,9 +7,6 @@ function DetailPage(props) {
         return item.id == id;
     });
 
-    console.log(id);
-    console.log(itemData);
-
     return (
         <div className="container">
             <div className="row">

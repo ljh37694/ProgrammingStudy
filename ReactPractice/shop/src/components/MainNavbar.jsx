@@ -12,7 +12,7 @@ function MainNavbar() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/detail">Detail</Nav.Link>
+                        <Nav.Link href="/detail/0">Detail</Nav.Link>
                         <NavDropdown title="더보기" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">
                                 Action

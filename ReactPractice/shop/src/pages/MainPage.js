@@ -13,11 +13,10 @@ function MainPage(props) {
                     let copyItemData = [...itemData];
 
                     copyItemData.sort((a, b) => {
-
                         return (a.title < b.title ? -1 : (a.title > b.title ? 1 : 0));
                     });
 
-                    props.setItemData(copyItemData);
+                    setItemData(copyItemData);
                 }}
             >
                 정렬
