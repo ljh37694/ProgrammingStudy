@@ -1,4 +1,4 @@
-import ShoesItems from "./ShoesItems";
+import ShoesItems from "../components/ShoesItems";
 
 function MainPage(props) {
     return (

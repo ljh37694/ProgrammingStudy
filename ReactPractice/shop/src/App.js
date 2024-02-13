@@ -2,9 +2,9 @@ import "./App.css";
 import data from "./data.js";
 import { useState } from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
-import MainPage from "./component/MainPage.js";
-import DetailPage from "./component/DetailPage.jsx";
-import MainNavbar from "./component/MainNavbar.jsx";
+import MainPage from "./pages/MainPage.js";
+import DetailPage from "./pages/DetailPage.jsx";
+import MainNavbar from "./components/MainNavbar.jsx";
 
 function App() {
     let [itemData, setItemData] = useState(data);
