@@ -13,8 +13,8 @@ function App() {
         <div className="App">
             <MainNavbar />
             <Routes>
+                <Route path="/" element={<MainPage itemData={itemData} setItemData={setItemData} />} />
                 <Route path="/detail/:id" element={<DetailPage itemData={itemData} />} />
-                <Route path="/" element={<MainPage itemData={itemData} />} />
                 <Route
                     path="/event"
                     element={
