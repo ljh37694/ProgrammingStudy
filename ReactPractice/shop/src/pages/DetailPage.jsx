@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Nav } from "react-bootstrap";
+import { func } from "prop-types";
 
 function DetailPage(props) {
     let itemData = props.itemData;
@@ -10,6 +12,7 @@ function DetailPage(props) {
     let [alert, setAlert] = useState(true);
     let [dontDoThat, setDontDoThat] = useState(false);
     let [amount, setAmount] = useState(0);
+    let [curTab, setCurTab] = useState(0);
 
     // html이 다 로드되고 실행됨
     useEffect(() => {
@@ -52,7 +55,36 @@ function DetailPage(props) {
 
             { dontDoThat ? <div className="alert alert-danger">그러지 마!!!</div> : null }
             <input id="amount" onInput={ (e) => setAmount(e.target.value)} />
+
+            <div>
+                <Nav variant="tabs" defaultActiveKey="link0" onClick={(e) => {
+                    let tabNum = parseInt(e.target.dataset["id"]);
+
+                    setCurTab(tabNum);
+                }}>
+                    <Nav.Item>
+                        <Nav.Link eventKey="link0" data-id="0">버튼0</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="link1" data-id="1">버튼1</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="link2" data-id="2">버튼2</Nav.Link>
+                    </Nav.Item>
+                </Nav>
+                <TapContent idx={curTab} />
+            </div>
+
         </div>
+    );
+}
+
+function TapContent(props) {
+    let { idx } = props;
+    let contents = ["0번", "1번", "2번"];
+
+    return (
+        <div>{contents[idx]}</div>
     );
 }
 
