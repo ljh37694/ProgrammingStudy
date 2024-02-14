@@ -1,8 +1,11 @@
 import axios from "axios";
 import ShoesItems from "../components/ShoesItems";
+import { useState } from "react";
 
 function MainPage(props) {
     let { itemData, setItemData } = props;
+    let [count, setCount] = useState(2);
+    let [loading, setLoading] = useState(false);
 
     return (
         <>
@@ -23,11 +26,21 @@ function MainPage(props) {
                 정렬
             </button>
             <button className="btn btn-danger" onClick={() => {
-                axios.get("https://codingapple1.github.io/shop/data2.json")
+                setLoading(true);
+
+                axios.get(`https://codingapple1.github.io/shop/data${count}.json`)
                 .then((result) => {
+                    setCount(count + 1);
                     setItemData([...itemData, ...result.data]);
+                    setLoading(false);
+                })
+                .catch(() => {
+                    alert("상품이 더 없음");
+                    setLoading(false);
                 });
             }}>더보기</button>
+
+            { loading ? <p>로딩 중</p> : null }
         </>
     );
 }
