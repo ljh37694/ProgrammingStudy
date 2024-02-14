@@ -4,11 +4,11 @@ function ShoesItems(props) {
     return (
         <div>
             <div className="row w-100">
-                {itemData.map((item, idx) => {
+                {itemData.map((item) => {
                     return (
-                        <div className="col-md-4" key={idx}>
+                        <div className="col-md-4" key={item.id}>
                             <img
-                                src={`https://codingapple1.github.io/shop/shoes${idx + 1}.jpg`}
+                                src={`https://codingapple1.github.io/shop/shoes${item.id + 1}.jpg`}
                                 width="70%"
                             />
                             <h4>{item.title}</h4>
