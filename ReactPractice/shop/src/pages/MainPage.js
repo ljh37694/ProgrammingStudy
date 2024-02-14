@@ -1,3 +1,4 @@
+import axios from "axios";
 import ShoesItems from "../components/ShoesItems";
 
 function MainPage(props) {
@@ -8,7 +9,7 @@ function MainPage(props) {
             <div className="main-image w-100 m-0"></div>
             <ShoesItems data={itemData} />
             <button
-                className="btn btn-danger"
+                className="btn btn-danger me-3"
                 onClick={() => {
                     let copyItemData = [...itemData];
 
@@ -21,6 +22,12 @@ function MainPage(props) {
             >
                 정렬
             </button>
+            <button className="btn btn-danger" onClick={() => {
+                axios.get("https://codingapple1.github.io/shop/data2.json")
+                .then((result) => {
+                    setItemData([...itemData, ...result.data]);
+                });
+            }}>더보기</button>
         </>
     );
 }
