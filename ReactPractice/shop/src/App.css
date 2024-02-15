@@ -16,6 +16,15 @@
   background-position: center;
 }
 
+.start {
+  opacity: 0;
+}
+
+.end {
+  opacity: 1;
+  transition: all 0.5s;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

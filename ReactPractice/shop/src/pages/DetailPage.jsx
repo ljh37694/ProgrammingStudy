@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Nav } from "react-bootstrap";
-import { func } from "prop-types";
 
 function DetailPage(props) {
     let itemData = props.itemData;
@@ -13,6 +12,7 @@ function DetailPage(props) {
     let [dontDoThat, setDontDoThat] = useState(false);
     let [amount, setAmount] = useState(0);
     let [curTab, setCurTab] = useState(0);
+    let [fade, setFade] = useState("");
 
     // html이 다 로드되고 실행됨
     useEffect(() => {
@@ -34,6 +34,11 @@ function DetailPage(props) {
     useEffect(() => {
         setDontDoThat(isNaN(amount));
     }, [amount]);
+
+    useEffect(() => {
+        setTimeout(() => setFade("end"), 100);
+        setFade("");
+    }, [curTab]);
 
     return (
         <div className="container">
@@ -72,19 +77,19 @@ function DetailPage(props) {
                         <Nav.Link eventKey="link2" data-id="2">버튼2</Nav.Link>
                     </Nav.Item>
                 </Nav>
-                <TapContent idx={curTab} />
-            </div>
 
+                <TapContent idx={curTab} className={`start ${fade}`} />
+            </div>
         </div>
     );
 }
 
 function TapContent(props) {
-    let { idx } = props;
+    let { idx, className } = props;
     let contents = ["0번", "1번", "2번"];
 
     return (
-        <div>{contents[idx]}</div>
+        <div className={className}>{contents[idx]}</div>
     );
 }
 
