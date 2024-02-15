@@ -37,7 +37,8 @@ function DetailPage(props) {
 
     useEffect(() => {
         setTimeout(() => setFade("end"), 100);
-        setFade("");
+        
+        return () => setFade("");
     }, [curTab]);
 
     return (
