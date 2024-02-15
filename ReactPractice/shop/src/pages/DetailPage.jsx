@@ -13,6 +13,7 @@ function DetailPage(props) {
     let [amount, setAmount] = useState(0);
     let [curTab, setCurTab] = useState(0);
     let [fade, setFade] = useState("");
+    let [pageMount, setPageMount] = useState("");
 
     // html이 다 로드되고 실행됨
     useEffect(() => {
@@ -41,8 +42,14 @@ function DetailPage(props) {
         return () => setFade("");
     }, [curTab]);
 
+    useEffect(() => {
+        setTimeout(() => setPageMount("end"), 100);
+
+        return () => setPageMount("");
+    }, []);
+
     return (
-        <div className="container">
+        <div className={`container start ${pageMount}`}>
             { alert ? <div className="alert alert-warning">2초 이내 구매시 할인</div> : null }
             <div className="row">
                 <div className="col-md-6">
