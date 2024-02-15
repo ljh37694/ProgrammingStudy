@@ -35,7 +35,7 @@ function MainPage(props) {
                     setLoading(false);
                 })
                 .catch(() => {
-                    alert("상품이 더 없음");
+                    alert("상품 더 없음");
                     setLoading(false);
                 });
             }}>더보기</button>

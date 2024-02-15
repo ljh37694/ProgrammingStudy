@@ -1,20 +1,27 @@
 import "./App.css";
 import data from "./data.js";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage.js";
 import DetailPage from "./pages/DetailPage.jsx";
 import MainNavbar from "./components/MainNavbar.jsx";
 
+export let Context1 = createContext();
+
 function App() {
     let [itemData, setItemData] = useState(data);
+    let [stock] = useState([10, 12, 30]);
 
     return (
         <div className="App">
             <MainNavbar />
             <Routes>
                 <Route path="/" element={<MainPage itemData={itemData} setItemData={setItemData} />} />
-                <Route path="/detail/:id" element={<DetailPage itemData={itemData} />} />
+                <Route path="/detail/:id" element={
+                    <Context1.Provider value={stock}>
+                        <DetailPage itemData={itemData} />
+                    </Context1.Provider>
+                } />
                 <Route
                     path="/event"
                     element={

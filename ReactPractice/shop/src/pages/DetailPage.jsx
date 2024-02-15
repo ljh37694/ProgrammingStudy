@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Nav } from "react-bootstrap";
+import { Context1 } from "./../App.js";
 
 function DetailPage(props) {
     let itemData = props.itemData;
@@ -86,18 +87,19 @@ function DetailPage(props) {
                     </Nav.Item>
                 </Nav>
 
-                <TapContent idx={curTab} className={`start ${fade}`} />
+                <TabContent idx={curTab} className={`start ${fade}`} />
             </div>
         </div>
     );
 }
 
-function TapContent(props) {
+function TabContent(props) {
     let { idx, className } = props;
     let contents = ["0번", "1번", "2번"];
+    let stock = useContext(Context1);
 
     return (
-        <div className={className}>{contents[idx]}</div>
+        <div className={className}>{stock[idx]}</div>
     );
 }
 
