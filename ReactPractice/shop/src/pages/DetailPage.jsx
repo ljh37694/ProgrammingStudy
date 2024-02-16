@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { Context1 } from "./../App.js";
+import { useDispatch, useSelector } from "react-redux";
+import { addCartItem } from "../store.js";
 
 function DetailPage(props) {
     let itemData = props.itemData;
@@ -15,6 +17,8 @@ function DetailPage(props) {
     let [curTab, setCurTab] = useState(0);
     let [fade, setFade] = useState("");
     let [pageMount, setPageMount] = useState("");
+    let cartItems = useSelector(state => state.cartItems);
+    let dispatch = useDispatch();
 
     // html이 다 로드되고 실행됨
     useEffect(() => {
@@ -63,7 +67,17 @@ function DetailPage(props) {
                     <h4 className="pt-5">{curItem.title}</h4>
                     <p>{curItem.content}</p>
                     <p>{curItem.price}</p>
-                    <button className="btn btn-danger">주문하기</button>
+                    <button className="btn btn-danger" onClick={() => {
+                        let cartItem = {
+                            id: curItem.id,
+                            name: curItem.title,
+                            count: 1
+                        };
+
+                        dispatch(addCartItem(cartItem));
+
+                        console.log(cartItem);
+                    }}>주문하기</button>
                 </div>
             </div>
 

@@ -7,30 +7,36 @@ let user = createSlice({
     reducers: {
         addAge(state) {
             state.age++;
+            console.log(state);
         }
     }
 });
 
 export let { addAge } = user.actions;
 
-let stock = createSlice({
-    name: "stock",
+let cartItems = createSlice({
+    name: "cartItem",
     initialState: [
         { id: 0, name: "White and Black", count: 2 },
         { id: 2, name: "Grey Yordan", count: 1 },
     ],
     reducers: {
-        changeStock(cur) {
+        plusCount(state, id) {
+            let cur = state.find((data) => data.id === id.payload);
 
+            cur.count++;
+        },
+        addCartItem(state, data) {
+            state.push(data.payload);
         }
     }
 });
 
-export let { changeStock } = stock.actions;
+export let { plusCount, addCartItem } = cartItems.actions;
 
 export default configureStore({
     reducer: {
         user: user.reducer,
-        stock : stock.reducer,
+        cartItems : cartItems.reducer,
     },
 });

@@ -1,9 +1,9 @@
 import { Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { changeStock, addAge } from "./../store.js";
+import { plusCount, addAge } from "./../store.js";
 
 function CartPage() {
-    let stock = useSelector((state) => state.stock);
+    let cart = useSelector((state) => state.cartItems);
     let user = useSelector((state) => state.user);
     let dispatch = useDispatch();
 
@@ -21,7 +21,7 @@ function CartPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {stock.map((item, idx) => {
+                    {cart.map((item, idx) => {
                         return (
                             <tr key={item.id}>
                                 <td>{idx + 1}</td>
@@ -29,7 +29,7 @@ function CartPage() {
                                 <td>{item.count}</td>
                                 <td>
                                     <button
-                                        onClick={() => dispatch(changeStock())}
+                                        onClick={() => dispatch(plusCount(item.id))}
                                         className="btn btn-danger"
                                     >
                                         버튼
