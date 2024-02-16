@@ -7,12 +7,13 @@ function MainNavbar() {
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container className="ms-0">
-                <Navbar.Brand href="#home">Shoeshop</Navbar.Brand>
+                <Navbar.Brand href="/">Shoeshop</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/detail/0">Detail</Nav.Link>
+                        <Nav.Link href="/cart">Cart</Nav.Link>
+
                         <NavDropdown title="더보기" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">
                                 Action
