@@ -2,7 +2,7 @@ import "./App.css";
 import data from "./data.js";
 import { createContext, useState } from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
-import MainPage from "./pages/MainPage.js";
+import MainPage from "./pages/MainPage.jsx";
 import DetailPage from "./pages/DetailPage.jsx";
 import MainNavbar from "./components/MainNavbar.jsx";
 import CartPage from "./pages/CartPage.jsx";
