@@ -1,6 +1,6 @@
 import { Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { changeStock } from "./../store.js";
+import { changeStock, addAge } from "./../store.js";
 
 function CartPage() {
     let stock = useSelector((state) => state.stock);
@@ -10,6 +10,7 @@ function CartPage() {
     return (
         <>
             <h6>{ user.name }({ user.age })의 장바구니</h6>
+            <button onClick={() => dispatch(addAge())} className="btn btn-danger vertical-middle">+</button>
             <Table>
                 <thead>
                     <tr>
