@@ -27,7 +27,15 @@ let cartItems = createSlice({
             cur.count++;
         },
         addCartItem(state, data) {
-            state.push(data.payload);
+            let idx = state.findIndex((item) => {
+                return data.payload.id == item.id;
+            });
+
+            if (idx != -1) {
+                state[idx].count++;
+            } else {
+                state.push(data.payload);
+            }
         }
     }
 });
