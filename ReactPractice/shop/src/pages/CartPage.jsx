@@ -17,12 +17,12 @@ function CartPage() {
                 </tr>
             </thead>
             <tbody>
-                { stock.map((result) => {
+                { stock.map((item) => {
                     return (
                         <tr>
-                            <td>{result.id}</td>
-                            <td>{result.name}</td>
-                            <td>{result.count}</td>
+                            <td>{item.id}</td>
+                            <td>{item.name}</td>
+                            <td>{item.count}</td>
                             <td>?</td>
                         </tr>
                     );
