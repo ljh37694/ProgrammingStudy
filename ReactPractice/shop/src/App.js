@@ -12,12 +12,13 @@ export let Context1 = createContext();
 function App() {
     let [itemData, setItemData] = useState(data);
     let [stock] = useState([10, 12, 30]);
+    let [count, setCount] = useState(2);
 
     return (
         <div className="App">
             <MainNavbar />
             <Routes>
-                <Route path="/" element={<MainPage itemData={itemData} setItemData={setItemData} />} />
+                <Route path="/" element={<MainPage itemData={itemData} setItemData={setItemData} count={count} setCount={setCount} />} />
                 <Route path="/detail/:id" element={
                     <Context1.Provider value={stock}>
                         <DetailPage itemData={itemData} />
