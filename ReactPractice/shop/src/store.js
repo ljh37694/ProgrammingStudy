@@ -36,11 +36,16 @@ let cartItems = createSlice({
             } else {
                 state.push(data.payload);
             }
+        },
+        deleteCartItem(state, action) {
+            let idx = state.findIndex(item => item.id == action.payload);
+
+            state.splice(idx, 1);
         }
     }
 });
 
-export let { plusCount, addCartItem } = cartItems.actions;
+export let { plusCount, addCartItem, deleteCartItem } = cartItems.actions;
 
 export default configureStore({
     reducer: {
