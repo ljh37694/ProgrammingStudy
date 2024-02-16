@@ -17,7 +17,7 @@ function CartPage() {
                         <th>#</th>
                         <th>상품명</th>
                         <th>수량</th>
-                        <th>변경하기</th>
+                        <th>1개 더하기</th>
                         <th>삭제하기</th>
                     </tr>
                 </thead>
@@ -33,7 +33,7 @@ function CartPage() {
                                         onClick={() => dispatch(plusCount(item.id))}
                                         className="btn btn-danger"
                                     >
-                                        버튼
+                                        +
                                     </button>
                                 </td>
                                 <td>
