@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function ShoesItems(props) {
     let itemData = props.data;
 
@@ -6,10 +8,15 @@ function ShoesItems(props) {
             {itemData.map((item) => {
                 return (
                     <div className="col-md-4" key={item.id}>
-                        <img
-                            src={`https://codingapple1.github.io/shop/shoes${item.id + 1}.jpg`}
-                            width="70%"
-                        />
+                        <Link to={`/detail/${item.id}`}>
+                            <img
+                                src={`https://codingapple1.github.io/shop/shoes${
+                                    item.id + 1
+                                }.jpg`}
+                                width="70%"
+                            />
+                        </Link>
+
                         <h4>{item.title}</h4>
                         <p>{item.content}</p>
                         <p>{item.price}원</p>
