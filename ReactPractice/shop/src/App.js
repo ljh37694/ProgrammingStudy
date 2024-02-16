@@ -5,6 +5,7 @@ import { Outlet, Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage.js";
 import DetailPage from "./pages/DetailPage.jsx";
 import MainNavbar from "./components/MainNavbar.jsx";
+import CartPage from "./pages/CartPage.jsx";
 
 export let Context1 = createContext();
 
@@ -37,7 +38,7 @@ function App() {
                     />
                     <Route path="two" element={<p>생일 쿠폰 받기</p>} />
                 </Route>
-                <Route path="/cart" />
+                <Route path="/cart" element={ <CartPage /> } />
             </Routes>
         </div>
     );

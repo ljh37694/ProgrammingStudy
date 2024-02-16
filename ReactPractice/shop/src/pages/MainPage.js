@@ -1,11 +1,15 @@
 import axios from "axios";
 import ShoesItems from "../components/ShoesItems";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function MainPage(props) {
     let { itemData, setItemData } = props;
     let [count, setCount] = useState(2);
     let [loading, setLoading] = useState(false);
+    let test = useSelector(state => state.user);
+
+    console.log(test);
 
     return (
         <>
