@@ -8,7 +8,9 @@ function MainNavbar() {
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container className="ms-0">
-                <Navbar.Brand href="/">Shoeshop</Navbar.Brand>
+                <Navbar.Brand>
+                    <Link to="/" className="link">Shoeshop</Link>
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
