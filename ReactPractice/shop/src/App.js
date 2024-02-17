@@ -1,6 +1,6 @@
 import "./App.css";
 import data from "./data.js";
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage.jsx";
 import DetailPage from "./pages/DetailPage.jsx";
@@ -13,6 +13,10 @@ function App() {
     let [itemData, setItemData] = useState(data);
     let [stock] = useState([10, 12, 30]);
     let [count, setCount] = useState(2);
+
+    useEffect(() => {
+        localStorage.setItem("watchedItems", JSON.stringify([]));
+    }, []);
 
     return (
         <div className="App">

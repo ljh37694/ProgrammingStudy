@@ -4,6 +4,7 @@ import { Nav } from "react-bootstrap";
 import { Context1 } from "./../App.js";
 import { useDispatch, useSelector } from "react-redux";
 import { addCartItem } from "../store.js";
+import { createGlobalStyle } from "styled-components";
 
 function DetailPage(props) {
     let itemData = props.itemData;
@@ -51,6 +52,15 @@ function DetailPage(props) {
         setTimeout(() => setPageMount("end"), 100);
 
         return () => setPageMount("");
+    }, []);
+
+    useEffect(() => {
+        let localData = JSON.parse(localStorage.getItem("watchedItems"));
+        localData.push(curItem.id);
+
+        console.log(localData);
+
+        localStorage.setItem("watchedItems", JSON.stringify(localData));
     }, []);
 
     return (
