@@ -55,12 +55,13 @@ function DetailPage(props) {
     }, []);
 
     useEffect(() => {
-        let localData = JSON.parse(localStorage.getItem("watchedItems"));
-        localData.push(curItem.id);
+        let watchedItems = JSON.parse(localStorage.getItem("watchedItems"));
+        watchedItems.push(curItem.id);
 
-        console.log(localData);
+        watchedItems = new Set(watchedItems);
+        watchedItems = Array.from(watchedItems);
 
-        localStorage.setItem("watchedItems", JSON.stringify(localData));
+        localStorage.setItem("watchedItems", JSON.stringify(watchedItems));
     }, []);
 
     return (
