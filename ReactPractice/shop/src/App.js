@@ -6,6 +6,7 @@ import MainNavbar from "./components/MainNavbar.jsx";
 import MainPage from "./pages/MainPage.jsx";
 import { useQuery } from "react-query";
 import axios from "axios";
+import TestPage from "./pages/TestPage.jsx";
 
 export let Context1 = createContext();
 
@@ -72,6 +73,7 @@ function App() {
                         <Route path="two" element={<p>생일 쿠폰 받기</p>} />
                     </Route>
                     <Route path="/cart" element={<CartPage />} />
+                    <Route path="/test" element={<TestPage />} />
                 </Routes>
             </Suspense>
         </div>
