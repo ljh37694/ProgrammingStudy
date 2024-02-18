@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider, BrowserRouter } from "react-router-dom";
 import store from './store';
 import { Provider } from 'react-redux';
-import { QueryClient, QueryClientProvider } from "react-query"; }
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();

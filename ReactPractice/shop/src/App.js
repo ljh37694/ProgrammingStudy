@@ -6,6 +6,8 @@ import MainPage from "./pages/MainPage.jsx";
 import DetailPage from "./pages/DetailPage.jsx";
 import MainNavbar from "./components/MainNavbar.jsx";
 import CartPage from "./pages/CartPage.jsx";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 export let Context1 = createContext();
 
@@ -18,16 +20,39 @@ function App() {
         localStorage.setItem("watchedItems", JSON.stringify([]));
     }, []);
 
+    // 실시간 처리할 때 용이
+    let result = useQuery("asdf", () => {
+        axios
+            .get("https://codingapple1.github.io/userdata.json")
+            .then((result) => result.data);
+    });
+
     return (
         <div className="App">
+            {result.isLoading && "로딩중"}
+            {result.error && "에러남"}
+            {result.data && result.data.name}
             <MainNavbar />
             <Routes>
-                <Route path="/" element={<MainPage itemData={itemData} setItemData={setItemData} count={count} setCount={setCount} />} />
-                <Route path="/detail/:id" element={
-                    <Context1.Provider value={stock}>
-                        <DetailPage itemData={itemData} />
-                    </Context1.Provider>
-                } />
+                <Route
+                    path="/"
+                    element={
+                        <MainPage
+                            itemData={itemData}
+                            setItemData={setItemData}
+                            count={count}
+                            setCount={setCount}
+                        />
+                    }
+                />
+                <Route
+                    path="/detail/:id"
+                    element={
+                        <Context1.Provider value={stock}>
+                            <DetailPage itemData={itemData} />
+                        </Context1.Provider>
+                    }
+                />
                 <Route
                     path="/event"
                     element={
@@ -43,7 +68,7 @@ function App() {
                     />
                     <Route path="two" element={<p>생일 쿠폰 받기</p>} />
                 </Route>
-                <Route path="/cart" element={ <CartPage /> } />
+                <Route path="/cart" element={<CartPage />} />
             </Routes>
         </div>
     );
