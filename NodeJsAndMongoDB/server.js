@@ -4,6 +4,8 @@ let serverTime = new Date();
 
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
+app.use(express.json());
+app.use(express.urlencoded({ extended : true }));
 
 const { MongoClient } = require("mongodb");
 
@@ -38,11 +40,33 @@ app.get("/about", (req, res) => {
 });
 
 app.get("/list", async (req, res) => {
-    let result = await db.collection("Post").find().toArray();
+    let result = await db.collection("post").find().toArray();
     console.log(result);
     res.render("posts.ejs", { data : result });
 });
 
 app.get("/time", (req, res) => {
     res.render("time.ejs", { time : serverTime });
+});
+
+
+app.get("/write", (req, res) => {
+    res.render("write.ejs");
+});
+
+app.post("/add", async (req, res) => {
+    try {
+        if (req.body.title == "" || req.body.content == "") {
+            alert("빈 칸이 있음");
+        } else {
+            await db.collection("post").insertOne(req.body, (err, result) => {
+                console.log("저장 완료");
+            });
+        
+            res.redirect("/list");
+        }
+    } catch(e) {
+        console.log(e);
+        res.status(500).send("서버 에러!!!");
+    }
 });
