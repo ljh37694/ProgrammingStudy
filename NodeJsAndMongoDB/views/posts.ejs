@@ -7,15 +7,15 @@
         <link rel="stylesheet" href="/style.css">
     </head>
     <body class="grey-bg">
+        <%- include("nav.ejs"); %>
+        
         <div class="white-bg">
-            <div class="list-box">
-              <h4><%= data[0].title %></h4>
-              <p>글내용임</p>
-            </div>
-            <div class="list-box">
-              <h4>글제목임</h4>
-              <p>글내용임</p>
-            </div>
+            <% data.forEach((post) => { %>
+                <div class="list-box">
+                    <h4><%= post.title %></h4>
+                    <p><%= post.content %></p>
+                </div>
+            <% }); %>
           </div>
     </body>
 </html>

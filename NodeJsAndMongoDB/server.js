@@ -40,7 +40,7 @@ app.get("/about", (req, res) => {
 app.get("/list", async (req, res) => {
     let result = await db.collection("Post").find().toArray();
     console.log(result);
-    res.render("posts.ejs", { data: result });
+    res.render("posts.ejs", { data : result });
 });
 
 app.get("/time", (req, res) => {
