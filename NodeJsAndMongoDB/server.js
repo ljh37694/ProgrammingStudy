@@ -115,3 +115,7 @@ app.put("/edit-post/:id", async (req, res) => {
         res.status(500).send("서버 에러!!!");
     }
 });
+
+app.delete("/delete-post", async (req, res) => {
+    await db.collection("post").deleteOne({ _id : new ObjectId(req.query.id) });
+});

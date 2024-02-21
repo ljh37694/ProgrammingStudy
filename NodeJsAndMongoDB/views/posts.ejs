@@ -12,10 +12,29 @@
         <div class="white-bg">
             <% data.forEach((post) => { %>
                 <div class="list-box">
-                    <h4><%= post.title %> <a href="/detail/<%= post._id %>">링크</a> <a href="/edit/<%= post._id %>">✏</a></h4>
+                    <h4>
+                        <%= post.title %>
+                        <a href="/detail/<%= post._id %>">링크</a> 
+                        <a href="/edit/<%= post._id %>" style="text-decoration-line: none;">✏️</a>
+                        <span href="/edit/<%= post._id %>" class="del-btn" style="cursor: pointer;" data-id="<%= post._id %>">🗑️</span>
+                    </h4>
                     <p><%= post.content %></p>
                 </div>
             <% }); %>
           </div>
+
+          <script>
+            const delBtn = document.querySelectorAll(".del-btn");
+
+            for (let i = 0; i < delBtn.length; i++) {
+                delBtn[i].addEventListener("click", (e) => {
+                    let postId = e.target.dataset.id;
+                    
+                    fetch(`/delete-post?id=${postId}`, {
+                        method : "DELETE",
+                    });
+                });
+            }
+          </script>
     </body>
 </html>
