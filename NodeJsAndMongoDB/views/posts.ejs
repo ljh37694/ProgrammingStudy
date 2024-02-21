@@ -29,10 +29,12 @@
             for (let i = 0; i < delBtn.length; i++) {
                 delBtn[i].addEventListener("click", (e) => {
                     let postId = e.target.dataset.id;
-                    
+
                     fetch(`/delete-post?id=${postId}`, {
                         method : "DELETE",
                     });
+
+                    e.target.parentElement.parentElement.style.display = "none";
                 });
             }
           </script>
