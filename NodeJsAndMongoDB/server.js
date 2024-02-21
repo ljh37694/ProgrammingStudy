@@ -1,11 +1,14 @@
 const express = require("express");
 const app = express();
 let serverTime = new Date();
+const methodOverride = require("method-override");
 
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }));
+app.use(methodOverride('_method')) ;
+
 
 const { MongoClient, ObjectId } = require("mongodb");
 
@@ -98,7 +101,7 @@ app.get("/edit/:id", async (req, res) => {
     }
 });
 
-app.post("/modify/:id", async (req, res) => {
+app.put("/edit-post/:id", async (req, res) => {
     try {
         if (req.body.title == "" || req.body.content == "") {
             alert("빈 칸이 있음");
