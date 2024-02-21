@@ -49,7 +49,6 @@ app.get("/time", (req, res) => {
     res.render("time.ejs", { time : serverTime });
 });
 
-
 app.get("/write", (req, res) => {
     res.render("write.ejs");
 });
@@ -72,9 +71,44 @@ app.post("/add", async (req, res) => {
 });
 
 app.get("/detail/:_id", async (req, res) => {
-    const result = await db.collection("post").findOne({_id : new ObjectId(req.params._id)});
+    try {
+        const result = await db.collection("post").findOne({_id : new ObjectId(req.params._id)});
 
-    res.render("detail.ejs", { post : result });
+        if (result == null) {
+            res.status(400).send("그런 글 없음");
+        }
 
-    console.log(req.params);
+        res.render("detail.ejs", { post : result });
+    } catch(e) {
+        res.send("이거 아님");
+    }
+});
+
+app.get("/edit/:id", async (req, res) => {
+    try {
+        const result = await db.collection("post").findOne({_id : new ObjectId(req.params.id)});
+
+        if (result == null) {
+            res.status(400).send("그런 글 없음");
+        }
+
+        res.render("edit.ejs", { post : result });
+    } catch(e) {
+        res.send("이거 아님");
+    }
+});
+
+app.post("/modify/:id", async (req, res) => {
+    try {
+        if (req.body.title == "" || req.body.content == "") {
+            alert("빈 칸이 있음");
+        } else {
+            await db.collection("post").updateOne({ _id : new ObjectId(req.params.id)}, { $set : {title : req.body.title, content : req.body.content} });
+        
+            res.redirect("/list");
+        }
+    } catch(e) {
+        console.log(e);
+        res.status(500).send("서버 에러!!!");
+    }
 });

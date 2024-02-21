@@ -12,7 +12,7 @@
         <div class="white-bg">
             <% data.forEach((post) => { %>
                 <div class="list-box">
-                    <h4><%= post.title %></h4>
+                    <h4><%= post.title %> <a href="/detail/<%= post._id %>">링크</a> <a href="/edit/<%= post._id %>">✏</a></h4>
                     <p><%= post.content %></p>
                 </div>
             <% }); %>
