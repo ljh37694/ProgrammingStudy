@@ -7,7 +7,7 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }));
 
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 
 let db;
 const url ="mongodb+srv://ljh37694:hi37694*@forum.6p5dx3j.mongodb.net/?retryWrites=true&w=majority";
@@ -69,4 +69,12 @@ app.post("/add", async (req, res) => {
         console.log(e);
         res.status(500).send("서버 에러!!!");
     }
+});
+
+app.get("/detail/:_id", async (req, res) => {
+    const result = await db.collection("post").findOne({_id : new ObjectId(req.params._id)});
+
+    res.render("detail.ejs", { post : result });
+
+    console.log(req.params);
 });
