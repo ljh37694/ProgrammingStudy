@@ -25,9 +25,11 @@ new MongoClient(url)
         console.log(err);
     });
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+    let result = await db.collection("post").find().toArray();
+
     // res.send("Hello");
-    res.sendFile(__dirname + "/index.html");
+    res.render("posts.ejs", { data : result });
 });
 
 app.get("/news", (req, res) => {
