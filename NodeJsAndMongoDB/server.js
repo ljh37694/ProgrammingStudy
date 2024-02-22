@@ -121,3 +121,11 @@ app.put("/edit-post/:id", async (req, res) => {
 app.delete("/delete-post", async (req, res) => {
     await db.collection("post").deleteOne({ _id : new ObjectId(req.query.id) });
 });
+
+app.get("/list/:number", async (req, res) => {
+    let num = parseInt(req.params.number);
+    const LIM = 5;
+    let result = await db.collection("post").find().skip(num * LIM).limit(LIM).toArray();
+    
+    res.render("posts.ejs", { data : result });
+});
