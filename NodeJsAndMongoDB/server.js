@@ -1,11 +1,14 @@
 const express = require("express");
 const app = express();
 let serverTime = new Date();
+const methodOverride = require("method-override");
 
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }));
+app.use(methodOverride('_method')) ;
+
 
 const { MongoClient, ObjectId } = require("mongodb");
 
@@ -51,7 +54,6 @@ app.get("/time", (req, res) => {
     res.render("time.ejs", { time : serverTime });
 });
 
-
 app.get("/write", (req, res) => {
     res.render("write.ejs");
 });
@@ -74,9 +76,48 @@ app.post("/add", async (req, res) => {
 });
 
 app.get("/detail/:_id", async (req, res) => {
-    const result = await db.collection("post").findOne({_id : new ObjectId(req.params._id)});
+    try {
+        const result = await db.collection("post").findOne({_id : new ObjectId(req.params._id)});
 
-    res.render("detail.ejs", { post : result });
+        if (result == null) {
+            res.status(400).send("그런 글 없음");
+        }
 
-    console.log(req.params);
+        res.render("detail.ejs", { post : result });
+    } catch(e) {
+        res.send("이거 아님");
+    }
+});
+
+app.get("/edit/:id", async (req, res) => {
+    try {
+        const result = await db.collection("post").findOne({_id : new ObjectId(req.params.id)});
+
+        if (result == null) {
+            res.status(400).send("그런 글 없음");
+        }
+
+        res.render("edit.ejs", { post : result });
+    } catch(e) {
+        res.send("이거 아님");
+    }
+});
+
+app.put("/edit-post/:id", async (req, res) => {
+    try {
+        if (req.body.title == "" || req.body.content == "") {
+            alert("빈 칸이 있음");
+        } else {
+            await db.collection("post").updateOne({ _id : new ObjectId(req.params.id)}, { $set : {title : req.body.title, content : req.body.content} });
+        
+            res.redirect("/list");
+        }
+    } catch(e) {
+        console.log(e);
+        res.status(500).send("서버 에러!!!");
+    }
+});
+
+app.delete("/delete-post", async (req, res) => {
+    await db.collection("post").deleteOne({ _id : new ObjectId(req.query.id) });
 });
