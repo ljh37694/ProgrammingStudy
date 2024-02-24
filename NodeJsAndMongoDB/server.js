@@ -7,6 +7,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const { MongoClient, ObjectId } = require("mongodb");
 const bcrypt = require("bcrypt");
+const MongoStore = require('connect-mongo');
 
 let db;
 const url =
@@ -31,6 +32,11 @@ app.use(
         secret: "1234",
         resave: false,
         saveUninitialized: false,
+        cookie : {maxAge : 1000 * 60},
+        store : MongoStore.create({
+            mongoUrl : "mongodb+srv://ljh37694:hi37694*@forum.6p5dx3j.mongodb.net/?retryWrites=true&w=majority",
+            dbName : "Forum",
+        })
     })
 );
 app.use(passport.session());
