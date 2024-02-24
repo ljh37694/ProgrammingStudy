@@ -5,8 +5,8 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-
 const { MongoClient, ObjectId } = require("mongodb");
+const bcrypt = require("bcrypt");
 
 let db;
 const url =
@@ -48,7 +48,7 @@ passport.use(
             return cb(null, false, { message: "아이디 DB에 없음" });
         }
 
-        if (result.password == pw) {
+        if (await bcrypt.compare(pw, result.password)) {
             return cb(null, result);
         } else {
             return cb(null, false, { message: "비번불일치" });
@@ -204,19 +204,23 @@ app.get("/sign-up", (req, res) => {
 });
 
 app.post("/sign-up", async (req, res) => {
-    let result = await db.collection("user").findOne({ username : req.body.username });
+    const id = req.body.username, pw = req.body.password;
+    let result = await db.collection("user").findOne({ username : id });
+    let hashPw = await bcrypt.hash(id, 10);
 
-    if (req.body.username == "") {
+    console.log(hashPw);
+
+    if (id == "") {
          res.send("id가 빈칸임");
     }
 
-    else if (req.body.password == "") {
+    else if (pw == "") {
         res.send("password가 빈칸임");
     }
 
     else {
         if (result == null) {
-            db.collection("user").insertOne({ username : req.body.username, password : req.body.password });
+            db.collection("user").insertOne({ username : id, password : hashPw });
             res.redirect("/login");
         } else {
             res.send("이미 가입된 아이디");
