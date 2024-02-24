@@ -6,50 +6,6 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
-app.use(passport.initialize());
-app.use(
-    session({
-        secret: "암호화에 쓸 비번",
-        resave: false,
-        saveUninitialized: false,
-    })
-);
-app.use(passport.session());
-app.use(express.static(__dirname + "/public"));
-app.set("view engine", "ejs");
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride("_method"));
-
-passport.use(
-    new LocalStrategy(async (id, pw, cb) => {
-        let result = await db.collection("user").findOne({ username: id });
-        if (!result) {
-            return cb(null, false, { message: "아이디 DB에 없음" });
-        }
-        if (result.password == pw) {
-            return cb(null, result);
-        } else {
-            return cb(null, false, { message: "비번불일치" });
-        }
-    })
-);
-
-passport.serializeUser((user, done) => {
-    process.nextTick(() => {
-        done(null, { id: user._id, username: user.username });
-    });
-});
-
-passport.deserializeUser(async (user, done) => {
-    let result = await db.collection("user").findOne({ _id : new ObjectId(user.id)});
-    delete result.password;
-
-    process.nextTick(() => {
-        done(null, user);
-    });
-});
-
 const { MongoClient, ObjectId } = require("mongodb");
 
 let db;
@@ -69,10 +25,60 @@ new MongoClient(url)
         console.log(err);
     });
 
+app.use(passport.initialize());
+app.use(
+    session({
+        secret: "1234",
+        resave: false,
+        saveUninitialized: false,
+    })
+);
+app.use(passport.session());
+app.use(express.static(__dirname + "/public"));
+app.set("view engine", "ejs");
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+
+passport.use(
+    new LocalStrategy(async (id, pw, cb) => {
+        let result = await db.collection("user").findOne({ username: id });
+
+        if (!result) {
+            return cb(null, false, { message: "아이디 DB에 없음" });
+        }
+
+        if (result.password == pw) {
+            return cb(null, result);
+        } else {
+            return cb(null, false, { message: "비번불일치" });
+        }
+    })
+);
+
+passport.serializeUser((user, done) => {
+    process.nextTick(() => {
+        done(null, { id: user._id, username: user.username });
+    });
+});
+
+passport.deserializeUser(async (user, done) => {
+    try {
+        let result = await db.collection("user").findOne({ _id: new ObjectId(user.id) });
+        delete result.password;
+
+        process.nextTick(() => {
+            done(null, result);
+        });
+    } catch(e) {
+        console.log(e);
+        return done(e);
+    }
+});
+
 app.get("/", async (req, res) => {
     let result = await db.collection("post").find().toArray();
 
-    // res.send("Hello");
     res.render("posts.ejs", { data: result });
 });
 
@@ -87,7 +93,6 @@ app.get("/about", (req, res) => {
 
 app.get("/list", async (req, res) => {
     let result = await db.collection("post").find().toArray();
-    console.log(result);
     res.render("posts.ejs", { data: result });
 });
 
@@ -172,7 +177,12 @@ app.put("/edit-post/:id", async (req, res) => {
 });
 
 app.delete("/delete-post", async (req, res) => {
-    await db.collection("post").deleteOne({ _id: new ObjectId(req.query.id) });
+    try {
+        await db.collection("post").deleteOne({ _id: new ObjectId(req.query.id) });
+    } catch(e) {
+        console.log(e);
+        res.status(500).send("DB Error!");
+    }
 });
 
 app.get("/list/:number", async (req, res) => {
@@ -186,6 +196,32 @@ app.get("/list/:number", async (req, res) => {
         .toArray();
 
     res.render("posts.ejs", { data: result });
+});
+
+// 회원가입
+app.get("/sign-up", (req, res) => {
+    res.render("sign-up.ejs");
+});
+
+app.post("/sign-up", async (req, res) => {
+    let result = await db.collection("user").findOne({ username : req.body.username });
+
+    if (req.body.username == "") {
+         res.send("id가 빈칸임");
+    }
+
+    else if (req.body.password == "") {
+        res.send("password가 빈칸임");
+    }
+
+    else {
+        if (result == null) {
+            db.collection("user").insertOne({ username : req.body.username, password : req.body.password });
+            res.redirect("/login");
+        } else {
+            res.send("이미 가입된 아이디");
+        }
+    }
 });
 
 // 로그인
@@ -204,4 +240,11 @@ app.post("/login", async (req, res, next) => {
             res.redirect("/list");
         });
     })(req, res, next);
+
+    console.log(req.user);
+});
+
+app.get("/my-page", async (req, res) => {
+    res.render("my-page.ejs", { user: req.user });
+    console.log(req.user);
 });
