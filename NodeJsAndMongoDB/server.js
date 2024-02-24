@@ -107,10 +107,18 @@ app.get("/time", (req, res) => {
 });
 
 app.get("/write", (req, res) => {
-    res.render("write.ejs");
+    if (req.user) {
+        res.render("write.ejs");
+    } else {
+        res.render("login.ejs");
+    }
 });
 
 app.post("/add", async (req, res) => {
+    if (req.user) {
+
+    }
+
     try {
         if (req.body.title == "" || req.body.content == "") {
             alert("빈 칸이 있음");
@@ -210,7 +218,7 @@ app.get("/sign-up", (req, res) => {
 });
 
 app.post("/sign-up", async (req, res) => {
-    const id = req.body.username, pw = req.body.password;
+    const id = req.body.username, pw = req.body.password, cpw = req.body.confirmPassword;
     let result = await db.collection("user").findOne({ username : id });
     let hashPw = await bcrypt.hash(id, 10);
 
@@ -222,6 +230,10 @@ app.post("/sign-up", async (req, res) => {
 
     else if (pw == "") {
         res.send("password가 빈칸임");
+    }
+
+    else if (pw != cpw) {
+        res.send("password가 다름");
     }
 
     else {
