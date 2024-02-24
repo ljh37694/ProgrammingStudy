@@ -22,20 +22,33 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 passport.use(
-    new LocalStrategy(async (입력한아이디, 입력한비번, cb) => {
-        let result = await db
-            .collection("user")
-            .findOne({ username: 입력한아이디 });
+    new LocalStrategy(async (id, pw, cb) => {
+        let result = await db.collection("user").findOne({ username: id });
         if (!result) {
             return cb(null, false, { message: "아이디 DB에 없음" });
         }
-        if (result.password == 입력한비번) {
+        if (result.password == pw) {
             return cb(null, result);
         } else {
             return cb(null, false, { message: "비번불일치" });
         }
     })
 );
+
+passport.serializeUser((user, done) => {
+    process.nextTick(() => {
+        done(null, { id: user._id, username: user.username });
+    });
+});
+
+passport.deserializeUser(async (user, done) => {
+    let result = await db.collection("user").findOne({ _id : new ObjectId(user.id)});
+    delete result.password;
+
+    process.nextTick(() => {
+        done(null, user);
+    });
+});
 
 const { MongoClient, ObjectId } = require("mongodb");
 
@@ -176,17 +189,19 @@ app.get("/list/:number", async (req, res) => {
 });
 
 // 로그인
-app.get("/login", (요청, 응답) => {
-    응답.render("login.ejs");
+app.get("/login", (req, res) => {
+    res.render("login.ejs");
 });
 
-app.post("/login", async (요청, 응답, next) => {
+app.post("/login", async (req, res, next) => {
     passport.authenticate("local", (error, user, info) => {
-        if (error) return 응답.status(500).json(error);
-        if (!user) return 응답.status(401).json(info.message);
-        요청.logIn(user, (err) => {
+        if (error) return res.status(500).json(error);
+        if (!user) return res.status(401).json(info.message);
+
+        req.logIn(user, (err) => {
             if (err) return next(err);
-            응답.redirect("/");
+
+            res.redirect("/list");
         });
-    })(요청, 응답, next);
+    })(req, res, next);
 });
