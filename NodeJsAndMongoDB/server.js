@@ -46,6 +46,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
+/* 
+    많은 api에서 middleware를 적용하기 위해서 app.use를 사용한다. 
+    app.use() 밑에 있는 모든 api에 적용된다.
+*/
+//app.use(checkLogin);
+
 passport.use(
     new LocalStrategy(async (id, pw, cb) => {
         let result = await db.collection("user").findOne({ username: id });
@@ -82,6 +88,32 @@ passport.deserializeUser(async (user, done) => {
     }
 });
 
+function checkLogin(req, res, next) {
+    if (req.user) {
+        next(); // next()는 정상이니까 다음으로 넘어가라는 의미, 마지막에 넣는게 좋음
+    } else {
+        res.send("로그인을 하세요.");
+    }
+}
+
+function printCurTime(req, res, next) {
+    console.log(serverTime);
+
+    next();
+}
+
+function checkBlankOfLoginInput(req, res, next) {
+    const id = req.body.username, pw = req.body.password, cpw = req.body.confirmPassword;
+
+    if (id == "") {
+        res.send("아이디기 빈칸입니다.");
+    } else if (pw == "" || cpw == "") {
+        res.send("비밀번호가 빈칸입니다.");
+    } else {
+        next();
+    }
+}
+
 app.get("/", async (req, res) => {
     let result = await db.collection("post").find().toArray();
 
@@ -97,7 +129,7 @@ app.get("/about", (req, res) => {
     res.sendFile(__dirname + "/about.html");
 });
 
-app.get("/list", async (req, res) => {
+app.get("/list", printCurTime, async (req, res) => {
     let result = await db.collection("post").find().toArray();
     res.render("posts.ejs", { data: result });
 });
@@ -106,7 +138,8 @@ app.get("/time", (req, res) => {
     res.render("time.ejs", { time: serverTime });
 });
 
-app.get("/write", (req, res) => {
+// middleware 사용, 여러 개 넣으려면 []에 함수를 넣으면 된다.
+app.get("/write", checkLogin, (req, res) => {
     if (req.user) {
         res.render("write.ejs");
     } else {
@@ -217,7 +250,7 @@ app.get("/sign-up", (req, res) => {
     res.render("sign-up.ejs");
 });
 
-app.post("/sign-up", async (req, res) => {
+app.post("/sign-up", checkBlankOfLoginInput, async (req, res) => {
     const id = req.body.username, pw = req.body.password, cpw = req.body.confirmPassword;
     let result = await db.collection("user").findOne({ username : id });
     let hashPw = await bcrypt.hash(id, 10);
