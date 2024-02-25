@@ -46,6 +46,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
+app.use("/board", checkLogin);
+app.use("/board", require("./routes/board.js"));
+
 /* 
     많은 api에서 middleware를 적용하기 위해서 app.use를 사용한다. 
     app.use() 밑에 있는 모든 api에 적용된다.
@@ -148,10 +151,6 @@ app.get("/write", checkLogin, (req, res) => {
 });
 
 app.post("/add", async (req, res) => {
-    if (req.user) {
-
-    }
-
     try {
         if (req.body.title == "" || req.body.content == "") {
             alert("빈 칸이 있음");
