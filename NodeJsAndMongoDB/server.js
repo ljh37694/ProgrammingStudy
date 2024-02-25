@@ -8,17 +8,17 @@ const LocalStrategy = require("passport-local");
 const { MongoClient, ObjectId } = require("mongodb");
 const bcrypt = require("bcrypt");
 const MongoStore = require('connect-mongo');
+require("dotenv").config();
 
 let db;
-const url =
-    "mongodb+srv://ljh37694:hi37694*@forum.6p5dx3j.mongodb.net/?retryWrites=true&w=majority";
+const url = process.env.DB_URL;
 new MongoClient(url)
     .connect()
     .then((client) => {
         console.log("DB연결성공");
         db = client.db("Forum");
 
-        app.listen(1234, () => {
+        app.listen(process.env.PORT, () => {
             console.log("http://localhost:1234/ 서버 실행중");
         });
     })
@@ -34,7 +34,7 @@ app.use(
         saveUninitialized: false,
         cookie : {maxAge : 1000 * 60},
         store : MongoStore.create({
-            mongoUrl : "mongodb+srv://ljh37694:hi37694*@forum.6p5dx3j.mongodb.net/?retryWrites=true&w=majority",
+            mongoUrl : process.env.DB_URL,
             dbName : "Forum",
         })
     })
