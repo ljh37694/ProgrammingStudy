@@ -137,6 +137,28 @@ app.get("/list", printCurTime, async (req, res) => {
     res.render("posts.ejs", { data: result });
 });
 
+app.get("/list/:number", async (req, res) => {
+    let num = parseInt(req.params.number);
+    const LIM = 5;
+    let result = await db
+        .collection("post")
+        .find()
+        .skip(num * LIM)
+        .limit(LIM)
+        .toArray();
+
+    res.render("posts.ejs", { data: result });
+});
+
+app.get("/list/search/:title", async (req, res) => {
+    const regex = new RegExp(`${ req.params.title }`, "i");
+    let result = await db.collection("post").find({ "title" : { "$regex" : regex }}).toArray();
+
+    console.log(result);
+
+    res.render("posts.ejs", { data: result });
+});
+
 app.get("/time", (req, res) => {
     res.render("time.ejs", { time: serverTime });
 });
@@ -231,18 +253,6 @@ app.delete("/delete-post", async (req, res) => {
     }
 });
 
-app.get("/list/:number", async (req, res) => {
-    let num = parseInt(req.params.number);
-    const LIM = 5;
-    let result = await db
-        .collection("post")
-        .find()
-        .skip(num * LIM)
-        .limit(LIM)
-        .toArray();
-
-    res.render("posts.ejs", { data: result });
-});
 
 // 회원가입
 app.get("/sign-up", (req, res) => {

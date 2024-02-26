@@ -8,6 +8,10 @@
     </head>
     <body class="grey-bg">
         <%- include("nav.ejs"); %>
+        <div>        
+            <input id="search-input">
+            <button id="search-btn">검색</button>
+        </div>
         
         <div class="white-bg">
             <% data.forEach((post) => { %>
@@ -37,6 +41,16 @@
                     e.target.parentElement.parentElement.style.display = "none";
                 });
             }
+
+            document.querySelector("#search-btn").addEventListener("click", (e) => {
+                let text = document.querySelector("#search-input").value;
+
+                fetch(`/list/search/${text}`, {
+                        method : "GET"
+                });
+
+                window.location.href = `/list/search/${text}`;
+            });
           </script>
     </body>
 </html>
