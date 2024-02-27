@@ -20,7 +20,9 @@
                         <%= post.title %>
                         <a href="/detail/<%= post._id %>">링크</a> 
                         <a href="/edit/<%= post._id %>" style="text-decoration-line: none;">✏️</a>
-                        <span href="/edit/<%= post._id %>" class="del-btn" style="cursor: pointer;" data-id="<%= post._id %>">🗑️</span>
+                        <% if (post.user.equals(user._id )) { %>
+                            <span class="del-btn" style="cursor: pointer;" data-id="<%= post._id %>">🗑️</span>
+                        <% } %>
                     </h4>
                     <p><%= post.content %></p>
                 </div>

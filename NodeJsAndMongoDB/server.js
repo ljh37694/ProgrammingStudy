@@ -134,7 +134,7 @@ app.get("/about", (req, res) => {
 
 app.get("/list", printCurTime, async (req, res) => {
     let result = await db.collection("post").find().toArray();
-    res.render("posts.ejs", { data: result });
+    res.render("posts.ejs", { data: result, user : req.user });
 });
 
 app.get("/list/:number", async (req, res) => {
@@ -147,7 +147,7 @@ app.get("/list/:number", async (req, res) => {
         .limit(LIM)
         .toArray();
 
-    res.render("posts.ejs", { data: result });
+    res.render("posts.ejs", { data: result, user : req.user });
 });
 
 app.get("/list/search/:title", async (req, res) => {
@@ -177,7 +177,7 @@ app.get("/list/search/:title", async (req, res) => {
 
     console.log(result);
 
-    res.render("posts.ejs", { data: result });
+    res.render("posts.ejs", { data: result, user : req.user });
 });
 
 app.get("/time", (req, res) => {
@@ -235,13 +235,18 @@ app.get("/edit/:id", async (req, res) => {
     try {
         const result = await db
             .collection("post")
-            .findOne({ _id: new ObjectId(req.params.id) });
+            .findOne({ _id : new ObjectId(req.params.id) });
 
         if (result == null) {
             res.status(400).send("그런 글 없음");
         }
 
-        res.render("edit.ejs", { post: result });
+        if (result.user.equals(req.user._id)) {
+            res.render("edit.ejs", { post: result });
+        } else {
+            res.send("본인이 작성한 글 아님");
+        }
+
     } catch (e) {
         res.send("이거 아님");
     }
