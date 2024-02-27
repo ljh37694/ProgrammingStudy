@@ -154,6 +154,9 @@ app.get("/list/search/:title", async (req, res) => {
     const regex = new RegExp(`${ req.params.title }`, "i");
     let result = await db.collection("post").find({ "title" : { "$regex" : regex }}).toArray();
 
+    // index를 이용해서 title을 찾기
+    // let answer = await db.collection("post").find({ "$text" : { "$search" : req.params.title }});
+
     console.log(result);
 
     res.render("posts.ejs", { data: result });
