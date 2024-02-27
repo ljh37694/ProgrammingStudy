@@ -152,10 +152,28 @@ app.get("/list/:number", async (req, res) => {
 
 app.get("/list/search/:title", async (req, res) => {
     const regex = new RegExp(`${ req.params.title }`, "i");
-    let result = await db.collection("post").find({ "title" : { "$regex" : regex }}).toArray();
+    const searchCondition = [
+        {
+            $search : {
+                index : "title_index",
+                text : { query : req.params.title, path : "title" }
+            }
+        }, 
+        {
+            $limit : 3,
+        },
+        {
+            $project : { "_id" : 0 },
+        }
+    ];
+
+    // 순차 탐색으로 찾기 O(n)
+    // let result = await db.collection("post").find({ "title" : { "$regex" : regex }}).toArray();
 
     // index를 이용해서 title을 찾기
     // let answer = await db.collection("post").find({ "$text" : { "$search" : req.params.title }});
+
+    let result = await db.collection("post").aggregate(searchCondition).toArray();
 
     console.log(result);
 
