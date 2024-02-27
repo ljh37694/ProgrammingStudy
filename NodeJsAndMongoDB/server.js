@@ -198,7 +198,12 @@ app.post("/add", async (req, res) => {
         if (req.body.title == "" || req.body.content == "") {
             alert("빈 칸이 있음");
         } else {
-            await db.collection("post").insertOne(req.body, (err, result) => {
+            await db.collection("post").insertOne({
+                "title" : req.body.title,
+                "content" : req.body.content,
+                "user" : req.user._id,
+                username : req.user.username,
+            }, (err, result) => {
                 console.log("저장 완료");
             });
 
@@ -267,7 +272,10 @@ app.put("/edit-post/:id", async (req, res) => {
 
 app.delete("/delete-post", async (req, res) => {
     try {
-        await db.collection("post").deleteOne({ _id: new ObjectId(req.query.id) });
+        await db.collection("post").deleteOne({ 
+            _id: new ObjectId(req.query.id),
+            user : new ObjectId(req.user._id),
+        });
     } catch(e) {
         console.log(e);
         res.status(500).send("DB Error!");
