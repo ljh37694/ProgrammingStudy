@@ -12,6 +12,20 @@
         <div class="detail-bg">
             <h4><%- post.title  %></h4>
             <p><%- post.content %></p>
-        </div> 
+        </div>
+
+        
+        <div class="comments">
+            <h3>Comments</h3>
+            <form action="/detail/comment/<%= post._id %>" method="POST">
+                <input name="comment">
+                <button type="submit">전송</button>
+            </form>
+            <div class="comment-container">
+                <% comments.forEach((comment) => { %>
+                    <p>comment.content</p>
+                <% }) %>
+            </div>
+        </div>
     </body>
 </html>

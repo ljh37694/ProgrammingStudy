@@ -219,15 +219,36 @@ app.get("/detail/:_id", async (req, res) => {
     try {
         const result = await db
             .collection("post")
-            .findOne({ _id: new ObjectId(req.params._id) });
+            .findOne({ _id : new ObjectId(req.params._id) });
+        
+        const comments = await db.collection("comments").find({ parent_id : new ObjectId(req.params._id) }).toArray();
 
         if (result == null) {
             res.status(400).send("그런 글 없음");
         }
 
-        res.render("detail.ejs", { post: result });
+        res.render("detail.ejs", { post : result, "comments" : comments });
     } catch (e) {
         res.send("이거 아님");
+        console.log(e);
+    }
+});
+
+app.post("/detail/comment/:parent-id", async (req, res) => {
+    try {
+        if (req.body.comment == "") {
+            res.send("댓글이 빈칸입니다!");
+        } else {
+            await db.collection("comments").insertOne({
+                parent_id : req.params.parent-id,
+                content : req.body.comment
+            });
+
+            res.redirect("/detail/" + req.params.parent-id);
+        }
+    } catch (e) {
+        res.send("이거 아님");
+        console.log(e);
     }
 });
 
