@@ -17,13 +17,16 @@
         
         <div class="comments">
             <h3>Comments</h3>
-            <form action="/detail/comment/<%= post._id %>" method="POST">
+            <form action="/comment/<%= post._id %>" method="POST">
                 <input name="comment">
                 <button type="submit">전송</button>
             </form>
             <div class="comment-container">
                 <% comments.forEach((comment) => { %>
-                    <p>comment.content</p>
+                    <div class="comment-item">
+                        <h4 class="writer-name"><%= comment.writer_name %>:</h4>
+                        <p><%= comment.content %></p>
+                    </div>
                 <% }) %>
             </div>
         </div>

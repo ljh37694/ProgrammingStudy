@@ -223,6 +223,8 @@ app.get("/detail/:_id", async (req, res) => {
         
         const comments = await db.collection("comments").find({ parent_id : new ObjectId(req.params._id) }).toArray();
 
+        console.log(comments);
+
         if (result == null) {
             res.status(400).send("그런 글 없음");
         }
@@ -234,21 +236,22 @@ app.get("/detail/:_id", async (req, res) => {
     }
 });
 
-app.post("/detail/comment/:parent-id", async (req, res) => {
+app.post("/comment/:_id", async (req, res) => {
     try {
         if (req.body.comment == "") {
             res.send("댓글이 빈칸입니다!");
         } else {
             await db.collection("comments").insertOne({
-                parent_id : req.params.parent-id,
+                parent_id : new ObjectId(req.params._id),
+                writer_id : req.user._id,
+                writer_name : req.user.username,
                 content : req.body.comment
             });
 
-            res.redirect("/detail/" + req.params.parent-id);
+            res.redirect("/detail/" + req.params._id);
         }
     } catch (e) {
-        res.send("이거 아님");
-        console.log(e);
+        res.send(e);
     }
 });
 
