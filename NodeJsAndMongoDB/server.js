@@ -413,14 +413,8 @@ app.get("/chat-list", async (req, res) => {
 
     let list = await db.collection("chat").find({ 
         $or : [
-            { $or : [
-                { user1 : req.user._id },
-                { user2 : req.user._id }
-            ]},
-            { $or : [
-                { user2 : req.user._id },
-                { user1 : req.user._id }
-            ]},
+            { user1 : req.user._id },
+            { user2 : req.user._id }
         ]
     }).toArray();
 

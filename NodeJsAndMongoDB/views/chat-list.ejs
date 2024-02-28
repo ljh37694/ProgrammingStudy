@@ -8,5 +8,13 @@
     </head>
     <body>
         <%- include("nav.ejs") %>
+
+        <div class="chatting-room-container">
+            <% chatList.forEach((item) => { %>
+                <div class="chatting-room">
+                    <p><%= item.user1_name %></p>
+                </div>
+            <% }) %>
+        </div>
     </body>
 </html>
