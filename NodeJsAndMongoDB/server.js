@@ -120,7 +120,11 @@ function checkBlankOfLoginInput(req, res, next) {
 app.get("/", async (req, res) => {
     let result = await db.collection("post").find().toArray();
 
-    res.render("posts.ejs", { data: result });
+    if (req.user) {
+        res.render("posts.ejs", { data: result });
+    } else {
+        res.render("login.ejs");
+    }
 });
 
 app.get("/news", (req, res) => {
@@ -366,4 +370,58 @@ app.post("/login", async (req, res, next) => {
 app.get("/my-page", async (req, res) => {
     res.render("my-page.ejs", { user: req.user });
     console.log(req.user);
+});
+
+app.get("/chat/:writer_id/:writer_name", async (req, res) => {
+    res.render("chat.ejs");
+    let result;
+
+    if (req.user) {
+        result = await db.collection("chat").findOne({ 
+            $or : [
+                { $or : [
+                    { user1 : req.user._id },
+                    { user2 : req.user._id }
+                ]},
+                { $or : [
+                    { user2 : req.user._id },
+                    { user1 : req.user._id }
+                ]},
+            ],
+        });
+
+        if (!result) {
+            await db.collection("chat").insertOne({
+                user1 : req.user._id,
+                user1_name : req.user.username,
+                user2 : new ObjectId(req.params.writer_id),
+                user2_name : req.params.writer_name,
+            });
+        }
+    }
+
+    console.log(result);
+});
+
+app.get("/chat-list", async (req, res) => {
+    if (!req.user) {
+        return;
+    }
+
+    let list = await db.collection("chat").find({ 
+        $or : [
+            { $or : [
+                { user1 : req.user._id },
+                { user2 : req.user._id }
+            ]},
+            { $or : [
+                { user2 : req.user._id },
+                { user1 : req.user._id }
+            ]},
+        ]
+    }).toArray();
+
+    console.log(list);
+
+    res.render("chat-list.ejs", { chatList : list });
 });
