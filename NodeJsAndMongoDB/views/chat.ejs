@@ -11,9 +11,11 @@
 
         <div class="detail-bg">
             <div class="chat-screen">
-                <div class="chat-box"><span><%= writer.name %>: 안녕하세요</span></div>
-                <div class="chat-box"><span><%= writer.name %>: 안녕하세요</span></div>
-                <div class="chat-box mine"><span><%= user.name %>: 안녕하세요</span></div>
+                <% chat.forEach((item) => { %>
+                    <div class="chat-box <%= item.writer_id.equals(user._id) ? 'mine' : '' %>">
+                        <span><%= item.content %></span>
+                    </div>
+                <% }) %>
             </div>
         </div>
         <div class="chat-form">
@@ -23,7 +25,32 @@
 
         <script src="https://cdn.jsdelivr.net/npm/socket.io@4.7.2/client-dist/socket.io.min.js"></script>
         <script>
-        const socket = io() 
+            const socket = io();
+            const roomId = "<%= data._id %>";
+            const userId = "<%= user._id %>";
+
+            socket.emit("ask-join", roomId);
+
+            document.querySelector(".chat-button").addEventListener("click", () => {
+                let chatInput = document.querySelector(".chat-input");
+
+                socket.emit("send-msg", { msg : chatInput.value, room : roomId, writerId : userId });
+
+                chatInput.value = "";
+            });
+
+            socket.on("broadcast", (data) => {
+                const chat = document.createElement("div");
+                const text = document.createElement("span");
+                chat.className = userId == data.userId ? "chat-box mine" : "chat-box";
+
+                console.log(userId, data.userId);
+                text.innerHTML = data.msg;
+
+                chat.appendChild(text);
+
+                document.querySelector(".chat-screen").appendChild(chat);
+            });
         </script>
     </body>
 </html>

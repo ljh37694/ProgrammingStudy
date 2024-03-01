@@ -97,6 +97,17 @@ passport.deserializeUser(async (user, done) => {
     }
 });
 
+io.engine.use(session({
+    secret: "1234",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 },
+    store: MongoStore.create({
+        mongoUrl: process.env.DB_URL,
+        dbName: "Forum",
+    }),
+}));
+
 function checkLogin(req, res, next) {
     if (req.user) {
         next(); // next()는 정상이니까 다음으로 넘어가라는 의미, 마지막에 넣는게 좋음
@@ -401,22 +412,17 @@ app.get("/chat/create", async (req, res) => {
         console.log(result);
 
         if (!result) {
-            let chattingRoom = await db.collection("chatting_room").insertOne({
+            result = await db.collection("chatting_room").insertOne({
                 members: [req.user._id, writer._id],
                 create_time: serverTime,
                 members_name: [req.user.username, writer.username],
             });
         }
 
-        res.render("chat.ejs", {
-            user: { id: req.user._id, name: req.user.username },
-            writer: { id: writer._id, name: writer.username },
-        });
+        res.render("chat.ejs", { data : result, user : req.user });
     } catch (e) {
         console.log(e);
     }
-
-    //console.log(result);
 });
 
 app.get("/chat-list", async (req, res) => {
@@ -440,19 +446,14 @@ app.get("/chat/:chat_id", async (req, res) => {
             .collection("chatting_room")
             .findOne({ _id: new ObjectId(req.params.chat_id) });
 
-        console.log(chattingRoom.members, req.user._id);
+        let chatLog = await db.collection("chat").find({
+            chatting_room_id : chattingRoom._id
+        }).toArray();
+
+        if (!chatLog) chatLog = [];
 
         if (chattingRoom.members.find((item) => item.equals(req.user._id))) {
-            res.render("chat.ejs", {
-                user: {
-                    id: chattingRoom.members[0],
-                    name: chattingRoom.members_name[0],
-                },
-                writer: {
-                    id: chattingRoom.members[1],
-                    name: chattingRoom.members_name[1],
-                },
-            });
+            res.render("chat.ejs", { data : chattingRoom, chat : chatLog,  user : req.user });
         } else {
             res.send("돌아가라");
         }
@@ -460,3 +461,19 @@ app.get("/chat/:chat_id", async (req, res) => {
         console.log(e);
     }
 });
+
+io.on("connection", (socket) => {
+    socket.on("ask-join", async (room) => {
+        socket.join(room);
+    });
+
+    socket.on("send-msg", async (data) => {
+        await db.collection("chat").insertOne({
+            date : new Date(),
+            chatting_room_id : new ObjectId(data.room),
+            content : data.msg,
+            writer_id : new ObjectId(data.writerId)
+        });
+        io.to(data.room).emit("broadcast", { msg : data.msg, userId : new ObjectId(data.writerId) });
+    });
+})
