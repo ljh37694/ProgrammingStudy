@@ -12,7 +12,8 @@
         <div class="chatting-room-container">
             <% chatList.forEach((item) => { %>
                 <div class="chatting-room">
-                    <p><%= item.user1_name %></p>
+                    <p><%= item.members[0] == user._id ? item.members_name[1] : item.members_name[0] %></p>
+                    <a href="/chat/<%=item._id%>">채팅하기</a>
                 </div>
             <% }) %>
         </div>

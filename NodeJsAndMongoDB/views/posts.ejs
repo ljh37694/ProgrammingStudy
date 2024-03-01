@@ -23,7 +23,7 @@
                         <% if (post.user.equals(user._id )) { %>
                             <span class="del-btn" style="cursor: pointer;" data-id="<%= post._id %>">🗑️</span>
                         <% } %>
-                        <a href="/chat/<%= post.user %>/<%= post.username %>">채팅</a>
+                        <a href="/chat/create?writer_id=<%= post.user %>">채팅</a>
                     </h4>
                     <p><%= post.content %></p>
                 </div>

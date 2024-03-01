@@ -372,38 +372,36 @@ app.post("/login", async (req, res, next) => {
 
 app.get("/my-page", async (req, res) => {
     res.render("my-page.ejs", { user: req.user });
-    console.log(req.user);
 });
 
-app.get("/chat/:writer_id/:writer_name", async (req, res) => {
-    res.render("chat.ejs");
-    let result;
+app.get("/chat/create", async (req, res) => {
+    try {
+        let writer = await db.collection("user").findOne({ _id : new ObjectId(req.query.writer_id) }, { _id : 1, username : 1, password : 0 });
 
-    if (req.user) {
-        result = await db.collection("chat").findOne({ 
-            $or : [
-                { $or : [
-                    { user1 : req.user._id },
-                    { user2 : req.user._id }
-                ]},
-                { $or : [
-                    { user2 : req.user._id },
-                    { user1 : req.user._id }
-                ]},
-            ],
+        let result = await db.collection("chatting_room").findOne({
+            members : { $all : [req.user._id, writer._id] }
         });
 
+        console.log(result);
+    
         if (!result) {
-            await db.collection("chat").insertOne({
-                user1 : req.user._id,
-                user1_name : req.user.username,
-                user2 : new ObjectId(req.params.writer_id),
-                user2_name : req.params.writer_name,
+            let chattingRoom = await db.collection("chatting_room").insertOne({
+                members : [req.user._id, writer._id],
+                create_time : serverTime,
+                members_name: [req.user.username, writer.username]
             });
         }
+
+        res.render("chat.ejs", { 
+            user : { id : req.user._id, name : req.user.username },
+            writer : { id : writer._id, name : writer.username }
+        });
+    } catch(e) {
+        console.log(e);
     }
 
-    console.log(result);
+
+    //console.log(result);
 });
 
 app.get("/chat-list", async (req, res) => {
@@ -411,14 +409,23 @@ app.get("/chat-list", async (req, res) => {
         return;
     }
 
-    let list = await db.collection("chat").find({ 
-        $or : [
-            { user1 : req.user._id },
-            { user2 : req.user._id }
-        ]
-    }).toArray();
+    let list = await db.collection("chatting_room").find({ members : { $in : [req.user._id] } }).toArray();
 
     console.log(list);
 
-    res.render("chat-list.ejs", { chatList : list });
+    res.render("chat-list.ejs", { chatList : list, user : req.user });
 });
+
+app.get("/chat/:chat_id", async (req, res) => {
+    try {
+        let chattingRoom = await db.collection("chatting_room").findOne({ _id : new ObjectId(req.params.chat_id) });
+
+        res.render("chat.ejs", { 
+            user : { id : chattingRoom.members[0], name : chattingRoom.members_name[0] },
+            writer : { id : chattingRoom.members[1], name : chattingRoom.members_name[1] }
+        });
+
+    } catch(e) {
+        console.log(e);
+    }
+})
