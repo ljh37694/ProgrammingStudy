@@ -7,8 +7,12 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const { MongoClient, ObjectId } = require("mongodb");
 const bcrypt = require("bcrypt");
-const MongoStore = require('connect-mongo');
+const MongoStore = require("connect-mongo");
 require("dotenv").config();
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+const server = createServer(app);
+const io = new Server(server);
 
 let db;
 const url = process.env.DB_URL;
@@ -18,7 +22,7 @@ new MongoClient(url)
         console.log("DB연결성공");
         db = client.db("Forum");
 
-        app.listen(process.env.PORT, () => {
+        server.listen(process.env.PORT, () => {
             console.log("http://localhost:1234/ 서버 실행중");
         });
     })
@@ -32,11 +36,11 @@ app.use(
         secret: "1234",
         resave: false,
         saveUninitialized: false,
-        cookie : {maxAge : 1000 * 60},
-        store : MongoStore.create({
-            mongoUrl : process.env.DB_URL,
-            dbName : "Forum",
-        })
+        cookie: { maxAge: 1000 * 60 },
+        store: MongoStore.create({
+            mongoUrl: process.env.DB_URL,
+            dbName: "Forum",
+        }),
     })
 );
 app.use(passport.session());
@@ -79,13 +83,15 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (user, done) => {
     try {
-        let result = await db.collection("user").findOne({ _id: new ObjectId(user.id) });
+        let result = await db
+            .collection("user")
+            .findOne({ _id: new ObjectId(user.id) });
         delete result.password;
 
         process.nextTick(() => {
             done(null, result);
         });
-    } catch(e) {
+    } catch (e) {
         console.log(e);
         return done(e);
     }
@@ -106,7 +112,9 @@ function printCurTime(req, res, next) {
 }
 
 function checkBlankOfLoginInput(req, res, next) {
-    const id = req.body.username, pw = req.body.password, cpw = req.body.confirmPassword;
+    const id = req.body.username,
+        pw = req.body.password,
+        cpw = req.body.confirmPassword;
 
     if (id == "") {
         res.send("아이디기 빈칸입니다.");
@@ -138,7 +146,7 @@ app.get("/about", (req, res) => {
 
 app.get("/list", printCurTime, async (req, res) => {
     let result = await db.collection("post").find().toArray();
-    res.render("posts.ejs", { data: result, user : req.user });
+    res.render("posts.ejs", { data: result, user: req.user });
 });
 
 app.get("/list/:number", async (req, res) => {
@@ -151,24 +159,24 @@ app.get("/list/:number", async (req, res) => {
         .limit(LIM)
         .toArray();
 
-    res.render("posts.ejs", { data: result, user : req.user });
+    res.render("posts.ejs", { data: result, user: req.user });
 });
 
 app.get("/list/search/:title", async (req, res) => {
-    const regex = new RegExp(`${ req.params.title }`, "i");
+    const regex = new RegExp(`${req.params.title}`, "i");
     const searchCondition = [
         {
-            $search : {
-                index : "title_index",
-                text : { query : req.params.title, path : "title" }
-            }
-        }, 
-        {
-            $limit : 3,
+            $search: {
+                index: "title_index",
+                text: { query: req.params.title, path: "title" },
+            },
         },
         {
-            $project : { "_id" : 0 },
-        }
+            $limit: 3,
+        },
+        {
+            $project: { _id: 0 },
+        },
     ];
 
     // 순차 탐색으로 찾기 O(n)
@@ -177,11 +185,14 @@ app.get("/list/search/:title", async (req, res) => {
     // index를 이용해서 title을 찾기
     // let answer = await db.collection("post").find({ "$text" : { "$search" : req.params.title }});
 
-    let result = await db.collection("post").aggregate(searchCondition).toArray();
+    let result = await db
+        .collection("post")
+        .aggregate(searchCondition)
+        .toArray();
 
     console.log(result);
 
-    res.render("posts.ejs", { data: result, user : req.user });
+    res.render("posts.ejs", { data: result, user: req.user });
 });
 
 app.get("/time", (req, res) => {
@@ -202,14 +213,17 @@ app.post("/add", async (req, res) => {
         if (req.body.title == "" || req.body.content == "") {
             alert("빈 칸이 있음");
         } else {
-            await db.collection("post").insertOne({
-                "title" : req.body.title,
-                "content" : req.body.content,
-                "user" : req.user._id,
-                username : req.user.username,
-            }, (err, result) => {
-                console.log("저장 완료");
-            });
+            await db.collection("post").insertOne(
+                {
+                    title: req.body.title,
+                    content: req.body.content,
+                    user: req.user._id,
+                    username: req.user.username,
+                },
+                (err, result) => {
+                    console.log("저장 완료");
+                }
+            );
 
             res.redirect("/list");
         }
@@ -223,9 +237,12 @@ app.get("/detail/:_id", async (req, res) => {
     try {
         const result = await db
             .collection("post")
-            .findOne({ _id : new ObjectId(req.params._id) });
-        
-        const comments = await db.collection("comments").find({ parent_id : new ObjectId(req.params._id) }).toArray();
+            .findOne({ _id: new ObjectId(req.params._id) });
+
+        const comments = await db
+            .collection("comments")
+            .find({ parent_id: new ObjectId(req.params._id) })
+            .toArray();
 
         console.log(comments);
 
@@ -233,7 +250,7 @@ app.get("/detail/:_id", async (req, res) => {
             res.status(400).send("그런 글 없음");
         }
 
-        res.render("detail.ejs", { post : result, "comments" : comments });
+        res.render("detail.ejs", { post: result, comments: comments });
     } catch (e) {
         res.send("이거 아님");
         console.log(e);
@@ -246,10 +263,10 @@ app.post("/comment/:_id", async (req, res) => {
             res.send("댓글이 빈칸입니다!");
         } else {
             await db.collection("comments").insertOne({
-                parent_id : new ObjectId(req.params._id),
-                writer_id : req.user._id,
-                writer_name : req.user.username,
-                content : req.body.comment
+                parent_id: new ObjectId(req.params._id),
+                writer_id: req.user._id,
+                writer_name: req.user.username,
+                content: req.body.comment,
             });
 
             res.redirect("/detail/" + req.params._id);
@@ -263,7 +280,7 @@ app.get("/edit/:id", async (req, res) => {
     try {
         const result = await db
             .collection("post")
-            .findOne({ _id : new ObjectId(req.params.id) });
+            .findOne({ _id: new ObjectId(req.params.id) });
 
         if (result == null) {
             res.status(400).send("그런 글 없음");
@@ -274,7 +291,6 @@ app.get("/edit/:id", async (req, res) => {
         } else {
             res.send("본인이 작성한 글 아님");
         }
-
     } catch (e) {
         res.send("이거 아님");
     }
@@ -305,16 +321,15 @@ app.put("/edit-post/:id", async (req, res) => {
 
 app.delete("/delete-post", async (req, res) => {
     try {
-        await db.collection("post").deleteOne({ 
+        await db.collection("post").deleteOne({
             _id: new ObjectId(req.query.id),
-            user : new ObjectId(req.user._id),
+            user: new ObjectId(req.user._id),
         });
-    } catch(e) {
+    } catch (e) {
         console.log(e);
         res.status(500).send("DB Error!");
     }
 });
-
 
 // 회원가입
 app.get("/sign-up", (req, res) => {
@@ -322,27 +337,23 @@ app.get("/sign-up", (req, res) => {
 });
 
 app.post("/sign-up", checkBlankOfLoginInput, async (req, res) => {
-    const id = req.body.username, pw = req.body.password, cpw = req.body.confirmPassword;
-    let result = await db.collection("user").findOne({ username : id });
+    const id = req.body.username,
+        pw = req.body.password,
+        cpw = req.body.confirmPassword;
+    let result = await db.collection("user").findOne({ username: id });
     let hashPw = await bcrypt.hash(id, 10);
 
     console.log(hashPw);
 
     if (id == "") {
-         res.send("id가 빈칸임");
-    }
-
-    else if (pw == "") {
+        res.send("id가 빈칸임");
+    } else if (pw == "") {
         res.send("password가 빈칸임");
-    }
-
-    else if (pw != cpw) {
+    } else if (pw != cpw) {
         res.send("password가 다름");
-    }
-
-    else {
+    } else {
         if (result == null) {
-            db.collection("user").insertOne({ username : id, password : hashPw });
+            db.collection("user").insertOne({ username: id, password: hashPw });
             res.redirect("/login");
         } else {
             res.send("이미 가입된 아이디");
@@ -376,30 +387,34 @@ app.get("/my-page", async (req, res) => {
 
 app.get("/chat/create", async (req, res) => {
     try {
-        let writer = await db.collection("user").findOne({ _id : new ObjectId(req.query.writer_id) }, { _id : 1, username : 1, password : 0 });
+        let writer = await db
+            .collection("user")
+            .findOne(
+                { _id: new ObjectId(req.query.writer_id) },
+                { _id: 1, username: 1, password: 0 }
+            );
 
         let result = await db.collection("chatting_room").findOne({
-            members : { $all : [req.user._id, writer._id] }
+            members: { $all: [req.user._id, writer._id] },
         });
 
         console.log(result);
-    
+
         if (!result) {
             let chattingRoom = await db.collection("chatting_room").insertOne({
-                members : [req.user._id, writer._id],
-                create_time : serverTime,
-                members_name: [req.user.username, writer.username]
+                members: [req.user._id, writer._id],
+                create_time: serverTime,
+                members_name: [req.user.username, writer.username],
             });
         }
 
-        res.render("chat.ejs", { 
-            user : { id : req.user._id, name : req.user.username },
-            writer : { id : writer._id, name : writer.username }
+        res.render("chat.ejs", {
+            user: { id: req.user._id, name: req.user.username },
+            writer: { id: writer._id, name: writer.username },
         });
-    } catch(e) {
+    } catch (e) {
         console.log(e);
     }
-
 
     //console.log(result);
 });
@@ -409,29 +424,39 @@ app.get("/chat-list", async (req, res) => {
         return;
     }
 
-    let list = await db.collection("chatting_room").find({ members : { $in : [req.user._id] } }).toArray();
+    let list = await db
+        .collection("chatting_room")
+        .find({ members: { $in: [req.user._id] } })
+        .toArray();
 
     console.log(list);
 
-    res.render("chat-list.ejs", { chatList : list, user : req.user });
+    res.render("chat-list.ejs", { chatList: list, user: req.user });
 });
 
 app.get("/chat/:chat_id", async (req, res) => {
     try {
-        let chattingRoom = await db.collection("chatting_room").findOne({ _id : new ObjectId(req.params.chat_id) });
+        let chattingRoom = await db
+            .collection("chatting_room")
+            .findOne({ _id: new ObjectId(req.params.chat_id) });
 
         console.log(chattingRoom.members, req.user._id);
 
-        if (chattingRoom.members.find(item => item.equals(req.user._id))) {
+        if (chattingRoom.members.find((item) => item.equals(req.user._id))) {
             res.render("chat.ejs", {
-                user : { id : chattingRoom.members[0], name : chattingRoom.members_name[0] },
-                writer : { id : chattingRoom.members[1], name : chattingRoom.members_name[1] }
+                user: {
+                    id: chattingRoom.members[0],
+                    name: chattingRoom.members_name[0],
+                },
+                writer: {
+                    id: chattingRoom.members[1],
+                    name: chattingRoom.members_name[1],
+                },
             });
         } else {
             res.send("돌아가라");
         }
-
-    } catch(e) {
+    } catch (e) {
         console.log(e);
     }
-})
+});
