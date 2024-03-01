@@ -420,10 +420,16 @@ app.get("/chat/:chat_id", async (req, res) => {
     try {
         let chattingRoom = await db.collection("chatting_room").findOne({ _id : new ObjectId(req.params.chat_id) });
 
-        res.render("chat.ejs", { 
-            user : { id : chattingRoom.members[0], name : chattingRoom.members_name[0] },
-            writer : { id : chattingRoom.members[1], name : chattingRoom.members_name[1] }
-        });
+        console.log(chattingRoom.members, req.user._id);
+
+        if (chattingRoom.members.find(item => item.equals(req.user._id))) {
+            res.render("chat.ejs", {
+                user : { id : chattingRoom.members[0], name : chattingRoom.members_name[0] },
+                writer : { id : chattingRoom.members[1], name : chattingRoom.members_name[1] }
+            });
+        } else {
+            res.send("돌아가라");
+        }
 
     } catch(e) {
         console.log(e);
