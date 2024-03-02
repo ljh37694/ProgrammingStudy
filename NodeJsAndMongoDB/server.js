@@ -476,4 +476,16 @@ io.on("connection", (socket) => {
         });
         io.to(data.room).emit("broadcast", { msg : data.msg, userId : new ObjectId(data.writerId) });
     });
+});
+
+app.get("/stream/list", (req, res) => {
+    res.writeHead(200, {
+        "Connection" : "keep-alive",
+        "Content-Type" : "text/event-stream",
+        "Cache-Control" : "no-cache",
+    });
+
+    // 형식 그대로 맟춰야 됨
+    res.write("event: msg\n");
+    res.write("data: Hi\n\n");
 })

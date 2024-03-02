@@ -32,6 +32,10 @@
 
           <script>
             const delBtn = document.querySelectorAll(".del-btn");
+            const eventSource = new EventSource("/stream/list");
+            eventSource.addEventListener("msg", (e) => {
+                console.log(e.data);
+            });
 
             for (let i = 0; i < delBtn.length; i++) {
                 delBtn[i].addEventListener("click", (e) => {
