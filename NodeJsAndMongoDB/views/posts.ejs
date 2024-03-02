@@ -4,37 +4,67 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
-        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="/style.css" />
     </head>
     <body class="grey-bg">
         <%- include("nav.ejs"); %>
-        <div>        
-            <input id="search-input">
+        <div>
+            <input id="search-input" />
             <button id="search-btn">검색</button>
         </div>
-        
+
         <div class="white-bg">
             <% data.forEach((post) => { %>
-                <div class="list-box">
-                    <h4>
-                        <%= post.title %>
-                        <a href="/detail/<%= post._id %>">링크</a> 
-                        <a href="/edit/<%= post._id %>" style="text-decoration-line: none;">✏️</a>
-                        <% if (post.user.equals(user._id )) { %>
-                            <span class="del-btn" style="cursor: pointer;" data-id="<%= post._id %>">🗑️</span>
-                        <% } %>
-                        <a href="/chat/create?writer_id=<%= post.user %>">채팅</a>
-                    </h4>
-                    <p><%= post.content %></p>
-                </div>
+            <div class="list-box">
+                <h4>
+                    <%= post.title %>
+                    <a href="/detail/<%= post._id %>">링크</a>
+                    <a
+                        href="/edit/<%= post._id %>"
+                        style="text-decoration-line: none"
+                        >✏️</a
+                    >
+                    <% if (post.user.equals(user._id)) { %>
+                    <span
+                        class="del-btn"
+                        style="cursor: pointer"
+                        data-id="<%= post._id %>"
+                        >🗑️</span
+                    >
+                    <% } %>
+                    <a href="/chat/create?writer_id=<%= post.user %>">채팅</a>
+                </h4>
+                <p><%= post.content %></p>
+            </div>
             <% }); %>
-          </div>
+        </div>
 
-          <script>
+        <script>
             const delBtn = document.querySelectorAll(".del-btn");
-            const eventSource = new EventSource("/stream/list");
-            eventSource.addEventListener("msg", (e) => {
-                console.log(e.data);
+
+            let eventSource = new EventSource("/stream/list");
+            eventSource.addEventListener("insertPost", (e) => {
+                let newPost = JSON.parse(e.data);
+                const delBtnHtml =
+                    newPost.user === "<%= user._id %>"
+                        ? `<span class="del-btn" style="cursor: pointer;" data-id="${newPost._id}">🗑️</span>`
+                        : "";
+
+                const post = `
+                        <div class="list-box">
+                            <h4>
+                                ${newPost.title}
+                                <a href="/detail/${newPost._id}">링크</a> 
+                                <a href="/edit/${newPost._id}" style="text-decoration-line: none;">✏️</a>
+                                ${delBtnHtml}
+                                <a href="/chat/create?writer_id=${newPost.user}">채팅</a>
+                            </h4>
+                            <p>${newPost.content}</p>
+                        </div>`;
+
+                document
+                    .querySelector(".white-bg")
+                    .insertAdjacentHTML("afterbegin", post);
             });
 
             for (let i = 0; i < delBtn.length; i++) {
@@ -42,22 +72,24 @@
                     let postId = e.target.dataset.id;
 
                     fetch(`/delete-post?id=${postId}`, {
-                        method : "DELETE",
+                        method: "DELETE",
                     });
 
                     e.target.parentElement.parentElement.style.display = "none";
                 });
             }
 
-            document.querySelector("#search-btn").addEventListener("click", (e) => {
-                let text = document.querySelector("#search-input").value;
+            document
+                .querySelector("#search-btn")
+                .addEventListener("click", (e) => {
+                    let text = document.querySelector("#search-input").value;
 
-                fetch(`/list/search/${text}`, {
-                        method : "GET"
+                    fetch(`/list/search/${text}`, {
+                        method: "GET",
+                    });
+
+                    window.location.href = `/list/search/${text}`;
                 });
-
-                window.location.href = `/list/search/${text}`;
-            });
-          </script>
+        </script>
     </body>
 </html>

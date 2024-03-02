@@ -36,7 +36,7 @@ app.use(
         secret: "1234",
         resave: false,
         saveUninitialized: false,
-        cookie: { maxAge: 1000 * 60 },
+        cookie: { maxAge: 1000 * 600 },
         store: MongoStore.create({
             mongoUrl: process.env.DB_URL,
             dbName: "Forum",
@@ -137,11 +137,17 @@ function checkBlankOfLoginInput(req, res, next) {
 }
 
 app.get("/", async (req, res) => {
-    let result = await db.collection("post").find().toArray();
+    try {
+        let result = await db.collection("post").find().toArray();
 
-    if (req.user) {
-        res.render("posts.ejs", { data: result });
-    } else {
+        if (req.user) {
+            res.render("posts.ejs", { data: result, user: req.user });
+        } else {
+            res.render("login.ejs");
+        }
+    } catch(e) {
+        console.log(e);
+
         res.render("login.ejs");
     }
 });
@@ -156,8 +162,13 @@ app.get("/about", (req, res) => {
 });
 
 app.get("/list", printCurTime, async (req, res) => {
-    let result = await db.collection("post").find().toArray();
-    res.render("posts.ejs", { data: result, user: req.user });
+    try {
+        let result = await db.collection("post").find().sort({ _id : -1 }).toArray();
+        res.render("posts.ejs", { data: result, user: req.user });    
+    } catch(e) {
+        console.log(e);
+        res.render("/login");
+    }
 });
 
 app.get("/list/:number", async (req, res) => {
@@ -486,6 +497,16 @@ app.get("/stream/list", (req, res) => {
     });
 
     // 형식 그대로 맟춰야 됨
-    res.write("event: msg\n");
-    res.write("data: Hi\n\n");
+    // res.write("event: msg\n");
+    // res.write("data: Hi\n\n");
+
+    let condition = [
+        { $match : { operationType : "insert" } }
+    ];
+
+    let changeStream = db.collection("post").watch(condition);
+    changeStream.on("change", (result) => {
+        res.write("event: insertPost\n");
+        res.write(`data: ${JSON.stringify(result.fullDocument)}\n\n`);
+    });
 })
