@@ -16,6 +16,7 @@ const io = new Server(server);
 
 let db;
 const url = process.env.DB_URL;
+let changeStream;
 new MongoClient(url)
     .connect()
     .then((client) => {
@@ -25,6 +26,9 @@ new MongoClient(url)
         server.listen(process.env.PORT, () => {
             console.log("http://localhost:1234/ 서버 실행중");
         });
+
+        changeStream = db.collection("post").watch({ $match : { operationType : "insert" } });
+
     })
     .catch((err) => {
         console.log(err);
@@ -500,11 +504,6 @@ app.get("/stream/list", (req, res) => {
     // res.write("event: msg\n");
     // res.write("data: Hi\n\n");
 
-    let condition = [
-        { $match : { operationType : "insert" } }
-    ];
-
-    let changeStream = db.collection("post").watch(condition);
     changeStream.on("change", (result) => {
         res.write("event: insertPost\n");
         res.write(`data: ${JSON.stringify(result.fullDocument)}\n\n`);
