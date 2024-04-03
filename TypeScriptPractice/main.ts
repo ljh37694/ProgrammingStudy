@@ -5,3 +5,21 @@ function PrimitiveType() {
 
     console.log(name, age, birthLocation);
 }
+
+let song : {
+    title: string,
+    singer: string,
+} = {
+    title: "Shopper",
+    singer: "IU",
+};
+
+let project : {
+    member: string[],
+    days: number,
+    started: boolean,
+} = {
+    member : ['kim', 'park'],
+    days : 30,
+    started : true,
+};
