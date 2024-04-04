@@ -199,4 +199,20 @@ const phoneNumber : PhoneNumberType = (phoneNumber, cutZero, removeDash) => {
     console.log(removeDash(cutZero(phoneNumber)));
 }
 
-phoneNumber("", cutZero, removeDash);
+phoneNumber("010-1111-2222", cutZero, removeDash);
+
+// 타입스크립트로 HTML 변경과 조작할 때 주의점
+let img = document.querySelector("#image");
+
+// img가 null일 수 있어서 instanceof를 사용해서 narrowing을 한다.
+if (img instanceof HTMLImageElement) {
+    img.src = "new.jpg";
+}
+
+let naverLinks = document.querySelectorAll(".naver");
+
+naverLinks.forEach((data) => {
+    if (data instanceof HTMLAnchorElement) {
+        data.href = "https://kakao.com";
+    }
+});

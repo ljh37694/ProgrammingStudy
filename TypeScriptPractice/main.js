@@ -62,3 +62,59 @@ function lastSubject(teacher) {
     }
     return answer;
 }
+var object1 = {
+    color: "red",
+    size: 123,
+    position: [1, 3],
+};
+var human1 = {
+    name: "Lee",
+    phone: 123,
+    isChild: false,
+};
+function rockScissorPaper(select) {
+    return ["가위", "보", "가위"];
+}
+var user1 = {
+    name: "kim",
+    age: 30,
+    plusOne: function (x) {
+        return x + 1;
+    },
+    changeName: function () {
+        console.log("안녕");
+    },
+};
+user1.plusOne(1);
+user1.changeName();
+var cutZero = function (s) {
+    if (s[0] === "0") {
+        s = s.slice(1, s.length - 1);
+    }
+    return s;
+};
+var removeDash = function (phoneNumber) {
+    var answer = "";
+    for (var i = 0; i < phoneNumber.length; i++) {
+        if (phoneNumber[i] != "-") {
+            answer += phoneNumber[i];
+        }
+    }
+    return parseInt(answer);
+};
+var phoneNumber = function (phoneNumber, cutZero, removeDash) {
+    console.log(removeDash(cutZero(phoneNumber)));
+};
+phoneNumber("010-1111-2222", cutZero, removeDash);
+// 타입스크립트로 HTML 변경과 조작할 때 주의점
+var img = document.querySelector("#image");
+// img가 null일 수 있어서 instanceof를 사용해서 narrowing을 한다.
+if (img instanceof HTMLImageElement) {
+    img.src = "new.jpg";
+}
+var naverLinks = document.querySelectorAll(".naver");
+naverLinks.forEach(function (data) {
+    if (data instanceof HTMLAnchorElement) {
+        data.href = "https://kakao.com";
+    }
+});
