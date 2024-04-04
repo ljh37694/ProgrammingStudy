@@ -155,3 +155,12 @@ var Word = /** @class */ (function () {
 var word1 = new Word('kim', 3, 5, 'park');
 console.log(word1.num); //[3,5]
 console.log(word1.str); //['kim', 'park']
+var Cart = [{ product: '청소기', price: 7000 }, { product: '삼다수', price: 800 }];
+var Calc = {
+    plus: function (a, b) {
+        return a + b;
+    },
+    minus: function (a, b) {
+        return a - b;
+    }
+};

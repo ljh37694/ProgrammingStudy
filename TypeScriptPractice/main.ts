@@ -258,3 +258,53 @@ class Word {
 let word1 = new Word('kim', 3, 5, 'park');
 console.log(word1.num) //[3,5]
 console.log(word1.str) //['kim', 'park']
+
+// Object에 타입지정하려면 interface 이것도 있음
+interface Student {
+    name: string;
+}
+
+interface Teacher extends Student {
+    age: number;
+}
+
+// interface는 타입 이름 중복 선언 가능, type은 엄격 진지해서 안 됨
+// Animal은 name과 legs를 가짐
+interface Animal { 
+    name :string
+} 
+  interface Animal { 
+    legs :number 
+}
+
+interface Product {
+    brand: string;
+    serialNumber: number;
+    model: string[];
+}
+
+interface ItemType {
+    product: string,
+    price: number
+}
+
+let Cart : ItemType[] = [{ product : '청소기', price : 7000 }, { product : '삼다수', price : 800 }];
+
+interface ItemUpdateType extends ItemType {
+    card: boolean;
+}
+
+interface CalcType {
+    plus: (a: number, b: number) => number;
+    minus: (a: number, b: number) => number;
+}
+
+const Calc : CalcType = {
+    plus(a, b) {
+        return a + b;
+    },
+
+    minus(a, b) {
+        return a - b;
+    }
+};
