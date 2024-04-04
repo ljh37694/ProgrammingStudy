@@ -171,11 +171,32 @@ user1.plusOne(1);
 user1.changeName();
 
 type CutZeroType = (s : string) => string;
+type RemoveDashType = (phoneNumber : string) => number;
 
-const curZero : CutZeroType = (s) => {
+const cutZero : CutZeroType = (s) => {
     if (s[0] === "0") {
         s = s.slice(1, s.length - 1);
     }
 
     return s;
+};
+
+const removeDash : RemoveDashType = (phoneNumber) => {
+    let answer : string = "";
+
+    for (let i = 0; i < phoneNumber.length; i++) {
+        if (phoneNumber[i] != "-") {
+            answer += phoneNumber[i];
+        }
+    }
+    
+    return parseInt(answer);
 }
+
+type PhoneNumberType = (phoneNumber: string, cutZero: CutZeroType, removeDash: RemoveDashType) => void;
+
+const phoneNumber : PhoneNumberType = (phoneNumber, cutZero, removeDash) => {
+    console.log(removeDash(cutZero(phoneNumber)));
+}
+
+phoneNumber("", cutZero, removeDash);
