@@ -118,3 +118,40 @@ naverLinks.forEach(function (data) {
         data.href = "https://kakao.com";
     }
 });
+// class 만들 때 타입지정 가능
+var Car = /** @class */ (function () {
+    function Car(model, price) {
+        this.model = model;
+        this.price = price;
+    }
+    Car.prototype.tax = function () {
+        return this.price / 10;
+    };
+    return Car;
+}());
+var car1 = new Car("스파크", 500);
+console.log(car1);
+console.log(car1.tax());
+var Word = /** @class */ (function () {
+    function Word() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var _this = this;
+        this.num = [];
+        this.str = [];
+        args.forEach(function (data) {
+            if (typeof data === "number") {
+                _this.num.push(data);
+            }
+            else {
+                _this.str.push(data);
+            }
+        });
+    }
+    return Word;
+}());
+var word1 = new Word('kim', 3, 5, 'park');
+console.log(word1.num); //[3,5]
+console.log(word1.str); //['kim', 'park']

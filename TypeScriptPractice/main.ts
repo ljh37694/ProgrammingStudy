@@ -216,3 +216,45 @@ naverLinks.forEach((data) => {
         data.href = "https://kakao.com";
     }
 });
+
+// class 만들 때 타입지정 가능
+class Car {
+    // js와 다르게 필드값을 선언해야 constructor에서 사용할 수 있음
+    model : string;
+    price : number;
+
+    constructor(model: string, price: number) {
+        this.model = model;
+        this.price = price;
+    }
+
+    tax() : number {
+        return this.price / 10;
+    }
+}
+
+let car1 = new Car("스파크", 500);
+console.log(car1);
+console.log(car1.tax());
+
+class Word {
+    num: number[];
+    str: string[];
+
+    constructor(...args: (number | string)[]) {
+        this.num = [];
+        this.str = [];
+
+        args.forEach(data => {
+            if (typeof data === "number") {
+                this.num.push(data);
+            } else {
+                this.str.push(data);
+            }
+        });
+    }
+}
+
+let word1 = new Word('kim', 3, 5, 'park');
+console.log(word1.num) //[3,5]
+console.log(word1.str) //['kim', 'park']
