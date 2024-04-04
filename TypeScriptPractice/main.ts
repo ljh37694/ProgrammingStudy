@@ -69,7 +69,7 @@ function marriedPercentage(
 }
 
 // 타입 확정하기 Narrowing & Assertion
-function cleanning(arr : (string | number)[]) {
+function cleanning(arr: (string | number)[]) {
     arr.forEach((data, idx) => {
         if (typeof data == "string") {
             arr[idx] = parseInt(data);
@@ -81,16 +81,101 @@ function cleanning(arr : (string | number)[]) {
     return arr;
 }
 
-function lastSubject(teacher : {subject : string | string[]}) : string {
-    let answer : string;
+function lastSubject(teacher: { subject: string | string[] }): string {
+    let answer: string;
 
     if (Array.isArray(teacher.subject)) {
         answer = teacher.subject[teacher.subject.length - 1];
-    }
-
-    else {
+    } else {
         answer = teacher.subject;
     }
 
     return answer;
+}
+
+// 타입도 변수에 담아쓰세요 type 키워드 써서 & readonly
+type ObjectType = {
+    color: string;
+    size: number;
+    readonly position: number[];
+};
+
+const object1: ObjectType = {
+    color: "red",
+    size: 123,
+    position: [1, 3],
+};
+
+type HumanType = {
+    name: string;
+    phone: number;
+    email?: string;
+};
+
+type HumanType1 = {
+    name: string;
+    phone: number;
+    email?: number;
+};
+
+type Test = HumanType & HumanType1;
+
+/*
+    email은 never로 에러가 생김
+
+    const test : Test = {
+        name: "Lee",
+        email: "123",
+        phone: 123,
+    }
+ */
+
+type ChildType = {
+    isChild: boolean;
+};
+
+const human1: HumanType & ChildType = {
+    name: "Lee",
+    phone: 123,
+    isChild: false,
+};
+
+// Literal Types로 만드는 const 변수 유사품
+type RockScissorPaperType = "가위" | "바위" | "보";
+function rockScissorPaper(
+    select: RockScissorPaperType
+): RockScissorPaperType[] {
+    return ["가위", "보", "가위"] as const;
+}
+
+// 함수와 methods에 type alias 지정하는 법
+type UserInfoType = {
+    name: string,
+    age: number,
+    plusOne: (x : number) => number;
+    changeName: () => void;
+};
+
+let user1 : UserInfoType = {
+    name: "kim",
+    age: 30,
+    plusOne(x) {
+        return x + 1;
+    },
+    changeName: () => {
+        console.log("안녕");
+    },
+};
+
+user1.plusOne(1);
+user1.changeName();
+
+type CutZeroType = (s : string) => string;
+
+const curZero : CutZeroType = (s) => {
+    if (s[0] === "0") {
+        s = s.slice(1, s.length - 1);
+    }
+
+    return s;
 }
