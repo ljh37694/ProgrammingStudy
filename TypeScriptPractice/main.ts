@@ -341,3 +341,56 @@ function func3([a, b, c] : (unknown)[]): void {
 }
 
 func3([40, 'wine', false]);
+
+// class에서 사용가능한 protected, static 키워드
+class User {
+    private static x = 10; // static 키워드가 있으면 instance.attr가 아니라 className.attr를 쓸 수 있음
+    public static y = 20;
+
+    static addOne = (num : number): void => {
+        User.x += num;
+    };
+
+    static printX(): void {
+        console.log(User.x);
+    }
+}
+User.addOne(3) //이렇게 하면 x가 3 더해져야함
+User.addOne(4) //이렇게 하면 x가 4 더해져야함
+User.printX()  //이렇게 하면 콘솔창에 x값이 출력되어야함
+
+class Square {
+    width: number;
+    height: number;
+    color: string;
+
+    constructor(width: number, height: number, color: string) {
+        this.width = width;
+        this.height = height;
+        this.color = color;
+    }
+
+    draw = () : void => {
+        const box : HTMLElement = document.createElement("div");
+        const x = Math.random() * 400;
+        const y = Math.random() * 400;
+
+        box.style.width = `${this.width}px`;
+        box.style.height = `${this.height}px`;
+        box.style.backgroundColor = this.color;
+        box.style.position = "absolute";
+
+        box.style.top = `${x}px`;
+        box.style.left = `${y}px`;
+
+        console.log(box);
+
+        document.body.appendChild(box);
+    };
+};
+
+let sqaure = new Square(30, 30, "red");
+
+for (let i = 0; i < 8; i++) {
+    sqaure.draw();
+}

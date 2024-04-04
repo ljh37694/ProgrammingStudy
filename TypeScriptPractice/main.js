@@ -194,3 +194,47 @@ function func3(_a) {
     console.log(a, b, c);
 }
 func3([40, 'wine', false]);
+// class에서 사용가능한 protected, static 키워드
+var User = /** @class */ (function () {
+    function User() {
+    }
+    User.printX = function () {
+        console.log(User.x);
+    };
+    User.x = 10; // static 키워드가 있으면 instance.attr가 아니라 className.attr를 쓸 수 있음
+    User.y = 20;
+    User.addOne = function (num) {
+        User.x += num;
+    };
+    return User;
+}());
+User.addOne(3); //이렇게 하면 x가 3 더해져야함
+User.addOne(4); //이렇게 하면 x가 4 더해져야함
+User.printX(); //이렇게 하면 콘솔창에 x값이 출력되어야함
+var Square = /** @class */ (function () {
+    function Square(width, height, color) {
+        var _this = this;
+        this.draw = function () {
+            var box = document.createElement("div");
+            var x = Math.random() * 400;
+            var y = Math.random() * 400;
+            box.style.width = "".concat(_this.width, "px");
+            box.style.height = "".concat(_this.height, "px");
+            box.style.backgroundColor = _this.color;
+            box.style.position = "absolute";
+            box.style.top = "".concat(x, "px");
+            box.style.left = "".concat(y, "px");
+            console.log(box);
+            document.body.appendChild(box);
+        };
+        this.width = width;
+        this.height = height;
+        this.color = color;
+    }
+    return Square;
+}());
+;
+var sqaure = new Square(30, 30, "red");
+for (var i = 0; i < 8; i++) {
+    sqaure.draw();
+}
