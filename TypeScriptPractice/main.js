@@ -164,3 +164,33 @@ var Calc = {
         return a - b;
     }
 };
+// 함수 rest 파라미터, destructuring 할 때 타입지정
+var person = { student: true, age: 20 };
+function func1(_a) {
+    var student = _a.student, age = _a.age;
+    console.log(student, age);
+}
+func1({ student: true, age: 20 });
+function findMaxNum() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    var maxNum = 0;
+    args.forEach(function (num) {
+        if (maxNum > num) {
+            maxNum = num;
+        }
+    });
+    return maxNum;
+}
+function func2(_a) {
+    var user = _a.user, comment = _a.comment, admin = _a.admin;
+    console.log(user, comment, admin);
+}
+func2({ user: "Lee", comment: [3, 5, 4], admin: false });
+function func3(_a) {
+    var a = _a[0], b = _a[1], c = _a[2];
+    console.log(a, b, c);
+}
+func3([40, 'wine', false]);

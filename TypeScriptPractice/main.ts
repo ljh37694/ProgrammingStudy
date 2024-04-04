@@ -308,3 +308,36 @@ const Calc : CalcType = {
         return a - b;
     }
 };
+
+// 함수 rest 파라미터, destructuring 할 때 타입지정
+let person = { student : true, age : 20 };
+
+function func1({student, age} : {student: boolean, age: number}){
+  console.log(student, age);
+}
+
+func1({ student : true, age : 20 });
+
+function findMaxNum(...args: number[]) : number{
+    let maxNum = 0;
+
+    args.forEach((num) => {
+        if (maxNum > num) {
+            maxNum = num;
+        }
+    });
+
+    return maxNum;
+}
+
+function func2({ user, comment, admin }: { user: string, comment: number[], admin: boolean}): void{
+    console.log(user, comment, admin);
+}
+
+func2({ user : "Lee", comment : [3,5,4], admin : false });
+
+function func3([a, b, c] : (unknown)[]): void {
+    console.log(a, b, c);
+}
+
+func3([40, 'wine', false]);
