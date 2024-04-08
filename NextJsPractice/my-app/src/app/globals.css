@@ -17,6 +17,18 @@ body {
     color: #fff;
 }
 
+.main-nav {
+    background-color: #fff;
+    font-size: 26px;
+    padding: 10px;
+
+    & > *{
+        margin: 0 0.5em;
+        text-decoration-line: none;
+        color: black;
+    }
+}
+
 .main-title {
     text-align: center;
     font-size: 26px;
