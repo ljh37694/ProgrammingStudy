@@ -1,8 +1,10 @@
 export default function Home(): JSX.Element {
+  const name: string = "Lee";
+
   return (
-    <main>
-      <h3>Apple Fresh</h3>
-      <p>by dev lee</p>
+    <main className="main-page">
+      <h3 className="main-title">Apple Fresh</h3>
+      <p className="sub-title">by dev {name}</p>
     </main>
   );
 }
