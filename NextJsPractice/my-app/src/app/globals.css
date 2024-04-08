@@ -10,11 +10,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    color: #fff;
 }
 
 body {
     background-color: rgb(29, 29, 25);
+    color: #fff;
 }
 
 .main-title {
@@ -28,5 +28,23 @@ body {
     font-size: 20px;
 }
 
-.main-page {
+.list-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.food-card {
+    background-color: #fff;
+    color: black;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    font-size: 20px;
+    padding: 0 1.5em;
+    margin: 1em 0;
+    width: 20em;
+    height: 5em;
 }
