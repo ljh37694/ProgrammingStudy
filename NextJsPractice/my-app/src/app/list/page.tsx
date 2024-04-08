@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function List(): JSX.Element {
     const products: string[] = ["Tomatoes", "Pasta", "Coconut"];
 
