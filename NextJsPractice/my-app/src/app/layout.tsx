@@ -21,6 +21,7 @@ export default function RootLayout({
                 <nav className="main-nav">
                     <Link href="/">Home</Link>
                     <Link href="/list">List</Link>
+                    <Link href="/cart">Cart</Link>
                 </nav>
                 {children}
             </body>
