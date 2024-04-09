@@ -72,4 +72,15 @@ body {
     display: flex;
     justify-content: space-around;
     border-bottom: 1px solid grey;
+
+    & > p {
+        width: 33.33333%;
+        text-align: center;
+    }
+}
+
+.main-btn {
+    padding: 10px;
+    font-size: 20px;
+    color: #fff;
 }
