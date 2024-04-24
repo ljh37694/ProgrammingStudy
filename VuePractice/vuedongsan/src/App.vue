@@ -1,15 +1,23 @@
 <template>
+  <div class="black-bg" v-if="activeModal == true">
+    <div class="white-bg">
+      <h4>상세페이지</h4>
+      <p>내용</p>
+      <button @click="activeModal = false">닫기</button>
+    </div>
+  </div>
+
   <nav class="main-nav">
     <a v-for="(link, idx) in navLink" :key="idx">{{ link }}</a>
   </nav>
 
   <div v-for="(product, idx) in products" :key="product">
-    <h4 :style="redColor">{{ product }}</h4>
+    <img src="./assets/room0.jpg" class="room-img">
+    <h4 :style="redColor" @click="activeModal = true">{{ product }}</h4>
     <p>{{ price1 }}</p>
     <button v-on:click="increase(idx)">허위 매물 신고</button>
     <span>신고수 : {{ reportCount[idx] }}</span>
   </div>
-
 </template>
 
 <script>
@@ -18,6 +26,7 @@ export default {
   name: 'App',
   data() {
     return {
+      activeModal: false,
       reportCount: [0, 0, 0],
       price1: 60,
       redColor: "color: red",
@@ -36,12 +45,12 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+body {
+  margin: 0;
+}
+
+div {
+  box-sizing: border-box;
 }
 
 .main-nav {
@@ -56,5 +65,27 @@ export default {
   font-size: 20px;
   color: #fff;
   padding: 20px;
+}
+
+.room-img {
+  width: 100%;
+  margin-top: 40px;
+}
+
+.black-bg {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  padding: 20px;
+}
+
+.white-bg {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 20px;
+  width: 100%;
+  text-align: center;
 }
 </style>
