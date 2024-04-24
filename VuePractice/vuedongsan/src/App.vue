@@ -1,17 +1,13 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <div>
-    <h4 :style="redColor">{{ products[0] }}</h4>
+  <nav class="main-nav">
+    <a v-for="(link, idx) in navLink" :key="idx">{{ link }}</a>
+  </nav>
+
+  <div v-for="product in products" :key="product">
+    <h4 :style="redColor">{{ product }}</h4>
     <p>{{ price1 }}</p>
   </div>
-    <div>
-    <h4 :style="redColor">{{ products[1] }}</h4>
-    <p>{{ price1 }}</p>
-  </div>
-    <div>
-    <h4 :style="redColor">{{ products[2] }}</h4>
-    <p>{{ price1 }}</p>
-  </div>
+
 </template>
 
 <script>
@@ -23,6 +19,7 @@ export default {
       price1: 60,
       redColor: "color: red",
       products: ["역삼동 원룸", "천호동 원룸", "마포구 원룸"],
+      navLink: ["Home", "Shop", "About"],
     }
   },
   components: {
@@ -37,6 +34,19 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: skyblue;
+  border-radius: 10px;
+}
+
+.main-nav > a {
+  font-size: 20px;
+  color: #fff;
+  padding: 20px;
 }
 </style>
