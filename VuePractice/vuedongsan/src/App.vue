@@ -1,30 +1,21 @@
 <template>
-  <div class="black-bg" v-if="activeModal == true">
-    <div class="white-bg">
-      <h4>{{ products[clickedIdx].title }}</h4>
-      <p>{{ products[clickedIdx].content }}</p>
-      <button @click="activeModal = false">닫기</button>
-    </div>
-  </div>
-
-  <Discount />
+  <Modal :productsData="productsData" :activeModal="activeModal" :clickedIdx="clickedIdx"/>
+  <Discount :productsData="productsData" />
 
   <nav class="main-nav">
     <a v-for="(link, idx) in navLink" :key="idx">{{ link }}</a>
   </nav>
 
-  <div v-for="(product, idx) in products" :key="idx" class="product">
-    <img :src="product.image" class="room-img">
-    <h4 :style="redColor" @click="activeModal = true; clickedIdx = idx">{{ product.title }}</h4>
-    <p>{{ product.price }}</p>
-    <button v-on:click="increase(idx)">허위 매물 신고</button>
-    <span>신고수 : {{ reportCount[idx] }}</span>
+  <div v-for="(productData, idx) in productsData" :key="idx">
+    <ProductCard :productData="productData" :activeModal="activeModal" :clickedIdx="clickedIdx" />
   </div>
 </template>
 
 <script>
 import oneRoomData from "./assets/oneRoom";
 import Discount from "./components/Discount.vue";
+import Modal from "./components/Modal.vue";
+import ProductCard from "./components/ProductCard.vue";
 
 export default {
   name: 'App',
@@ -33,9 +24,7 @@ export default {
       clickedIdx: 0,
       activeModal: false,
       reportCount: new Array(6).fill(0),
-      price1: 60,
-      redColor: "color: red",
-      products: oneRoomData,
+      productsData: oneRoomData,
       navLink: ["Home", "Shop", "About"],
     }
   },
@@ -46,6 +35,8 @@ export default {
   },
   components: {
     Discount,
+    Modal,
+    ProductCard,
   }
 }
 </script>
