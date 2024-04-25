@@ -7,6 +7,8 @@
     </div>
   </div>
 
+  <Discount />
+
   <nav class="main-nav">
     <a v-for="(link, idx) in navLink" :key="idx">{{ link }}</a>
   </nav>
@@ -22,6 +24,7 @@
 
 <script>
 import oneRoomData from "./assets/oneRoom";
+import Discount from "./components/Discount.vue";
 
 export default {
   name: 'App',
@@ -42,6 +45,7 @@ export default {
     }
   },
   components: {
+    Discount,
   }
 }
 </script>
@@ -63,7 +67,7 @@ div {
   border-radius: 10px;
 }
 
-.main-nav > a {
+.main-nav>a {
   font-size: 20px;
   color: #fff;
   padding: 20px;
