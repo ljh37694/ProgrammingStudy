@@ -11,26 +11,27 @@
     <a v-for="(link, idx) in navLink" :key="idx">{{ link }}</a>
   </nav>
 
-  <div v-for="(product, idx) in products" :key="product">
-    <img src="./assets/room0.jpg" class="room-img">
-    <h4 :style="redColor" @click="activeModal = true">{{ product }}</h4>
-    <p>{{ price1 }}</p>
+  <div v-for="(product, idx) in products" :key="product" class="product">
+    <img :src="product.image" class="room-img">
+    <h4 :style="redColor" @click="activeModal = true">{{ product.title }}</h4>
+    <p>{{ product.price }}</p>
     <button v-on:click="increase(idx)">허위 매물 신고</button>
     <span>신고수 : {{ reportCount[idx] }}</span>
   </div>
 </template>
 
 <script>
+import oneRoomData from "./assets/oneRoom";
 
 export default {
   name: 'App',
   data() {
     return {
       activeModal: false,
-      reportCount: [0, 0, 0],
+      reportCount: new Array(6).fill(0),
       price1: 60,
       redColor: "color: red",
-      products: ["역삼동 원룸", "천호동 원룸", "마포구 원룸"],
+      products: oneRoomData,
       navLink: ["Home", "Shop", "About"],
     }
   },
@@ -86,6 +87,10 @@ div {
   padding: 20px;
   font-size: 20px;
   width: 100%;
+  text-align: center;
+}
+
+.product {
   text-align: center;
 }
 </style>
