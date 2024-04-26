@@ -3,6 +3,9 @@
     <div class="white-bg">
       <h4>{{ productsData[clickedIdx].title }}</h4>
       <p>{{ productsData[clickedIdx].content }}</p>
+      <input @input="month = $event.target.value">
+      <p>{{ month }}개월: {{ productsData[clickedIdx].price * month }}</p>
+
       <button @click="$emit('closeModal')">닫기</button>
     </div>
   </div>
@@ -11,6 +14,11 @@
 <script>
 export default {
   name: "Modal",
+  data() {
+    return {
+      month: 1,
+    }
+  },
   props: {
     productsData: Array,
     clickedIdx: Number,
