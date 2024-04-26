@@ -3,9 +3,9 @@
     <div class="white-bg">
       <h4>{{ productsData[clickedIdx].title }}</h4>
       <p>{{ productsData[clickedIdx].content }}</p>
-      <input @input="month = $event.target.value">
+      <input v-model="month">
       <p>{{ month }}개월: {{ productsData[clickedIdx].price * month }}</p>
-
+      
       <button @click="$emit('closeModal')">닫기</button>
     </div>
   </div>
