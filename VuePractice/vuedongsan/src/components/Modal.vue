@@ -19,6 +19,14 @@ export default {
       month: 1,
     }
   },
+  watch: {
+    month(after, before) {
+      if (isNaN(after)) {
+        this.month = 1;
+        alert("문자를 입력했습니다.");
+      }
+    }
+  },
   props: {
     productsData: Array,
     clickedIdx: Number,
