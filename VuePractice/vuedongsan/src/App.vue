@@ -1,5 +1,5 @@
 <template>
-  <Modal :productsData="productsData" :activeModal="activeModal" :clickedIdx="clickedIdx"/>
+  <Modal :productsData="productsData" :clickedIdx="clickedIdx" :activeModal="activeModal" @closeModal="activeModal = false"/>
   <Discount :productsData="productsData" />
 
   <nav class="main-nav">
@@ -7,7 +7,7 @@
   </nav>
 
   <div v-for="(productData, idx) in productsData" :key="idx">
-    <ProductCard :productData="productData" :activeModal="activeModal" :clickedIdx="clickedIdx" />
+    <ProductCard :productData="productData" @openModal="activeModal = true; clickedIdx = idx" />
   </div>
 </template>
 

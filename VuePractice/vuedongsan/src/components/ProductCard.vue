@@ -1,7 +1,9 @@
 <template>
-  <img :src="productData.image" class="room-img">
-    <h4 @click="activeModal = true; clickedIdx = idx">{{ productData.title }}</h4>
+  <div class="product">
+    <img :src="productData.image" class="room-img">
+    <h4 @click="$emit('openModal')">{{ productData.title }}</h4>
     <p>{{ productData.price }}</p>
+  </div>
 </template>
 
 <script>
