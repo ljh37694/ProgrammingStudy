@@ -1,7 +1,8 @@
 <template>
-  <Modal :productsData="productsData" :clickedIdx="clickedIdx" :activeModal="activeModal"
-    @closeModal="activeModal = false" />
-  <Discount :productsData="productsData" />
+  <Modal :productsData="productsData" :clickedIdx="clickedIdx" :activeModal="showModal"
+    @closeModal="showModal = false" />
+
+  <Discount :discountRate="discountRate" v-if="showDiscount == true" />
 
   <div class="sort-button-container">
     <button @click="priceAscendingSort">낮은 가격순 정렬</button>
@@ -17,7 +18,7 @@
   </nav>
 
   <div v-for="(productData, idx) in productsData" :key="idx">
-    <ProductCard :productData="productData" @openModal="activeModal = true; clickedIdx = idx" />
+    <ProductCard :productData="productData" @openModal="showModal = true; clickedIdx = idx" />
   </div>
 </template>
 
@@ -32,10 +33,13 @@ export default {
   data() {
     return {
       clickedIdx: 0,
-      activeModal: false,
+      showModal: false,
+      showDiscount: true,
       reportCount: new Array(6).fill(0),
       productsData: [...oneRoomData],
       navLink: ["Home", "Shop", "About"],
+      discountRate: 30,
+      discountInterval: null,
     }
   },
   methods: {
@@ -71,6 +75,17 @@ export default {
     Discount,
     Modal,
     ProductCard,
+  },
+  mounted() {
+    this.discountInterval = setInterval(() => {
+      this.discountRate--;
+    }, 300);
+  },
+  updated() {
+    if (this.discountRate == 0) {
+      clearInterval(this.discountInterval);
+      this.showDiscount = false;
+    }
   }
 }
 </script>

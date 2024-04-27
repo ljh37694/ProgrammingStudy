@@ -5,13 +5,12 @@
         <h4>{{ productsData[clickedIdx].title }}</h4>
         <p>{{ productsData[clickedIdx].content }}</p>
         <input v-model="month">
-        <p>{{ month }}개월: {{ productsData[clickedIdx].price * month }}</p>
+        <p>{{ month }}개월: {{ productsData[clickedIdx].price * month }}원</p>
 
         <button @click="$emit('closeModal')">닫기</button>
       </div>
     </div>
   </Transition>
-
 </template>
 
 <script>
@@ -23,18 +22,24 @@ export default {
     }
   },
   watch: {
-    month(after, before) {
+    month(after) {
       if (isNaN(after)) {
         this.month = 1;
         alert("문자를 입력했습니다.");
       }
     }
   },
+  beforeUpdate() {
+    console.log(this.month);
+    if (this.month == 2) {
+      alert("3개월부터 팝니다");
+    }
+  },
   props: {
     productsData: Array,
     clickedIdx: Number,
     activeModal: Boolean,
-  }
+  },
 }
 </script>
 
