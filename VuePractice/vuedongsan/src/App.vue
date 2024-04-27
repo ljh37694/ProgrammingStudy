@@ -1,6 +1,16 @@
 <template>
-  <Modal :productsData="productsData" :clickedIdx="clickedIdx" :activeModal="activeModal" @closeModal="activeModal = false"/>
+  <Modal :productsData="productsData" :clickedIdx="clickedIdx" :activeModal="activeModal"
+    @closeModal="activeModal = false" />
   <Discount :productsData="productsData" />
+
+  <div class="sort-button-container">
+    <button @click="priceAscendingSort">낮은 가격순 정렬</button>
+    <button @click="priceDescendingSort">높은 가격순 정렬</button>
+    <button @click="nameSort">이름순 정렬</button>
+    <button @click="sortBack">되돌리기</button>
+    <button @click="priceFilter">50만원 이하 상품 보기</button>
+  </div>
+
 
   <nav class="main-nav">
     <a v-for="(link, idx) in navLink" :key="idx">{{ link }}</a>
@@ -24,13 +34,37 @@ export default {
       clickedIdx: 0,
       activeModal: false,
       reportCount: new Array(6).fill(0),
-      productsData: oneRoomData,
+      productsData: [...oneRoomData],
       navLink: ["Home", "Shop", "About"],
     }
   },
   methods: {
     increase(idx) {
       this.reportCount[idx]++;
+    },
+    priceAscendingSort() {
+      this.productsData.sort((a, b) => {
+        return a.price - b.price;
+      });
+    },
+    priceDescendingSort() {
+      this.productsData.sort((a, b) => {
+        return b.price - a.price;
+      });
+    },
+    sortBack() {
+      this.productsData = [...oneRoomData];
+    },
+    nameSort() {
+      this.productsData.sort((a, b) => {
+        if (a.title < b.title) return -1;
+        else return 1;
+      });
+    },
+    priceFilter() {
+      this.productsData = this.productsData.filter(data => {
+        return data.price <= 500000;
+      });
     }
   },
   components: {
@@ -88,5 +122,15 @@ div {
 
 .product {
   text-align: center;
+}
+
+.sort-button-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.sort-button-container > button {
+  margin: 0px 10px;
 }
 </style>
