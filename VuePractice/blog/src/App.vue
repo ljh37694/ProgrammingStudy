@@ -1,12 +1,11 @@
 <template>
   <MainNavbar />
-  
-  <PostList :postsData="postsData" />
+
+  <router-view :postsData="postsData"></router-view>
 </template>
 
 <script>
 import MainNavbar from './components/MainNavbar.vue';
-import PostList from './components/PostList.vue';
 import posts from "./assets/posts";
 
 export default {
@@ -18,7 +17,6 @@ export default {
   },
   components: {
     MainNavbar,
-    PostList,
   }
 }
 </script>
