@@ -1,22 +1,33 @@
 <template>
+  <MainNavbar />
+  
+  <PostList :postsData="postsData" />
 </template>
 
 <script>
+import MainNavbar from './components/MainNavbar.vue';
+import PostList from './components/PostList.vue';
+import posts from "./assets/posts";
 
 export default {
   name: 'App',
+  data() {
+    return {
+      postsData: posts,
+    }
+  },
   components: {
+    MainNavbar,
+    PostList,
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  body {
+    background-color: rgb(154, 218, 255);
+  }
+  div {
+    box-sizing: border-box;
+  }
 </style>
