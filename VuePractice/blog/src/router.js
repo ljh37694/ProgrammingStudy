@@ -4,7 +4,7 @@ import PostDetail from "./components/PostDetail.vue";
 
 const routes = [
   {
-   path: "/detail",
+   path: "/detail/:id",
    component: PostDetail,
   },
   {
