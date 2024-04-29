@@ -2,6 +2,7 @@
   <div class="post-detail-container">
     <h5>{{ postsData[$route.params.id].title }}</h5>
     <p>{{ postsData[$route.params.id].content }}</p>
+    <router-view></router-view>
   </div>
 </template>
 

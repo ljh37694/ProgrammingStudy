@@ -1,5 +1,5 @@
 <template>
-  <div v-for="post in postsData" :key="post.number" class="post-card">
+  <div v-for="(post, idx) in postsData" :key="post.number" @click="$router.push(`/detail/${idx}`)" class="post-card">
     <h5>{{ post.title }}</h5>
     <p>{{ post.date }}</p>
     <p>{{ post.content }}</p>
