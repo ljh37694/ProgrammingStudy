@@ -1,21 +1,34 @@
 <template>
+  <main id="vuestagram">
+    <Container :postData="postData" />
+  </main>
 </template>
 
 <script>
+import Container from './components/Container.vue';
+import postData from './assets/postData';
 
 export default {
   name: 'App',
+  data() {
+    return {
+      postData: postData,
+    }
+  },
   components: {
+    Container,
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+body {
+  background-color: black;
+  color: #fff;
+}
+
+#vuestagram {
+  margin: auto;
+  width: 60vw;
 }
 </style>
