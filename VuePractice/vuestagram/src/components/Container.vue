@@ -6,7 +6,7 @@
 
     <!-- 필터선택페이지 -->
     <div v-else-if="step == 1">
-      <div class="upload-image"></div>
+      <div class="upload-image" :style="{backgroundImage: `url(${imageUrl})`}"></div>
       <div class="filters">
         <div class="filter-1"></div>
         <div class="filter-1"></div>
@@ -18,7 +18,7 @@
 
     <!-- 글작성페이지 -->
     <div v-else-if="step == 2">
-      <div class="upload-image"></div>
+      <div class="upload-image" :style="{ backgroundImage: `url(${imageUrl})`}"></div>
       <div class="write">
         <textarea class="write-box">write!</textarea>
       </div>
@@ -38,6 +38,7 @@ export default {
   props: {
     postData: Array,
     step: Number,
+    imageUrl: String,
   },
   components: {
     Post,
@@ -47,8 +48,8 @@ export default {
 
 <style>
 .upload-image {
-  width: 100%;
-  height: 450px;
+  width: 60vw;
+  height: 60vw;
   background: cornflowerblue;
   background-size: cover;
 }
