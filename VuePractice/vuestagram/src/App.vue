@@ -1,7 +1,11 @@
 <template>
   <main id="vuestagram">
-    <Container :postData="postData" />
+    <Container :postData="postData" :step="step"/>
     <button @click="more">더보기</button>
+
+    <div>
+      <button v-for="i in 3" :key="i" @click="step = i - 1">필터 {{ i }}</button>
+    </div>
   </main>
 </template>
 
@@ -16,6 +20,7 @@ export default {
     return {
       postData: postData,
       moreCount: 0,
+      step: 0,
     }
   },
   methods: {
