@@ -1,6 +1,15 @@
 <template>
   <main id="vuestagram">
-    <Container :postData="postData" :step="step" :imageUrl="imageUrl"/>
+    <header class="header" v-if="step != 0">
+      <ul>
+        <li class="header-left-button">cancle</li>
+      </ul>
+      <ul class="header-right-button">
+        <li v-if="step == 1" @click="step++">next</li>
+        <li v-if="step == 2" @click="publish">등록</li>
+      </ul>
+    </header>
+    <Container :postData="postData" :step="step" :imageUrl="imageUrl" />
     <button @click="more">더보기</button>
 
     <div>
@@ -34,10 +43,10 @@ export default {
   methods: {
     more() {
       axios.get(`https://codingapple1.github.io/vue/more${this.moreCount++}.json`)
-      .then(res => {
-        this.postData = [...this.postData, res.data];
-      })
-      .catch(e => console.log(e));
+        .then(res => {
+          this.postData = [...this.postData, res.data];
+        })
+        .catch(e => console.log(e));
     },
     upload(e) {
       let file = e.target.files;
@@ -46,7 +55,22 @@ export default {
       this.step = 1;
 
       console.log(this.imageUrl);
-    }
+    },
+    publish() {
+      let post = {
+        name: "Kim Hyun",
+        userImage: "https://picsum.photos/100?random=3",
+        postImage: this.imageUrl,
+        likes: 36,
+        date: "May 15",
+        liked: false,
+        content: document.querySelector(".write-box").value,
+        filter: "perpetua"
+      };
+
+      this.postData.unshift(post);
+      this.step = 0;
+    },
   },
   components: {
     Container,
@@ -67,5 +91,23 @@ body {
 
 #file {
   display: none;
+}
+
+.header {
+  color: rgb(123, 184, 248);
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em 3em;
+  background-color: #fff;
+}
+
+.header-left-button {
+  float: left;
+  list-style: none;
+}
+
+.header-right-button {
+  float: right;
+  list-style: none;
 }
 </style>
