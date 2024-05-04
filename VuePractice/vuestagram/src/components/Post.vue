@@ -49,7 +49,6 @@ export default {
 
 .post-body {
   width: 100%;
-  height: 450px;
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;

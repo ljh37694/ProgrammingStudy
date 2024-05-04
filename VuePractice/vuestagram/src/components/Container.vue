@@ -6,19 +6,15 @@
 
     <!-- 필터선택페이지 -->
     <div v-else-if="step == 1">
-      <div class="upload-image" :style="{backgroundImage: `url(${imageUrl})`}"></div>
+      <div class="upload-image" :class="currentFilter" :style="{ backgroundImage: `url(${imageUrl})` }"></div>
       <div class="filters">
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
+        <FilterBox v-for="(filter, idx) in filters" :key="idx" :imageUrl="imageUrl" @click="currentFilter = filter" :class="filter"></FilterBox>
       </div>
     </div>
 
     <!-- 글작성페이지 -->
     <div v-else-if="step == 2">
-      <div class="upload-image" :style="{ backgroundImage: `url(${imageUrl})`}"></div>
+      <div class="upload-image" :style="{ backgroundImage: `url(${imageUrl})` }"></div>
       <div class="write">
         <textarea class="write-box">write!</textarea>
       </div>
@@ -28,11 +24,16 @@
 
 <script>
 import Post from './Post.vue';
+import FilterBox from './FilterBox.vue';
 
 export default {
   name: "TheContainer",
   data() {
     return {
+      currentFilter: "",
+      filters: ["", "aden", "_1977", "brannan", "brooklyn", "clarendon", "earlybird", "gingham", "hudson",
+        "inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon", "nashville", "perpetua",
+        "reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"],
     }
   },
   props: {
@@ -42,16 +43,19 @@ export default {
   },
   components: {
     Post,
+    FilterBox,
   }
 }
 </script>
 
 <style>
 .upload-image {
-  width: 60vw;
-  height: 60vw;
+  width: 100%;
+  height: 70vh;
   background: cornflowerblue;
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .filters {
