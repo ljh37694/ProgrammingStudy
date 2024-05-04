@@ -8,7 +8,8 @@
     <div v-else-if="step == 1">
       <div class="upload-image" :class="currentFilter" :style="{ backgroundImage: `url(${imageUrl})` }"></div>
       <div class="filters">
-        <FilterBox v-for="(filter, idx) in filters" :key="idx" :imageUrl="imageUrl" @click="currentFilter = filter" :class="filter">
+        <FilterBox v-for="(filter, idx) in filters" :key="idx" :imageUrl="imageUrl" @click="currentFilter = filter"
+          :class="filter">
           {{ filter }}
         </FilterBox>
       </div>
@@ -63,6 +64,13 @@ export default {
 .filters {
   overflow-x: scroll;
   white-space: nowrap;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -ms-user-select: none;
+  /* 인터넷익스플로러 */
+  user-select: none;
 }
 
 .filter-1 {
