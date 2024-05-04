@@ -8,7 +8,9 @@
     <div v-else-if="step == 1">
       <div class="upload-image" :class="currentFilter" :style="{ backgroundImage: `url(${imageUrl})` }"></div>
       <div class="filters">
-        <FilterBox v-for="(filter, idx) in filters" :key="idx" :imageUrl="imageUrl" @click="currentFilter = filter" :class="filter"></FilterBox>
+        <FilterBox v-for="(filter, idx) in filters" :key="idx" :imageUrl="imageUrl" @click="currentFilter = filter" :class="filter">
+          {{ filter }}
+        </FilterBox>
       </div>
     </div>
 
@@ -16,7 +18,7 @@
     <div v-else-if="step == 2">
       <div class="upload-image" :style="{ backgroundImage: `url(${imageUrl})` }"></div>
       <div class="write">
-        <textarea class="write-box">write!</textarea>
+        <textarea class="write-box" placeholder="Write!"></textarea>
       </div>
     </div>
   </div>
@@ -30,8 +32,8 @@ export default {
   name: "TheContainer",
   data() {
     return {
-      currentFilter: "",
-      filters: ["", "aden", "_1977", "brannan", "brooklyn", "clarendon", "earlybird", "gingham", "hudson",
+      currentFilter: "original",
+      filters: ["original", "aden", "_1977", "brannan", "brooklyn", "clarendon", "earlybird", "gingham", "hudson",
         "inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon", "nashville", "perpetua",
         "reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"],
     }
