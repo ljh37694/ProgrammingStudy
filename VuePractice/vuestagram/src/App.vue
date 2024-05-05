@@ -9,7 +9,7 @@
         <li v-if="step == 2" @click="publish">등록</li>
       </ul>
     </header>
-    <Container :postData="postData" :step="step" :imageUrl="imageUrl" :selectFilter="selectFilter" @selectFilter="(filter) => selectFilter = filter " />
+    <Container :postData="$store.state.postData" :step="step" :imageUrl="imageUrl" :selectFilter="selectFilter" @selectFilter="(filter) => selectFilter = filter " />
     <button @click="more">더보기</button>
 
     <div>
@@ -27,14 +27,12 @@
 
 <script>
 import Container from './components/Container.vue';
-import postData from './assets/postData';
 import axios from 'axios';
 
 export default {
   name: 'App',
   data() {
     return {
-      postData: postData,
       moreCount: 0,
       step: 0,
       imageUrl: "",
@@ -45,7 +43,7 @@ export default {
     more() {
       axios.get(`https://codingapple1.github.io/vue/more${this.moreCount++}.json`)
         .then(res => {
-          this.postData = [...this.postData, res.data];
+          this.$store.commit('addPost', [res.data]);
         })
         .catch(e => console.log(e));
     },

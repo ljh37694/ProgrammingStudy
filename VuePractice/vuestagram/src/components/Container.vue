@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <div v-if="step == 0">
-      <Post v-for="(data, idx) in postData" :key="idx" :data="data" />
+      <Post v-for="(data, idx) in postData" :key="idx" :data="data" @click="$store.commit('toggleLike', idx)" />
     </div>
 
     <!-- 필터선택페이지 -->
