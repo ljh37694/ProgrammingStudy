@@ -4,7 +4,7 @@
       <div class="profile" :style="{ backgroundImage: `url(${data.userImage})` }"></div>
       <span class="profile-name">{{ data.name }}</span>
     </div>
-    <div class="post-body" :style="{ backgroundImage: `url(${data.postImage})` }"></div>
+    <div class="post-body" :class="data.filter" :style="{ backgroundImage: `url(${data.postImage})` }"></div>
     <div class="post-content">
       <p>{{ data.likes }} Likes</p>
       <p><strong>{{ data.name }}</strong> {{ data.content }}</p>
@@ -23,6 +23,7 @@ export default {
 <style>
 .post {
   width: 100%;
+  height: 70vh;
   margin-bottom: 30px;
 }
 
@@ -49,9 +50,9 @@ export default {
 
 .post-body {
   width: 100%;
+  height: 468px;
   background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .post-content {

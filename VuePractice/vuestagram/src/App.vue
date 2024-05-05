@@ -9,7 +9,7 @@
         <li v-if="step == 2" @click="publish">등록</li>
       </ul>
     </header>
-    <Container :postData="postData" :step="step" :imageUrl="imageUrl" />
+    <Container :postData="postData" :step="step" :imageUrl="imageUrl" :selectFilter="selectFilter" @selectFilter="(filter) => selectFilter = filter " />
     <button @click="more">더보기</button>
 
     <div>
@@ -38,6 +38,7 @@ export default {
       moreCount: 0,
       step: 0,
       imageUrl: "",
+      selectFilter: "original",
     }
   },
   methods: {
@@ -65,7 +66,7 @@ export default {
         date: "May 15",
         liked: false,
         content: document.querySelector(".write-box").value,
-        filter: "perpetua"
+        filter: this.selectFilter,
       };
 
       this.postData.unshift(post);
@@ -86,7 +87,7 @@ body {
 
 #vuestagram {
   margin: auto;
-  width: 60vw;
+  width: 100%;
 }
 
 #file {

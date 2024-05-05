@@ -8,7 +8,7 @@
     <div v-else-if="step == 1">
       <div class="upload-image" :class="currentFilter" :style="{ backgroundImage: `url(${imageUrl})` }"></div>
       <div class="filters">
-        <FilterBox v-for="(filter, idx) in filters" :key="idx" :imageUrl="imageUrl" @click="currentFilter = filter"
+        <FilterBox v-for="(filter, idx) in filters" :key="idx" :imageUrl="imageUrl" @click="currentFilter = filter; $emit('selectFilter', currentFilter);"
           :class="filter">
           {{ filter }}
         </FilterBox>
@@ -17,7 +17,7 @@
 
     <!-- 글작성페이지 -->
     <div v-else-if="step == 2">
-      <div class="upload-image" :style="{ backgroundImage: `url(${imageUrl})` }"></div>
+      <div class="upload-image" :class="currentFilter" :style="{ backgroundImage: `url(${imageUrl})` }"></div>
       <div class="write">
         <textarea class="write-box" placeholder="Write!"></textarea>
       </div>
@@ -43,6 +43,7 @@ export default {
     postData: Array,
     step: Number,
     imageUrl: String,
+    selectFilter: String,
   },
   components: {
     Post,
@@ -52,6 +53,11 @@ export default {
 </script>
 
 <style>
+.main-container {
+  width: 40%;
+  margin: auto;
+}
+
 .upload-image {
   width: 100%;
   height: 70vh;
