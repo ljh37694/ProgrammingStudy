@@ -54,7 +54,7 @@ export default {
 
 <style>
 .main-container {
-  width: 40%;
+  width: 468px;
   margin: auto;
 }
 
