@@ -17,6 +17,9 @@ const store = createStore({
 
       let tmp = [...state.postData];
       state.postData = tmp;
+    },
+    publishPost(state, payload) {
+      state.postData.unshift(payload);
     }
   }
 });

@@ -6,7 +6,7 @@
       </ul>
       <ul class="header-right-button">
         <li v-if="step == 1" @click="step++">next</li>
-        <li v-if="step == 2" @click="publish">등록</li>
+        <li v-if="step == 2" @click="$store.commit('publishPost', publish())">등록</li>
       </ul>
     </header>
     <Container :postData="$store.state.postData" :step="step" :imageUrl="imageUrl" :selectFilter="selectFilter" @selectFilter="(filter) => selectFilter = filter " />
@@ -67,8 +67,9 @@ export default {
         filter: this.selectFilter,
       };
 
-      this.postData.unshift(post);
       this.step = 0;
+
+      return post;
     },
   },
   components: {
