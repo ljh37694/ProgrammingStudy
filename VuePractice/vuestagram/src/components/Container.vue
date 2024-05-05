@@ -59,8 +59,8 @@ export default {
 }
 
 .upload-image {
-  width: 100%;
-  height: 70vh;
+  width: 468px;
+  height: 468px;
   background: cornflowerblue;
   background-size: cover;
   background-repeat: no-repeat;
