@@ -1,7 +1,5 @@
 <template>
   <div class="main-container">
-    <p>{{ $store.state.more[0] }}</p>
-
     <div v-if="step == 0">
       <Post v-for="(data, idx) in postData" :key="idx" :data="data" @click="$store.commit('toggleLike', idx)" />
     </div>

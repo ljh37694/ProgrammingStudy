@@ -1,15 +1,16 @@
 <template>
   <main id="vuestagram">
+    <p>{{ more[0] }}</p>
     <header class="header" v-if="step != 0">
       <ul>
         <li class="header-left-button">cancle</li>
       </ul>
       <ul class="header-right-button">
         <li v-if="step == 1" @click="step++">next</li>
-        <li v-if="step == 2" @click="$store.commit('publishPost', publish())">등록</li>
+        <li v-if="step == 2" @click="publishPostData(publish())">등록</li>
       </ul>
     </header>
-    <Container :postData="$store.state.postData" :step="step" :imageUrl="imageUrl" :selectFilter="selectFilter" @selectFilter="(filter) => selectFilter = filter " />
+    <Container :postData="postData" :step="step" :imageUrl="imageUrl" :selectFilter="selectFilter" @selectFilter="(filter) => selectFilter = filter " />
     <button @click="$store.dispatch('getData')">더보기</button>
 
     <div>
@@ -26,6 +27,7 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex';
 import Container from './components/Container.vue';
 
 export default {
@@ -38,7 +40,17 @@ export default {
       selectFilter: "original",
     }
   },
+  computed: { // 컴포넌트 로드시 한 번 실행하고 실행 안 됨, 그냥 저장 공간
+    ...mapState(['more']),
+    now2() {
+      return new Date();
+    },
+    postData() {
+      return this.$store.state.postData;
+    }
+  },
   methods: {
+    ...mapMutations({publishPostData: "publishPost"}),
     upload(e) {
       let file = e.target.files;
       console.log(file);
@@ -63,6 +75,9 @@ export default {
 
       return post;
     },
+    now() {
+      return new Date();
+    }
   },
   components: {
     Container,
