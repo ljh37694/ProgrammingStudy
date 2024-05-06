@@ -10,7 +10,7 @@
       </ul>
     </header>
     <Container :postData="$store.state.postData" :step="step" :imageUrl="imageUrl" :selectFilter="selectFilter" @selectFilter="(filter) => selectFilter = filter " />
-    <button @click="more">더보기</button>
+    <button @click="$store.dispatch('getData')">더보기</button>
 
     <div>
       <button v-for="i in 3" :key="i" @click="step = i - 1">필터 {{ i }}</button>
@@ -27,7 +27,6 @@
 
 <script>
 import Container from './components/Container.vue';
-import axios from 'axios';
 
 export default {
   name: 'App',
@@ -40,13 +39,6 @@ export default {
     }
   },
   methods: {
-    more() {
-      axios.get(`https://codingapple1.github.io/vue/more${this.moreCount++}.json`)
-        .then(res => {
-          this.$store.commit('addPost', [res.data]);
-        })
-        .catch(e => console.log(e));
-    },
     upload(e) {
       let file = e.target.files;
       console.log(file);
